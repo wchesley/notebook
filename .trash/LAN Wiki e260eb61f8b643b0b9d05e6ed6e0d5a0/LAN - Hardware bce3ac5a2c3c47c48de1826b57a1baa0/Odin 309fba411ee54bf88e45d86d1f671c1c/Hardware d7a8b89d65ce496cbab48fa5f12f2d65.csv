@@ -1,0 +1,10 @@
+﻿Component,Model,Specs
+CPU,AMD FX 8320,"Speed: 3.5Ghz, Core/Thread Count: 8C/8T, L2 Cache: 8Mb, L3 Cache: 8Mb, 32nm Arch(Piledriver), Max Temp: 61.1C, TDP: 125W"
+GPU,AMD Radeon R7 370,"Speed: 925 MHz, RAM: 2Gb DDR5, Core Count: 1024, Trinidad Processor Arch"
+RAM,Mixed,2x4Gb @ unknown speed
+Motherboard,Gigabyte?,???
+Storage,2Tb Hdd (Toshiba?),"Holds OS, "
+PSU,EVGA?,650 Watt
+Optical Drive,Blue Ray,Read/Write
+"Extra HDD 1: ",HGST 2Tb,"2Tb, 64mb Cache, ZFS Mirror - Nextpool"
+"Extra HDD 2: ",WD 2Tb,"2Tb, 64mb Cache, ZFS Mirror - Nextpool"

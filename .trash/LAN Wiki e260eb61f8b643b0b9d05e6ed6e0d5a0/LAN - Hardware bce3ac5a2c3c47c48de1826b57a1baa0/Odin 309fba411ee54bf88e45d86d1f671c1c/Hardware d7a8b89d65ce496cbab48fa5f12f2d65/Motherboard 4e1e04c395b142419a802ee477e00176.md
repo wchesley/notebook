@@ -1,0 +1,4 @@
+# Motherboard
+
+Model: Gigabyte?
+Specs: ???

@@ -1,0 +1,102 @@
+{
+  "main": {
+    "id": "300e4c677e806abb",
+    "type": "split",
+    "children": [
+      {
+        "id": "bab55b9da780c794",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Docker/Docker.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d70f13fd0914bb3e",
+    "type": "split",
+    "children": [
+      {
+        "id": "fe554e820f2ce1d0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "da3dd032f1b50a60",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "6a29bb8e2c7b19b2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "Proxmox",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 162
+  },
+  "right": {
+    "id": "60b736a6fc07a9da",
+    "type": "split",
+    "children": [
+      {
+        "id": "e6483a24a6c789c8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1e80c4fa5eaa6b33",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Docker/Docker.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "bab55b9da780c794",
+  "lastOpenFiles": [
+    "Docker/Docker.md",
+    "NextCloud/Untitled.md",
+    "ZFS/ZFS-Home.md",
+    "Pfsense/egress-rules.md",
+    "Pfsense/Untitled.md",
+    "Untitled.md",
+    "ZFS/ZFS-Snapshot-clone.md",
+    "ZFS/ZFS-send-receive.md",
+    "ZFS/ZFS-migration-plan.md",
+    "LAN Wiki e260eb61f8b643b0b9d05e6ed6e0d5a0.md"
+  ]
+}
