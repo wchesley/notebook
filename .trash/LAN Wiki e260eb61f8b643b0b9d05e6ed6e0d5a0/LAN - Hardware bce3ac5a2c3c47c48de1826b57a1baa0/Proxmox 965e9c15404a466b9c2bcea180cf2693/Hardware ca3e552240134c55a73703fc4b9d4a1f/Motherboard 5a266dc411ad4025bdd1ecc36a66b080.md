@@ -1,3 +1,0 @@
-# Motherboard
-
-Model: HP?

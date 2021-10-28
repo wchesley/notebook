@@ -7,9 +7,17 @@
         "id": "bab55b9da780c794",
         "type": "leaf",
         "state": {
+          "type": "graph",
+          "state": {}
+        }
+      },
+      {
+        "id": "820b1cd55a590e96",
+        "type": "leaf",
+        "state": {
           "type": "markdown",
           "state": {
-            "file": "Docker/Docker.md",
+            "file": "TIG-Stack/Managing-Data-in-Influx-CLI.md",
             "mode": "source"
           }
         }
@@ -68,7 +76,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Docker/Docker.md",
+                "file": "TIG-Stack/Managing-Data-in-Influx-CLI.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,17 +94,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "bab55b9da780c794",
+  "active": "820b1cd55a590e96",
   "lastOpenFiles": [
+    "TIG-Stack/Managing-Data-in-Influx-CLI.md",
+    "TIG-Stack/Telegraf-1-19-docs.md",
+    "TIG-Stack/Influx-Telegraf-downloads.md",
+    "TIG-Stack/Influx-debian-repo.md",
+    "TIG-Stack/Bytes-to-GB.md",
+    "iRedMail/DNS-records.md",
     "Docker/Docker.md",
-    "NextCloud/Untitled.md",
-    "ZFS/ZFS-Home.md",
-    "Pfsense/egress-rules.md",
-    "Pfsense/Untitled.md",
-    "Untitled.md",
-    "ZFS/ZFS-Snapshot-clone.md",
-    "ZFS/ZFS-send-receive.md",
-    "ZFS/ZFS-migration-plan.md",
-    "LAN Wiki e260eb61f8b643b0b9d05e6ed6e0d5a0.md"
+    "Reading-List/Media 1b46dfe923104549ba676159ce5f2e53/General-Magic-the-Movie.md",
+    "Reading-List/Media 1b46dfe923104549ba676159ce5f2e53/Bon-Appe╠Бtit-Foodcast.md",
+    "Python-Ref/Remove-text-between-()-and-[]---Stack-Overflow.md"
   ]
 }

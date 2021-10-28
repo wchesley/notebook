@@ -26,10 +26,9 @@
         - [http://192.168.0.100:300](http://192.168.0.100:300)
         - Alerts are pushed to discord server via: Odin-discord-alerts, goes to server-shit channel. \
 - Minecraft
-    - 192.168.0.30
+    - 192.168.0.55
     - Set up per guide on minecrafts website
-        - UNTESTED - have yet to test access to the server from a minecraft client.
-        - Idea was scrapped as PS+ is required to play multiplayer on playstation...
+        - Working as of 10/15/2021 Both winston and I can join the server, minimal lag 
 - Valheim/ByteBot
     - 192.168.0.50
     - Valheim built using: [https://gameplay.tips/guides/9765-valheim.html](https://gameplay.tips/guides/9765-valheim.html)
@@ -77,7 +76,10 @@
     - Test nginx config changes with: `service nginx configtest`
     - Apply changes with `service nginx reload`
     - Ref this link for how I set up Nginx reverse proxy w/SSL [https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins)
-
+- Plex
+	- 192.168.0.119
+	- web exposed on port :32400/web/index.html 
+	- supposedly plex is added to apt repo? 
 ## ODIN
 
 - 192.168.0.18

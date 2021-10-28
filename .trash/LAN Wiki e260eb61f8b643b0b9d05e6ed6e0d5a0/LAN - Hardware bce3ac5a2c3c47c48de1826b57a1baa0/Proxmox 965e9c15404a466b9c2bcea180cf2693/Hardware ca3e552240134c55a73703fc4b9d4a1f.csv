@@ -1,9 +1,0 @@
-﻿Component,Model,Specs
-CPU,Intel Core i5 2300,"Speed: 2.8Ghz, Core/Thread: 4C/4T, L2 Cache: 1Mb, L3 Cache: 6 Mb, TDP: 95W, 32nm Arch(Sandy Bridge)"
-GPU,Intel HD Graphics 2000 (integrated),"Clock: 1350 Mhz, Max GFLOPS: 129.6 (Single-precision floating-point format (FP32)) "
-RAM,"idk branding :( ",1x4Gb DDR3
-Motherboard,"HP? ",
-Storage,250Gb ???,Powered on hours (Jan 2021): 5627(verify this)
-PSU,idk branding,idk output prolly 300w?
-Optical Drive,N/A,N/A
-"Extra HDD 1: ",WD 500Gb,idk (Proxmox VM/CT storage)
