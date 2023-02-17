@@ -1,6 +1,5 @@
 # The Notebook
 
-<<<<<<< HEAD
 My collection of notes from, well, everything. Ranging from detailed and complete to just a URL on a page, maybe a loose description or two. This is a very active workspace with varying ranges of completion depending on the page or topic.
 
  1. [Ansible](Ansible-Ref/README.md)
@@ -20,6 +19,3 @@ My collection of notes from, well, everything. Ranging from detailed and complet
 15. [TIG](TIG-Stack/Bytes-to-GB.md)
 16. [Windows](Windows/Using-Telegraf-on-Windows-Blog-InfluxData.md)
 17. [ZFS](ZFS/ZFS-Home.md)
-=======
-My semi-organized mess of notes from just about everything. 
->>>>>>> 5a6e566f5f847008c6ad89e1f145cb330fe06a68
