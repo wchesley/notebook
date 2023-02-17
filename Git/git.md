@@ -459,36 +459,37 @@ find the authors on the latest modified lines
 ```bash
 $ git blame googlepythonstyle.vim b88c6a1b (Google Python team 2019-12-30 13:45:23 -0800 12) ” See the License for the specific language governing permissions and b88c6a1b (Google Python team 2019-12-30 13:45:23 -0800 13) “ limitations under the License. b88c6a1b (Google Python team 2019-12-30 13:45:23 -0800 14) 222e6da8 (mshields@google.com 2010-11-29 20:32:06 +0000 15) ” Indent Python in the Google way. 222e6da8 (mshields@google.com 2010-11-29 20:32:06 +0000 16) 222e6da8 (mshields@google.com 2010-11-29 20:32:06 +0000 17) setlocal indentexpr=GetGooglePythonIndent(v:lnum) “`
 ```
-Further Information
+## Further Information
 
-    tryGit - A fun interactive way to learn Git.
+[tryGit - A fun interactive way to learn Git.](http://try.github.io/levels/1/challenges/1)
 
-    Learn Git Branching - the most visual and interactive way to learn Git on the web
+[Learn Git Branching - the most visual and interactive way to learn Git on the web](http://learngitbranching.js.org/)
 
-    Udemy Git Tutorial: A Comprehensive Guide
+[Udemy Git Tutorial: A Comprehensive Guide](https://blog.udemy.com/git-tutorial-a-comprehensive-guide/)
 
-    Git Immersion - A Guided tour that walks through the fundamentals of git
+[Git Immersion - A Guided tour that walks through the fundamentals of git](http://gitimmersion.com/)
 
-    git-scm - Video Tutorials
+[git-scm - Video Tutorials](http://git-scm.com/videos)
 
 [git-scm - Documentation](http://git-scm.com/docs)
 
-    Atlassian Git - Tutorials & Workflows
+[Atlassian Git - Tutorials & Workflows](https://www.atlassian.com/git/)
 
-    SalesForce Cheat Sheet
+[SalesForce Cheat Sheet](http://res.cloudinary.com/hy4kyit2a/image/upload/SF_git_cheatsheet.pdf)
 
-    Git - the simple guide
+[Git - the simple guide](http://rogerdudler.github.io/git-guide/index.html)
 
-    Pro Git
+[Pro Git](http://www.git-scm.com/book/en/v2)
 
-    An introduction to Git and GitHub for Beginners (Tutorial)
+[An introduction to Git and GitHub for Beginners (Tutorial)](http://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
-    The New Boston tutorial to Git covering basic commands and workflow
+[The New Boston tutorial to Git covering basic commands and workflow](https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAKWClAD_iKpNC0bGHxGhcx) 
 
+<sub>
 Got a suggestion? A correction, perhaps? Open an Issue on the Github Repo, or make a pull request yourself!
 
 Originally contributed by Jake Prather, and updated by 35 contributor(s).
 Creative Commons License
 
 © 2023 Jake Prather, Leo Rudberg, Betsy Lorton, Bruno Volcov, Andrew Taylor, Jason Stathopulos, Milo Gilad
-
+</sub>
