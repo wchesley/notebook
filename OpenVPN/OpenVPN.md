@@ -4,10 +4,11 @@
 
 ref for DNS: 
 
-[Solving DNS problems with OpenVPN on Ubuntu box | Software Passion](http://www.softwarepassion.com/solving-dns-problems-with-openvpn-on-ubuntu-box/)
+- [Solving DNS problems with OpenVPN on Ubuntu box | Software Passion](http://www.softwarepassion.com/solving-dns-problems-with-openvpn-on-ubuntu-box/)
+- [ArchLinux Docs](https://wiki.archlinux.org/title/OpenVPN#DNS)
+- [update-resolv-conf](https://github.com/jonathanio/update-systemd-resolved/blob/master/update-systemd-resolved)
 
 Ref for setup: 
 
-[[SOLVED] - Turnkey Linux OpenVPN template issues?](https://forum.proxmox.com/threads/turnkey-linux-openvpn-template-issues.31668/#post-157372)
-
-[To-Do ](OpenVPN%200f93b0b948ff44c6a2ed67808c74b8c0/To-Do%20b43bd374db034a6c84b295c684d9510e.csv)
+[[SOLVED] - Turnkey Linux OpenVPN template issues?](https://forum.proxmox.com/threads/turnkey-linux-openvpn-template-issues.31668/#post-157372)  
+- Make sure that openresolv is installed to linux clients
