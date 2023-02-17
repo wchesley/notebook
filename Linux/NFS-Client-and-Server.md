@@ -129,6 +129,9 @@ volume. However, it also reduces the speed of file operations.
 - `no_subtree_check`: This option prevents subtree checking, which is a process where the **host** must check whether the file is actually still available in the exported tree for every request. This can cause many problems when a file is
 renamed while the **client** has it opened. In almost all cases, it is better to disable subtree checking.
 - `no_root_squash`: By default, NFS translates requests from a **root** user remotely into a non-privileged user on the server. This was intended as security feature to prevent a **root** account on the **client** from using the file system of the **host** as **root**. `no_root_squash` disables this behavior for certain shares.
+- permissions: mapping nfs clients to specific user-ID and group. NFS is built on top of RPC authentication. With NFS version 3, the most common authentication mechanism is AUTH_UNIX. The user id and group id of the client system are sent in each RPC call, and the permissions these IDs have on the file being accessed are checked on the server. For this to work, the UID and GIDs must be the same on the server and the clients. However, you can force all access to occur as a single user and group by combining the all_squash, anonuid, and anongid export options. _all_squash_ will map all UIDs and GIDs to the anonymous user, and _anonuid_ and _anongid_ set the UID and GID of the anonymous user. For example, if your UID and GID on your dev server are both 1001, you could export your home directory with a line like
+  `/home/darren 192.168.1.1/24(rw,all_squash,anonuid=1001,anongid=1001)`
+  pulled from: https://serverfault.com/questions/240897/how-to-properly-set-permissions-for-nfs-folder-permission-denied-on-mounting-en
 
 When you are finished making your changes, save and close the file. 
 Then, to make the shares available to the clients that you configured, 

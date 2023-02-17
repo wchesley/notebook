@@ -14,7 +14,7 @@ Add the new LXC to the weekly [backup plan](obsidian://open?vault=obsidian_notes
 
 [Tutorials/Setting up a server](https://minecraft.gamepedia.com/Tutorials/Setting_up_a_server#Configuring_the_environment)
 
-Ensure Java OpenJDK is installed. 
+Ensure Java OpenJDK is installed. Verify with `java --version`
 
 Currently Minecraft is set to run on startup, it has a service created for it, should it not start, or need to be restarted: `systemctl restart/start minecraft.service` 
 

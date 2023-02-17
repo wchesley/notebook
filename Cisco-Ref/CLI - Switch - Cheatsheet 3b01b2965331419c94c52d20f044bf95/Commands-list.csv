@@ -21,7 +21,7 @@ ip name-server serverip-1 serverip-2,A configure mode command that sets the IP 
 ping {hostname | system-address} [source source-address],Used in enable mode to diagnose basic network connectivity
 show vtp status,"Lists the current VTP status, including the current mode"
 show vlanshow vlan brief,Lists each VLAN and all interfaces assigned to that VLAN but does not include trunks
-show interfaces trunk,Lists information about the currently operational trunks and the VLANs supported by those trunks
+show interfaces trunk,Lists information about tflatpak run md.obsidian.Obsidianhe currently operational trunks and the VLANs supported by those trunks
 show interfaces switchport,"Displays a large variety of configuration settings and current operational status, including VLAN trunking details."
 show interface status,Displays the interface line status
 show interfaces,"Displays detailed information about interface status, settings and counters"

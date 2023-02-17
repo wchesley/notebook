@@ -7,13 +7,13 @@ WTAMU, oTree, Python: Python, WTAMU, Work
 
 ## TODO:
 
-- [ ]  Ask Babb about email settings, to get running locally. Pending this for New user validation as well as User - Lost Credentials. C3T-20 & C3T-21 respectively.
+- [x]  Ask Babb about email settings, to get running locally. Pending this for New user validation as well as User - Lost Credentials. C3T-20 & C3T-21 respectively.
     - asked about this, we have SMTP settings; I need access to this, should be getting credentials?
-- [ ]  Disposition & Knowledge Element lookups, tie into wizard? Basic feature is there already, might need some tweaking to get it to not redirect to another page.
+- [x]  Disposition & Knowledge Element lookups, tie into wizard? Basic feature is there already, might need some tweaking to get it to not redirect to another page.
 - [x]  Create additional models - Is there anything else that needs to be created? or are we leaving this open until we decide we don't need anymore?
     - Nothing more to create.
-- [ ]  What flow are we looking for on approving CCS classifications? I'd assume it'd be up to an admin to approve tags on an Knowledge Element.
-    - [ ]  Do we want to restrict display of non-approved tags when viewing Knowledge Elements?
+- [x]  What flow are we looking for on approving CCS classifications? I'd assume it'd be up to an admin to approve tags on an Knowledge Element.
+    - [x]  Do we want to restrict display of non-approved tags when viewing Knowledge Elements?
 
 Bug when I tried to edit a Knowledge Element from the search? 
 

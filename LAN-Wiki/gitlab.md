@@ -9,37 +9,37 @@ First, choose a directory where the service will reside in. I recommend `/opt/gi
 
 ```
 docker-compose.yml
-```
 
-```
+
+
 version: '3'
-```
 
-```
+
+
 services:
-```
 
-```
+
+
 gitlab-runner:
-```
 
-```
+
+
 image: 'gitlab/gitlab-runner:latest'
-```
 
-```
+
+
 volumes:
-```
 
-```
+
+
  - /var/run/docker.sock:/var/run/docker.sock
-```
 
-```
+
+
  - ./config:/etc/gitlab-runner
-```
 
-```
+
+
 restart: unless-stopped
 ```
 

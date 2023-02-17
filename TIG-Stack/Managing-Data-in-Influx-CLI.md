@@ -10,6 +10,4 @@ So specific to the PVE database:
 `> use pve 
 DROP SERIES FROM "weather" WHERE "city" = 'Amarillo'`
 
-pulled from: 
-
-[](https://community.influxdata.com/t/commad-to-delete-a-particular-series-from-influxdb/5600/3)
+pulled from: [here](https://community.influxdata.com/t/commad-to-delete-a-particular-series-from-influxdb/5600/3)

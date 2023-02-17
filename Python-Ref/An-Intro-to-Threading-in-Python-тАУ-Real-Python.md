@@ -3,7 +3,7 @@
 Created: April 21, 2021 10:54 PM
 URL: https://realpython.com/intro-to-python-threading/
 
-![An%20Intro%20to%20Threading%20in%20Python%20%E2%80%93%20Real%20Python%204dca53deb86145949e87c60f942064aa/Intro-to-Threading_Watermarked.95b143d3ba6c.jpg](An%20Intro%20to%20Threading%20in%20Python%20%E2%80%93%20Real%20Python%204dca53deb86145949e87c60f942064aa/Intro-to-Threading_Watermarked.95b143d3ba6c.jpg)
+![./An%20Intro%20to%20Threading%20in%20Python%20%E2%80%93%20Real%20Python%204dca53deb86145949e87c60f942064aa/Intro-to-Threading_Watermarked.95b143d3ba6c.jpg](An%20Intro%20to%20Threading%20in%20Python%20%E2%80%93%20Real%20Python%204dca53deb86145949e87c60f942064aa/Intro-to-Threading_Watermarked.95b143d3ba6c.jpg)
 
 Table of Contents
 
