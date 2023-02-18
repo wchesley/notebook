@@ -62,3 +62,7 @@ English shored up the populus by encouraging social rebels, religiouse dissenter
 Biggest payoff for colonist was the offering of land and promise of a better life.  
 
 ### Virginia 
+
+<blockquote>
+Glory, God and Gold and the Virginia Company<br> <sub>~ Jamestown settlers. . .probably</sub>
+</blockquote>
