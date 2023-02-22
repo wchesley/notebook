@@ -19,3 +19,19 @@ I care just a smidgen more about loosing game progress, game servers are backed 
 - Run every day BUT Saturday at 3:30am
 - Email notifications are only on failure
 - Included LXC's are Valheim and Minecraft 
+
+# PBS Proxmox Backup Server
+Free 150gb cloud hosted option from tuxis.nl
+I've created your Proxmox Backup Server account. Please see the details below:
+
+Host: pbs001.tuxis.nl
+User: DB1476
+Realm: pbs
+Datastore: DB1476_chesley-PBS
+
+Your PBS Password: alreadyChanged (Please change it ASAP!)
+
+Login to https://pbs001.tuxis.nl:8007/ to check your pruning and verification settings.
+If you have any questions please let us know.
+
+grabbed this soley to back up gitlab instance elsewhere. almost lost that vm and would have lost a lot with it (this included)
