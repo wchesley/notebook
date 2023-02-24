@@ -65,6 +65,7 @@ Now you can spin up instances with your new template.
 Pulled together from two related posts from austinsnerdythings.com
 - [how-to-create-a-proxmox-ubuntu-cloud-init-image](https://austinsnerdythings.com/2021/08/30/how-to-create-a-proxmox-ubuntu-cloud-init-image/)
 - [how-to-deploy-vms-in-proxmox-with-terraform](https://austinsnerdythings.com/2021/09/01/how-to-deploy-vms-in-proxmox-with-terraform/)
+- [Terraform Proxmox Provider](https://github.com/Telmate/terraform-provider-proxmox)
 
 ## Overview
 * make sure libguestfs-tools are installed on proxmox server: 
@@ -94,3 +95,4 @@ echo "you also still need to copy ssh keys to the newly cloned VM"
 ```
 
 So far process leaves me with broken network, had to set netplan by hand. need to find a way to automate disk resizing, ansible maybe? oh, and had to reset root password from cloud init file...
+Fixed network, had a line in there that ignored network changes just before setting the IP address...removed that line and network works...also, changing disk type (in template for now, from web GUI) to virtio SCSI Single, automagically expanded the disk for me upon vm creation with terraform. 
