@@ -18,6 +18,7 @@ Process per my hand written notes:
 2. Power up VM 
 	1. in VM console run: `sudo fdisk -l` to verify VM see's new space
 3. Run `sudo parted`
+   1. `parted` detect that you're not using all the space available and offers to fix/ignore, I chose fix then proceeded with step 4, the `print` command wasn't necessary as telling `parted` to fix it showed the partitions. step 5 & 6 weren't necessary in this case. 	
 4. From parted shell: 
 	1. `(parted) print` -> lists partitions and their sizes (in bytes I think) root partition is typically #3 
 	2. `(parted) resizepart 3 100%` Tell partition 3 to use all available space

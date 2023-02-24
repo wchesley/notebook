@@ -60,3 +60,37 @@ Powering off dumps you right back into the host cli, where you run:
 root@gold:~# mv FILENAME.tar.gz /mnt/pve/gluster/template/cache/centos-7-ssh-20180908.tar.gz`
 
 Now you can spin up instances with your new template.
+
+# Automatically create templates (Terraform)
+Pulled together from two related posts from austinsnerdythings.com
+- [how-to-create-a-proxmox-ubuntu-cloud-init-image](https://austinsnerdythings.com/2021/08/30/how-to-create-a-proxmox-ubuntu-cloud-init-image/)
+- [how-to-deploy-vms-in-proxmox-with-terraform](https://austinsnerdythings.com/2021/09/01/how-to-deploy-vms-in-proxmox-with-terraform/)
+
+## Overview
+* make sure libguestfs-tools are installed on proxmox server: 
+  * `sudo apt update -y && sudo apt install libguestfs-tools -y`
+* Cloud images are pulled from https://cloud-images.ubuntu.com/
+  * ie `wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img`
+* with guestFS tools installed we can install packages to the image directly: 
+  * `sudo virt-customize -a focal-server-cloudimg-amd64.img --install qemu-guest-agent`
+  * or run commands: `sudo virt-customize -a focal-server-cloudimg-amd64.img --run-command 'useradd austin'`
+* Tie it all together in a nice bash script: 
+```bash
+# remove existing image in case last execution did not complete successfully
+rm focal-server-cloudimg-amd64.img
+wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+sudo virt-customize -a focal-server-cloudimg-amd64.img --install qemu-guest-agent
+sudo qm create 9000 --name "ubuntu-2004-cloudinit-template" --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
+sudo qm importdisk 9000 focal-server-cloudimg-amd64.img local-zfs
+sudo qm set 9000 --scsihw virtio-scsi-pci --scsi0 local-zfs:vm-9000-disk-0
+sudo qm set 9000 --boot c --bootdisk scsi0
+sudo qm set 9000 --ide2 local-zfs:cloudinit
+sudo qm set 9000 --serial0 socket --vga serial0
+sudo qm set 9000 --agent enabled=1
+sudo qm template 9000
+rm focal-server-cloudimg-amd64.img
+echo "next up, clone VM, then expand the disk"
+echo "you also still need to copy ssh keys to the newly cloned VM"
+```
+
+So far process leaves me with broken network, had to set netplan by hand. need to find a way to automate disk resizing, ansible maybe? oh, and had to reset root password from cloud init file...
