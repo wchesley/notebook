@@ -2,6 +2,19 @@
 
 Frequently used commands; dirty tips and tricks from stuff around the net I've needed at one point. 
 
+## Change default shell of Ubuntu: 
+
+* [pulled from stackoverflow](https://superuser.com/questions/46748/how-do-i-make-bash-my-default-shell-on-ubuntu)
+
+Use:
+
+    chsh
+
+Enter your password and state the path to the shell you want to use.
+
+For Bash that would be /bin/bash. For Zsh that would be /usr/bin/zsh.
+
+
 ## Get Process ID (PID) of shell script
 ```bash
 process_id=`/bin/ps -fu $USER| grep "ABCD" | grep -v "grep" | awk '{print $2}'`
