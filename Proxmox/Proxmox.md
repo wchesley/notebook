@@ -16,4 +16,8 @@ Free and Open Source Hypervisor. https://www.proxmox.com/en/proxmox-ve
 - [Resize Disk](./resize_disk.md)
 
 
-
+Make sure to add the community pve repo and get rid of the enterprise repo (you can skip this step if you have a valid enterprise subscription)
+```bash
+echo "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc/apt/sources.list
+rm /etc/apt/sources.list.d/pve-enterprise.list
+```
