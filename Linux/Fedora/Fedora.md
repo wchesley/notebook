@@ -5,6 +5,15 @@ Currently have my Laptop and Winston's PC on Fedora 36 & 35 respectively
 - [Upgrade Fedora to next Major Version](./Upgrade_Fedora_Release.md)
 - 
 
+## Add users to "sudo" group
+For RHEL distro's, the "sudo" group is different than Debian, it's called wheel here. 
+
+`sudo usermod -aG wheel <username>`
+
+remove sudo access to a user: 
+
+`sudo gpasswd -d senthil wheel`
+
 ## Discord install
 Method 1: Installing Discord via RPM Fusion Repository
 
