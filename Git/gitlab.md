@@ -14,8 +14,11 @@
 ## Runner over SSH
 
 - [pulled from stackoverflow](https://stackoverflow.com/questions/39208420/how-do-i-enable-cloning-over-ssh-for-a-gitlab-runner)
+  - TLDR sign in using SSH key to git@code.chesleyfamily.com before pulling/pusing over SSH. A simple `ssh -i ~/.ssh/id_rsa git@code.chesleyfamily.com` after adding SSH key to your account will suffice. `id_rsa` is the default key, your name could be different depending on how keys were generated.
 
 ### option 1: 
+
+> So far option 1 has been working well, I haven't even attempted option 2 yet.
 
 I had a similar problem that necessitated the use of cloning via ssh: using the virtualbox executor with very old guest linux OSes. I was able to get around it by doing a few small configuration changes:
 
