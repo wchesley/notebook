@@ -13,6 +13,12 @@ thin provision
 
 annnnndddd I just fixed it....was the portal, I had it backwards in my head, portal should have been host IP address instead of PVE nodes ip addresses. 
 
+## Removing Orphaned disks
+
+So, in the setup/testing process, I ended up with a lot of extra disks for vm 112 that I couldn't delete from GUI, first it complained about VM 112 existing. It was for testing so I deleted it. And I was still unable to remove the disk as GUI complained it didn't exist...yet I see it in the GUI and on iscsi host...Couldn't find disks on PVE host, but could see them with `pvesm scan iscsi <portal_ip_address>`. 
+
+Ended up SSHing into `portal` and ran `zfs list tank` which showed the orphaned VM disks that proxmox saw. I was able to remove them without issue with `zfs destroy /tank/vm-112-disk0`
+
 # My setup for ZFS over ISCSI
 
 2x300gb 10krpm SAS drives in zfs stripe - This is a testing ground, idgaf about data here. For Production, I'd use 4 drives in a striped mirror. Enabled lz4 compression and deduplication for this pool.
