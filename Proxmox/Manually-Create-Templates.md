@@ -75,24 +75,53 @@ Pulled together from two related posts from austinsnerdythings.com
 * with guestFS tools installed we can install packages to the image directly: 
   * `sudo virt-customize -a focal-server-cloudimg-amd64.img --install qemu-guest-agent`
   * or run commands: `sudo virt-customize -a focal-server-cloudimg-amd64.img --run-command 'useradd austin'`
-* Tie it all together in a nice bash script: 
+* Tie it all together in a nice bash script: <br><sub>Current script as of 03/02/2023</sub>
 ```bash
-# remove existing image in case last execution did not complete successfully
-rm focal-server-cloudimg-amd64.img
-wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
-sudo virt-customize -a focal-server-cloudimg-amd64.img --install qemu-guest-agent
-sudo qm create 9000 --name "ubuntu-2004-cloudinit-template" --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
-sudo qm importdisk 9000 focal-server-cloudimg-amd64.img local-zfs
-sudo qm set 9000 --scsihw virtio-scsi-pci --scsi0 local-zfs:vm-9000-disk-0
-sudo qm set 9000 --boot c --bootdisk scsi0
-sudo qm set 9000 --ide2 local-zfs:cloudinit
-sudo qm set 9000 --serial0 socket --vga serial0
-sudo qm set 9000 --agent enabled=1
-sudo qm template 9000
-rm focal-server-cloudimg-amd64.img
-echo "next up, clone VM, then expand the disk"
-echo "you also still need to copy ssh keys to the newly cloned VM"
+#!/bin/bash
+#cd "$(dirname "$0")"
+WEBHOOK_URL="https://discord.com/api/webhooks/1080958430103224430/Bspnp_rcrZRbmlEfBoqf4LJGpG639ZFaXAaDZ_KKKECoYJefJp9uaGtc1GUQnqJzAebd"
+#CURRENTDATE=`date +"%Y-%m-%d %T"`
+CURRENTDATE()
+{
+ date +"%Y-%m-%d %T"
+}
+cd "$(dirname ${BASH_SOURCE[0]})"
+echo "Working out of: ${PWD}"
+## Download weekly image: 
+# Remove old image: 
+/usr/bin/curl -H "Content-Type: application/json" -d '{"username":"Weekly Ubuntu Image Maker", "content":"Starting setup of new weekly image, time: '"${CURRENTDATE}"'"}' $WEBHOOK_URL
+rm jammy-server-cloudimg-amd64.img
+# Remove old template:
+qm destroy 9000
+echo "old image and template removed, fetching new one"
+wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+/usr/bin/curl -H "Content-Type: application/json" -d '{"username":"Weekly Ubuntu Image Maker", "content":"New Image Downloaded. Starting setup, time: '"${CURRENTDATE}"'"}' $WEBHOOK_URL
+## Cloud-init:
+virt-customize -a jammy-server-cloudimg-amd64.img --install qemu-guest-agent
+# Ansible setup: 
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'useradd ansible'
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'mkdir -p /home/ansible/.ssh'
+virt-customize -a jammy-server-cloudimg-amd64.img --ssh-inject ansible:file:/root/.ssh/id_rsa.pub
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'chown -R ansible:ansible /home/ansible'
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'usermod -aG sudo ansible'
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'useradd wchesley'
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'mkdir -p /home/wchesley'
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'usermod -aG sudo wchesley'
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'chow -R wchesley:wchesley /home/wchesley'
+virt-customize -a jammy-server-cloudimg-amd64.img --run-command 'ufw allow from 192.168.0.0/24 to any port 22'
+## Create VM: 
+/usr/bin/curl -H "Content-Type: application/json" -d '{"username":"Weekly Ubuntu Image Maker", "content":"Setup complete creating VM and teplating, time: '"${CURRENTDATE}"'"}' $WEBHOOK_URL
+qm create 9000 --name "ubuntu-gold-weekly" --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0,firewall=1
+qm importdisk 9000 jammy-server-cloudimg-amd64.img local-lvm
+qm set 9000 --scsihw virtio-scsi-single --scsi0 local-lvm:vm-9000-disk-0
+qm set 9000 --boot c --bootdisk scsi0
+qm set 9000 --ide2 local-lvm:cloudinit
+qm set 9000 --agent enabled=1
+qm template 9000
+echo "now, clone the template and expand the disk"
+/usr/bin/curl -H "Content-Type: application/json" -d '{"username":"Weekly Ubuntu Image Maker", "content":"Templating complete, new image is ready, time: '"${CURRENTDATE}"'"}' $WEBHOOK_URL
 ```
 
-So far process leaves me with broken network, had to set netplan by hand. need to find a way to automate disk resizing, ansible maybe? oh, and had to reset root password from cloud init file...
-Fixed network, had a line in there that ignored network changes just before setting the IP address...removed that line and network works...also, changing disk type (in template for now, from web GUI) to virtio SCSI Single, automagically expanded the disk for me upon vm creation with terraform. 
+* ~~So far process leaves me with broken network, had to set netplan by hand. need to find a way to automate disk resizing, ansible maybe? oh, and had to reset root password from cloud init file...~~
+* Fixed network, had a line in there that ignored network changes just before setting the IP address...removed that line and network works...also, changing disk type (in template for now, from web GUI) to virtio SCSI Single, automagically expanded the disk for me upon vm creation with terraform. 
+* Added Alerts to discord with scripts progress and a `CURRENTDATE` function. 
