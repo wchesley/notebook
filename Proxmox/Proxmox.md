@@ -21,3 +21,10 @@ Make sure to add the community pve repo and get rid of the enterprise repo (you 
 echo "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc/apt/sources.list
 rm /etc/apt/sources.list.d/pve-enterprise.list
 ```
+
+## Kill stuck VM or LXC
+Sometimes VMs or LXC's get stuck, mostly I can kill them with stop, but sometimes I forget and do shutdown instead. This hangs forever, stopping times out because it can't get the lock on the VM.  
+* Find the VM by it's ID
+  * `ps aux | grep "/usr/bin/kvm -id VMID"`
+* Once we find the PID we kill the process using the command.
+  * `kill -9 PID`
