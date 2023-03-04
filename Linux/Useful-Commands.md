@@ -60,3 +60,34 @@ then if it does what you want, change the `-print` to `-delete`:
     find . -depth -name "*.txt" -delete
 
 (`-delete` implies `-depth`, we're still adding it as a reminder as recommended by the GNU find manual).
+
+## Symlinks
+Run man ln  in your terminal and you should see the man pages for the ln command.
+```bash
+LN(1)                     BSD General Commands Manual                    LN(1)
+
+NAME
+     link, ln -- make links
+
+SYNOPSIS
+     ln [-Ffhinsv] source_file [target_file]
+     ln [-Ffhinsv] source_file ... target_dir
+     link source_file target_file
+
+DESCRIPTION
+     The ln utility creates a new directory entry (linked file) which has the same modes as the original file.  It is
+     useful for maintaining multiple copies of a file in many places at once without using up storage for the
+     ``copies''; instead, a link ``points'' to the original copy.  There are two types of links; hard links and sym-
+     bolic links.  How a link ``points'' to a file is one of the differences between a hard and symbolic link.
+
+     The options are as follows:
+
+     -F    If the target file already exists and is a directory, then remove it so that the link may occur.  The -F
+           option should be used with either -f or -i options.  If none is specified, -f is implied.  The -F option
+           is a no-op unless -s option is specified.
+
+     -h    If the target_file or target_dir is a symbolic link, do not follow it.  This is most useful with the -f
+           option, to replace a symlink which may point to a directory.
+
+     -f    If the target file already exists, then unlink it so that the link may occur.  (The -f option overrides...
+```
