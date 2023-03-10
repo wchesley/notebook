@@ -3,7 +3,7 @@
 - [ZFS Send/Receive](/ZFS/ZFS-send-receive)
 - [ZFS Migration Plan](/ZFS/ZFS-migration-plan)
 
-~~My setup was largely configured according to recommendations from Aaron Toponce's blog series on [ZFS Administration](https://pthree.org/2012/12/04/zfs-administration-part-i-vdevs/)~~ Moved over to using openzfs documentation instead, Aaron's article is great, but dated. 
+~~My setup was largely configured according to recommendations from Aaron Toponce's blog series on [ZFS Administration](https://pthree.org/2012/12/04/zfs-administration-part-i-vdevs/)~~ Moved over to using openzfs documentation instead, Aaron's article is great, but dated, written in 2012. Though openZFS docs are still very similar to Aaron Toponce's writings.  
 
 ## Current configuration
 - ~~2x2Tb Hdd's (WD and Hitachi) as ZFS Mirror~~
