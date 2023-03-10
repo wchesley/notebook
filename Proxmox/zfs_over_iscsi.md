@@ -23,6 +23,8 @@ Ended up SSHing into `portal` and ran `zfs list tank` which showed the orphaned 
 
 2x300gb 10krpm SAS drives in zfs stripe - This is a testing ground, idgaf about data here. For Production, I'd use 4 drives in a striped mirror. Enabled lz4 compression and deduplication for this pool.
 
+2x1Tb Crucial MX500 SSD's in zfs mirror. More production ready iscsi target. Enabled lz4 compression and deduplication for this pool.
+
 - [although a guide for freenas, this was immensely helpful](https://forum.proxmox.com/threads/iscsi-failed-to-connect-to-lun-iscsi_service-failed.82179/)
 - [Most excellent guide, auf deutch](https://deepdoc.at/dokuwiki/doku.php?id=virtualisierung:proxmox_kvm_und_lxc:proxmox_debian_als_zfs-over-iscsi_server_verwenden)
 - [another stackoverflow link iscsiadm cannot make connection to...connection refused](https://stackoverflow.com/questions/42096147/iscsiadm-cannot-make-connection-to-connection-refused)
@@ -54,7 +56,8 @@ o- / ...........................................................................
   ```
 
 - cd into iscsi `cd ./iscsi`
-- create one with `create` creates an iscsi target with default name. 
+- create one with `create` creates an iscsi target with default name.
+- create target portal group, ie `tpg1` 
 - create an initiator `create <initiatorname>` The `<initiatorname>` is the name we grabbed from `/etc/iscsi/initiatorname.iscsi`
 - cd from `tpg1`, cd into `portals`
 - accept the default of `0.0.0.0:3260` or set the IP address of your server. 
@@ -78,6 +81,45 @@ zfs: iscsi-zfs
 and from PVE GUI:  
 
 ![zfsOverISCSIimage](../iscsi-over-zfs.png)
+
+iscsi targetcli completed setup:
+```bash
+/> ls
+o- / ................................................................................................... [...]
+  o- backstores ........................................................................................ [...]
+  | o- block ............................................................................ [Storage Objects: 2]
+  | | o- tank-vm-102-disk-0 ........................ [/dev/tank/vm-102-disk-0 (100.0GiB) write-thru activated]
+  | | | o- alua ............................................................................. [ALUA Groups: 1]
+  | | |   o- default_tg_pt_gp ................................................. [ALUA state: Active/optimized]
+  | | o- tank-vm-113-disk-0 ......................... [/dev/tank/vm-113-disk-0 (32.0GiB) write-thru activated]
+  | |   o- alua ............................................................................. [ALUA Groups: 1]
+  | |     o- default_tg_pt_gp ................................................. [ALUA state: Active/optimized]
+  | o- fileio ........................................................................... [Storage Objects: 0]
+  | o- pscsi ............................................................................ [Storage Objects: 0]
+  | o- ramdisk .......................................................................... [Storage Objects: 0]
+  o- iscsi ...................................................................................... [Targets: 1]
+  | o- iqn.2003-01.org.linux-iscsi.heimdall.x8664:sn.f461fed3663d .................................. [TPGs: 1]
+  |   o- tpg1 ......................................................................... [no-gen-acls, no-auth]
+  |     o- acls .................................................................................... [ACLs: 2]
+  |     | o- iqn.1993-08.org.debian:01:1acae2a35ba7 ......................................... [Mapped LUNs: 2]
+  |     | | o- mapped_lun0 .............................................. [lun0 block/tank-vm-113-disk-0 (rw)]
+  |     | | o- mapped_lun1 .............................................. [lun1 block/tank-vm-102-disk-0 (rw)]
+  |     | o- iqn.1993-08.org.debian:01:e79cf44cb13c ......................................... [Mapped LUNs: 2]
+  |     |   o- mapped_lun0 .............................................. [lun0 block/tank-vm-113-disk-0 (rw)]
+  |     |   o- mapped_lun1 .............................................. [lun1 block/tank-vm-102-disk-0 (rw)]
+  |     o- luns .................................................................................... [LUNs: 2]
+  |     | o- lun0 .................... [block/tank-vm-113-disk-0 (/dev/tank/vm-113-disk-0) (default_tg_pt_gp)]
+  |     | o- lun1 .................... [block/tank-vm-102-disk-0 (/dev/tank/vm-102-disk-0) (default_tg_pt_gp)]
+  |     o- portals .............................................................................. [Portals: 3]
+  |       o- 192.168.0.112:3260 ......................................................................... [OK]
+  |       o- 192.168.0.118:3260 ......................................................................... [OK]
+  |       o- 192.168.0.12:3260 .......................................................................... [OK]
+  o- loopback ................................................................................... [Targets: 0]
+  o- vhost ...................................................................................... [Targets: 0]
+/> exit
+```
+## Adding new pools/drives
+This was as simple as installing the drives, setting up the zpool, then adding new zfs over iscsi storage in proxmox GUI. Used same target name as original setup. 
 
 From the [docs](https://pve.proxmox.com/pve-docs/pve-admin-guide.html#storage_zfs)
 ## 7.18. ZFS over ISCSI Backend
