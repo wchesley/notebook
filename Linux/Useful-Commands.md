@@ -2,6 +2,14 @@
 
 Frequently used commands; dirty tips and tricks from stuff around the net I've needed at one point. 
 
+## Copy files from remote server to localhost
+[ref stackexchange](https://unix.stackexchange.com/questions/188285/how-to-copy-a-file-from-a-remote-server-to-a-local-machine)
+```bash
+scp username@ipaddress:pathtofile localsystempath
+
+scp sadananad@ipaddress:/home/demo/public_html/myproject.tar.gz .
+```
+
 ## Change default shell of Ubuntu: 
 
 * [pulled from stackoverflow](https://superuser.com/questions/46748/how-do-i-make-bash-my-default-shell-on-ubuntu)
