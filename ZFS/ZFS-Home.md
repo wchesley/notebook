@@ -17,6 +17,11 @@ Ran into a curious issue that is, I suspect, a result of the forced import of th
 
 One of those articles, think it was the first github issue, mentioned that WD drives weren't as good in ZFS? I've been using one for years in the OG pool, didn't have an issue till the resilver AND it was the WD drive that was having the issues during the resilver. Not directly an issue? But something to consider. Should probably change out the WD drive before any other one.
 
+## Move pool mountpoint
+* [stack exchange](https://unix.stackexchange.com/questions/311590/how-do-i-change-the-mount-point-for-a-zfs-pool)
+
+`zfs set mountpoint=/mynewfolder mypool`
+
 ## Adding Disks by ID: 
 * Lists disks with `ls -l /dev/disk/by-id/
 * List from heimdall as of 3/9/2023:
