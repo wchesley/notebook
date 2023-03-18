@@ -1,14 +1,14 @@
 # Nextcloud Debug via ADB
 First things first make sure adb is installed. I have a backup of the installer on /Nextpool/Projects/Walker/Personal/Installers/platform-tools_r31.03-windows.zip
-Locally (windows desktop) it's not on $PATH but in C:\Users\Walker\Documents\Platform-tools
-To use outside of $PATH, navigate to the directory where the adb.exe is stored and launch it via `./adb.exe`
+Locally (windows desktop) it's not on $PATH but in `C:\Users\Walker\Documents\Platform-tools`
+To use outside of `$PATH`, navigate to the directory where the adb.exe is stored and launch it via `./adb.exe`
 To get a new copy of adb, download it from [google](https://developer.android.com/studio/releases/platform-tools)
 [adb documentation](https://developer.android.com/studio/command-line/adb)
 adb can be installed without installing Android Studio 
 
 ## Nextcloud specific Debugging
-####### Copied from [here](https://github.com/nextcloud/android)
-### [](https://github.com/nextcloud/android#getting-debug-info-via-logcat-mag)Getting debug info via logcat 🔍
+##### Copied from [here](https://github.com/nextcloud/android)
+### [Getting debug info via logcat](https://github.com/nextcloud/android#getting-debug-info-via-logcat-mag)
 
 #### [](https://github.com/nextcloud/android#with-a-linux-computer)
 
@@ -31,7 +31,7 @@ adb can be installed without installing Android Studio
 -   `adb logcat | findstr <processID> > %HOMEPATH%\Downloads\logcatOutput.txt` (This will produce a logcatOutput.txt file in your downloads)
 -   if the processID is 18841, an example command is: `adb logcat | findstr 18841 > %HOMEPATH%\Downloads\logcatOutput.txt` (You might cancel the process after a while manually: it will not be exited automatically.)
 
-#### [](https://github.com/nextcloud/android#on-a-device-with-root-wrench)
+#### [Rooted Android](https://github.com/nextcloud/android#on-a-device-with-root-wrench)
 
 #### On a device (with root) 🔧
 
