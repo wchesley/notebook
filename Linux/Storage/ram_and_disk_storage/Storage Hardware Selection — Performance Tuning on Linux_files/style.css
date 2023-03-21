@@ -1,0 +1,393 @@
+/* Changes in original theme are limited to validation.
+	My customizations are here, loaded after bootstrap.css.
+	Note: there is no longer col-xs.
+	@media sizes:	column:   ad min sizes:
+	     -  767 sm      - 63
+	 768 -  991 md	 64 - 82  300 >= col-md-5	336 >= col-md-6
+	 992 - 1199 lg	 83 - 99  300 >= col-lg-4	336 >= col-lg-4
+	1200 -      xl	100 -     300 >= col-xl-3	336 >= col-xl=4
+		 viewport   width
+	banner:      - 499  320px
+		 500 - 767  468px
+		 768 -      768px
+	rectangle:   - 805  300px
+		 806 -      336px
+	sky:	     - 399  120px
+		 400 - 999  160px
+		1000 -      320px
+
+	ad sizes: https://support.google.com/adsense/answer/6002621?hl=en
+	*/
+
+/*%%% Could serve my own font file, help with Google pagespeed:
+	src: local('Droid Sans'), local('DroidSans'), url(https://cromwell-intl.com/fonts/DroidSans.ttf) format('truetype');
+ Download that with wget, turn into code. %%%*/
+/* @import lines must come before everything else */
+/* @import "https://fonts.googleapis.com/css?family=Droid+Sans"; */
+@import "https://fonts.googleapis.com/css?family=Hammersmith+One&display=swap";
+@import "https://fonts.googleapis.com/css?family=Cantarell&display=swap";
+/* "Comic Neue"  is a free Google Font similar to Comic Sans.
+   I'll use it for p.caption as it's just a 42 kB download and
+   fonts are cached for a month. */
+@import "https://fonts.googleapis.com/css?family=Comic+Neue&display=swap";
+@font-face {
+	font-family: 'Droid Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Cantarell';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+}
+
+body {	background: #f5edc4;
+	color: #420d0c;
+	/* colors: https://en.wikipedia.org/wiki/Traditional_colors_of_Japan */
+	/* old: background:#e6e6fa; color:#000000; bordered bg: #d6d6ff; */
+	padding-top:0; margin-top:0;
+	font-family: 'Droid Sans', Helvetica, Arial, sans-serif;
+	width:100%; margin:auto;
+}
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+	font-family: 'Hammersmith One', 'Droid Sans', Helvetica, Arial, sans-serif;
+	color:#420d0c;
+	max-width:660pt;
+	margin:auto;
+}
+.container-fluid { width:100%; margin:auto; }
+.greyed { color: #585; background: #eee; }
+.grayed { color: #585; background: #eee; }
+pre,code{font-family:Courier,monospace;text-align:left;}
+code{font-size:0.95rem;}
+p>code{color:#622d2c;background:#f0e6b6;padding-left:3px;padding-right:3px;}
+p.caption>code{color:#622d2c;background:#c0c0c0;padding-left:3px;padding-right:3px;}
+li>code{color:#622d2c;background:#f0e6b6;padding-left:3px;padding-right:3px;}
+.highlighter>code{background:yellow;}
+pre {
+	font-size:0.90rem;
+	color:#420d0c;
+	display:block;
+	overflow:auto;
+	word-wrap:normal;
+	white-space:pre;
+	margin-top:1rem;
+	margin-bottom:0.5rem;
+	background:#fdf3cc;
+	border: 1px solid #666;
+	border-radius:0.5rem;
+	padding:0.5rem;
+}
+@media print {
+	h1,header h1,h2,h3,h4,h5,h6{color:#000;}
+	a,a:visited{color:#888;background:#eee;border-bottom:1px dotted #bbb;}
+	/* Omit ads in print version */
+	.adsbygoogle{display:none !important;}
+	/* "img class=noprint" = "don't print this" */
+	img.noprint{display:none !important;}
+	table{break-inside:avoid-page;}
+	body{width:1220px !important;}
+}
+
+/* "overflow: auto;" corrects behavior for lists to right of fl.
+   Smaller padding-left aligns better. */
+ul,ol{overflow:auto;padding-left:2rem;}
+.navbar ul{overflow:visible;}
+
+/* Images always in front (visible) and responsive */
+img{z-index:100;position:relative;height:auto;max-width:100%;}
+div{max-width:100%;}
+
+/* Enforce minimum paragraph & header width. */
+p:before{content:"";width:9rem;display:block;overflow:hidden;}
+@media(min-width:767px){p:before{content:"";width:11rem;display:block;overflow:hidden;}}
+p{padding-top:0.7rem;padding-bottom:0.4rem;}
+h1:before,h2:before,h3:before,h4:before,h5:before,h6:before{
+	content:"";width:6rem;display:block;overflow:hidden;}
+h1{padding-top:0.8rem;}
+h2,h3,h4,h5,h6 { padding-top: 1.0rem; margin-top: 0.5rem; }
+/* Original: 2.5, 2, 1.75, 1.5, 1.25, 1
+   Too large for "cybersecurity" in h2 on phone */
+@media(max-width:767px){
+	h1,.h1{font-size:2rem;}
+	h2,.h2{font-size:1.5rem;}
+	h3,.h3{font-size:1.4rem;}
+	h4,.h4{font-size:1.3rem;}
+	h5,.h5{font-size:1.2rem;}
+	h6,.h6{font-size:1.1rem;}
+}
+/* Enforce max paragraph width for readability */
+p{max-width:55rem;}
+ul,ol{max-width:50rem;}
+p,ul,ol{margin:auto;}
+/* had display:block; */
+table{max-width:60rem;margin:auto;overflow:auto;break-inside:avoid-page;}
+/* to make a table auto-scroll: <div class="scrolled"><table></table></div> */
+div.scrolled{display:block;overflow:auto;margin:auto;}
+pre{max-width:50rem;margin:auto;}
+/* Space at the start of a new section */
+section{margin-bottom:1rem;}
+
+/* Table defaults -- this is like the old cellspacing="0" */
+table{border-collapse:collapse;border-spacing:0;text-align:left;margin-bottom:5px;}
+td{vertical-align:top;padding:5px;}
+
+/* Table-like displays, div and nav */
+.tabled{display:table;max-width:50rem;margin:auto;padding:10px;}
+
+header, .header {
+	/** background:#eadfa8; **/
+	background:#4b574d;
+	color:#fdd262;
+	width:100%;
+	text-align:center;
+	/* Order: top, right, bottom, left */
+	padding:0;
+	margin:0px 0px 5px 0px;
+}
+/* On mobile: Do not display Google top banner.  Don't need to
+   leave space at top for Infolinks ad, it bumps content down.*/
+@media(max-width:767px){
+	.top-banner{display:none !important;}
+}
+
+
+header h1,header h2 {
+	margin:4px auto;
+	padding:2px;
+	color:#fdd262;
+	/*%%%
+	max-width:728px;
+	%%%*/
+}
+.header h1, .header h2{color:#fdd262;}
+header img {border:1px solid black;}
+
+.centered{text-align:center;}
+
+.bordered{background:#eadfa8;}
+.bordered,.canvased,.paper,table.bordered td{border:1px solid black !important;}
+p.bordered,p.canvased,p.paper{padding:5px;}
+img.bordered{margin-top:3px;margin-bottom:10px;}
+img.captioned{margin-bottom:0;padding-bottom:0;}
+div.bordered,div.canvased,div.paper,pre.bordered,pre.canvased,pre.paper{
+	z-index:0;position:relative;padding:2px 5px 2px 5px;
+}
+.canvased{background-image:url(/pictures/canvas.png);}
+.paper{background-image:url(/pictures/paper.png);}
+
+p.caption{
+	font-family:"Comic Neue";
+	font-size:0.9rem;
+	z-index:101;position:relative;
+	background:#c0c0c0;
+	padding:1px 2px 1px 2px;
+	margin:0 auto;
+	margin-bottom:5px;
+	text-align:left;
+}
+
+.textleft{text-align:left;}
+.textright{text-align:right;}
+.vmiddle{vertical-align:middle;}
+.vbottom{vertical-align:bottom;}
+.highlighter{background:yellow;}
+.underlined{text-decoration:underline;}
+.strikethrough{text-decoration:line-through;}
+
+/* Frequently used in cybersecurity/attack-analysis */
+.backAFA{background:#a0ffa0;}
+.backCCC{background:#c0c0c0;}
+.backFFC{background:#ffffc0;}
+.backFF0{background:#ffff00;}
+.font8pt{font-size:8pt;}
+.font9pt{font-size:9pt;}
+
+/* Keep text within buttons */
+.btn{white-space:normal;margin-bottom:2px;}
+
+/* Floated buttons are higher than following paragraphs, without this: */
+.btn.fr{margin-top:12px;}
+.btn.fl{margin-top:12px;}
+
+.max40{max-width:40%;}
+.max45{max-width:45%;}
+.max48{max-width:48%;}
+.max50{max-width:50%;}
+/* width >50% prevents flow */
+.fl{float:left;margin-right:1rem;}
+.fr{float:right;margin-left:1rem;}
+.clfl{clear:left;padding-top:10px;float:left;margin-right:1rem;}
+.crfr{clear:right;padding-top:10px;float:right;margin-left:1rem;}
+.cl{clear:left;padding-top:10px;}
+.cr{clear:right;padding-top:10px;}
+.cb{clear:both;padding-top:10px;}
+.cl0{clear:left;}
+.cr0{clear:right;}
+.cb0{clear:both;}
+
+a{color:#3050c0;}
+a:hover{background:#f0b070;}
+a.next{color:#000050;background:#ffe49c;}
+a.next:hover{color:#500000;background:#ffff00;}
+/* for HTML 5 on old browsers */
+header,section,footer,aside,nav,article,figure{display:block;}
+
+/* Google responsive ads */
+/* Ad sizes: https://support.google.com/adsense/answer/6002621?hl=en */
+.top-banner{width:100%;height:90px;margin:auto;}
+.responsive{width:100%;height:310px;padding:0;margin-bottom:10px;}
+@media(min-width:768px){.responsive{width:100%;height:320px;padding:0;margin-bottom:10px;}}
+@media(min-width:976px){.responsive{width:100%;height:250px;margin:auto;padding:0;margin-bottom:10px;}}
+.skyscraper{width:100%;height:310px;padding:0;margin:0 auto 10px auto;}
+@media(min-width:400px){.skyscraper{width:300px;height:605px;margin:0 auto 10px auto;}}
+@media(min-width:1000px){.skyscraper{width:340px;height:720px;margin:0 auto 10px auto;}}
+
+/* Changes to the "spacelab" theme */
+
+@media screen and (min-width:768px) {
+	.jumbotron {
+		padding-top:24px;
+		padding-bottom:24px;
+	}
+	.container .jumbotron {
+		padding-right:30px;
+		padding-left:30px;
+	}
+	.jumbotron h1,
+	.jumbotron .h1 {
+		font-size:50px;
+		margin-top:5px;
+	}
+}
+
+.row { margin:auto; }
+table { font-size: 1.0rem; }
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-top: 1px solid #88bb88;
+}
+
+.featurebox { max-width: 50%; }
+@media (max-width: 767px) {
+	.featurebox { max-width: 100%; }
+	.container { padding: 0; }
+}
+
+/* For 340px Android viewport:
+	Reduce minimum p & h[1-9] width, leftnav* width. */
+@media (max-width: 340px) {
+	p:before{content:"";width:110px;display:block;overflow:hidden;}
+	p{padding-top:1px;}
+	h1:before, h2:before, h3:before, h4:before {
+		content: ""; width: 110px; display: block; overflow: hidden; }
+	h1, h2, h3, h4 { padding-top: 2px; }
+	.navtable { width: 132px; padding: 1px; }
+	.navimg { width: 130px; }
+}
+
+/* No left/right padding for col-12, and little padding for col-1 through
+   col-11, on small displays */
+@media(max-width:767px) {
+ .col-12 {padding-left:0;padding-right:0;}
+ .col-1 {padding-left:5px;padding-right:5px;}
+ .col-2 {padding-left:5px;padding-right:5px;}
+ .col-3 {padding-left:5px;padding-right:5px;}
+ .col-4 {padding-left:5px;padding-right:5px;}
+ .col-5 {padding-left:5px;padding-right:5px;}
+ .col-6 {padding-left:5px;padding-right:5px;}
+ .col-7 {padding-left:5px;padding-right:5px;}
+ .col-8 {padding-left:5px;padding-right:5px;}
+ .col-9 {padding-left:5px;padding-right:5px;}
+ .col-10 {padding-left:5px;padding-right:5px;}
+ .col-11 {padding-left:5px;padding-right:5px;}
+}
+
+.dropdown li { border-bottom: 1px solid #ccc; }
+
+.btn { padding:6px; margin-top:4px; }
+.btn-warning {
+	color: #ffffff;
+	background-color: #c45500;
+	border-color: #c45500;
+}
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active,
+.open .dropdown-toggle.btn-warning {
+	color: #ffffff;
+	background-color: #9b4e00;
+	border-color: #874300;
+}
+.btn-warning,
+.btn-warning:hover {
+	background-image: -webkit-linear-gradient(#ef8c11, #c46500 50%, #b05a00);
+	background-image: linear-gradient(#ef8c11, #c46500 50%, #b05a00);
+	background-repeat: no-repeat;
+	border: 1px solid #914900;
+	/* filter: none; */
+}
+
+/* Add "steam" button type */
+/* original lines 2598-2642 */
+.btn-steam {
+  color: #ffd70f;
+  background-color: #7b4335;
+  border-color: #7b4335;
+}
+
+.btn-steam:hover,
+.btn-steam:focus,
+.btn-steam:active,
+.btn-steam.active,
+.open .dropdown-toggle.btn-steam {
+  color: #ffd70f;
+  background-color: #6b3325;
+  border-color: #6b3325;
+}
+
+.btn-steam:active,
+.btn-steam.active,
+.open .dropdown-toggle.btn-steam {
+  background-image: none;
+}
+
+.btn-steam.disabled,
+.btn-steam[disabled],
+fieldset[disabled] .btn-steam,
+.btn-steam.disabled:hover,
+.btn-steam[disabled]:hover,
+fieldset[disabled] .btn-steam:hover,
+.btn-steam.disabled:focus,
+.btn-steam[disabled]:focus,
+fieldset[disabled] .btn-steam:focus,
+.btn-steam.disabled:active,
+.btn-steam[disabled]:active,
+fieldset[disabled] .btn-steam:active,
+.btn-steam.disabled.active,
+.btn-steam[disabled].active,
+fieldset[disabled] .btn-steam.active {
+  background-color: #7b4335;
+  border-color: #7b4335;
+}
+
+.btn-steam .badge {
+  color: #7b4335;
+  background-color: #ffd70f;
+}
+
+/* original lines 7546-7553 */
+.btn-steam,
+.btn-steam:hover {
+  background-image: -webkit-linear-gradient(#904050, #7b4335 50%, #603020);
+  background-image: linear-gradient(#904050, #7b4335 50%, #603020);
+  background-repeat: no-repeat;
+  border: 1px solid #603020;
+  /* filter: none; */
+}
+

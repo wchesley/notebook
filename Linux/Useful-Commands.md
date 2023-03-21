@@ -2,6 +2,13 @@
 
 Frequently used commands; dirty tips and tricks from stuff around the net I've needed at one point. 
 
+## Copy files from remote server to localhost
+[ref stackexchange](https://unix.stackexchange.com/questions/188285/how-to-copy-a-file-from-a-remote-server-to-a-local-machine)
+```bash
+scp username@ipaddress:pathtofile localsystempath
+
+scp sadananad@ipaddress:/home/demo/public_html/myproject.tar.gz .
+```
 ## Run shell scripts in background: 
 * [ref askubuntu](https://askubuntu.com/questions/88091/how-to-run-a-shell-script-in-background)
 * [Difference between nohup, disown and &](https://unix.stackexchange.com/questions/3886/difference-between-nohup-disown-and)

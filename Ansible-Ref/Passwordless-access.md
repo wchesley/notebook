@@ -64,6 +64,13 @@ At the bottom of the file, I will add the following line.
 admin ALL=(ALL) NOPASSWD:ALL
 ```
 
+Alternatively you can specify root access without password on a per user basis, still editing with visudo: 
+
+```
+username ALL(ALL) NOPASSWD:ALL
+```
+
 The above was adapted and pulled from: 
 
-[Use Passwordless SSH Keys with Ansible to Manage Machine - Learn IT And DevOps Daily](http://www.ntweekly.com/2020/06/14/use-passwordless-ssh-keys-with-ansible-to-manage-machine/)
+* [Use Passwordless SSH Keys with Ansible to Manage Machine - Learn IT And DevOps Daily](http://www.ntweekly.com/2020/06/14/use-passwordless-ssh-keys-with-ansible-to-manage-machine/)
+* [How to run sudo command without a password on a Linux or Unix](https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/)

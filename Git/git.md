@@ -1,6 +1,15 @@
 # Git Reference
 
-Learn X in Y minutes
+### Clone submodules after cloning initial repo: 
+- [ref stackoverflow](https://stackoverflow.com/questions/16773642/pull-git-submodules-after-cloning-project-from-github)
+
+
+From the root of the repo just run:
+
+`git submodule update --init`
+
+
+## Learn X in Y minutes
 [Where X=git](https://learnxinyminutes.com/docs/git/)
 
 Git is a distributed version control and source code management system.
