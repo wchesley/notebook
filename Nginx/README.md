@@ -1,6 +1,7 @@
 # Nginx
 Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. The software was created by Igor Sysoev and publicly released in 2004. Nginx is free and open-source software, released under the terms of the 2-clause BSD license.
 - [open source docs](https://nginx.org/en/docs/)
+- [Ansible playbook to install nginx](https://code.chesleyfamily.com/wchesley/ansible-playbooks)
 
 ## Reverse proxy
 For my lab, Nginx is primarily a [reverse proxy](https://nginx.org/en/docs/http/ngx_http_proxy_module.html), though it's slowly becoming my default webserver as I've been working with it more than apache here recently. An example of one of my locally hosted sites reverse proxy config is as follows: 
