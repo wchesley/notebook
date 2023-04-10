@@ -7,3 +7,7 @@ Landing page for my Ubuntu notes
 
 upgrade without prompting reboot of services: `sudo NEEDRESTART_MODE=a apt-get dist-upgrade --yes` can also edit `/etc/needrestart/needrestart.conf` and change `#$nrconf{restart} = 'i';` (interacive mode) to `$nrconf{restart} = 'a';` (if we want to restart the services automatically)
 - see [askubuntu](https://askubuntu.com/questions/1367139/apt-get-upgrade-auto-restart-services)
+
+## apt-key Depreciation: 
+See: https://opensource.com/article/22/9/deprecated-linux-apt-key
+TODO: Create note page for `apt-key`
