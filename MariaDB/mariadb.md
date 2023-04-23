@@ -32,7 +32,17 @@ The image makes use of a `.env` file in the same directory as the `compose.yml` 
 Link - https://mariadb.com/docs/skysql/ref/es10.5/
 
 ## Shell interface
-Docker only has the root user, use `mysql -p` to get to root mariadb shell. Or specifiy the database user and database it has permission on. `mysql -user=Different_User -p database_name`
+Docker only has the root user, use `mysql -p` to get to root mariadb shell. Or specifiy the database user and database it has permission 
+on. `mysql -user=Different_User -p database_name`
+
+### Common commands: 
+
+- `show databases;`
+  - Lists all databases
+- `SELECT host, user FROM mysql.user;`
+  - Lists all users and their host. 
+- `CREATE user username@hostIPaddress identified by 'your-password'`
+  - Creates new user from specified IP address, authenticated by chosen password, you can also use the password hash rather than plain text.  
 
 ## Backup database (Docker)
 To create a dump of the database you can later restore from, use the following command from the docker host:  
