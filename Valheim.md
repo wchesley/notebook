@@ -1,5 +1,5 @@
 # Valheim & Valheim Plus
-LAN server IP: 192.168.0.55
+LAN server IP: 10.0.0.55
 Port: 2456
 Public IP is dynamic, ByteBot can tell you the IP if you have permission within my discord server. 
 
