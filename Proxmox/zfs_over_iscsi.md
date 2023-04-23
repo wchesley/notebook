@@ -19,6 +19,12 @@ So, in the setup/testing process, I ended up with a lot of extra disks for vm 11
 
 Ended up SSHing into `portal` and ran `zfs list tank` which showed the orphaned VM disks that proxmox saw. I was able to remove them without issue with `zfs destroy /tank/vm-112-disk0`
 
+## Changing IP addresses
+
+Recently migranted LAN to new subnet of 10.0.0.0/16. I updated `storage.cfg` to reflect the new IP's for nfs but iscsi didn't mount up after ip's were changed router and hosts rebooted. After rereading the notes below, I realized I needed to sign into the ISCSI host with the dedicated ssh key (located at `/etc/pve/priv/zfs/`), accept the new host and we should be good to go...but we weren't. 
+
+After reading the timeout error when trying to view the disks on an iscsi mount, I noticed PVE was trying to use an ssh key with the new IP address. I was able to rename the public and private keys in PVE, verified I could still sign in with them and restarted `iscsid.service`. Then I just needed to start the VM's that live on iscsi target and all was well. 
+
 # My setup for ZFS over ISCSI
 
 2x300gb 10krpm SAS drives in zfs stripe - This is a testing ground, idgaf about data here. For Production, I'd use 4 drives in a striped mirror. Enabled lz4 compression and deduplication for this pool.
