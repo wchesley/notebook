@@ -2,20 +2,20 @@
 
 ## Proxmox:
 
-- 192.168.0.12 - Host
+- 10.0.0.12 - Host
 
 [Static IP's](LAN%20-%20IP%20b118b29724f94fc09b11d3c2d663e605/Static%20IP's%20bbf9cdbfc5d74b508328aa9979294329.csv)
 
 ### Services:
 
 - PiHole
-    - 192.168.0.21
+    - 10.0.0.21
     - WebUI: [http://pi.hole/admin](http://pi.hole/admin)
 
     [Overview](https://docs.pi-hole.net/)
 
 - Grafana/InfluxDB
-    - 192.168.0.100
+    - 10.0.0.100
     - Set to monitor on port 8086
         - All telegraf agents should send data here
         - Create a new influx database for each telegraf agent.
@@ -23,14 +23,14 @@
             - While in the shell: `$ create database my-new-database`
             - List all databases: `$ show databases`
     - Grafana on port 3000
-        - [http://192.168.0.100:300](http://192.168.0.100:300)
-        - Alerts are pushed to discord server via: Odin-discord-alerts, goes to server-shit channel. \
+        - [http://10.0.0.100:300](http://10.0.0.100:300)
+        - Alerts are pushed to discord server via: Odin-discord-alerts, goes to server-shit channel. 
 - Minecraft
-    - 192.168.0.55
+    - 10.0.0.55
     - Set up per guide on minecrafts website
         - Working as of 10/15/2021 Both winston and I can join the server, minimal lag 
 - Valheim/ByteBot
-    - 192.168.0.50
+    - 10.0.0.50
     - Valheim built using: [https://gameplay.tips/guides/9765-valheim.html](https://gameplay.tips/guides/9765-valheim.html)
     - Valheim Plus: [https://www.nexusmods.com/valheim/mods/4](https://www.nexusmods.com/valheim/mods/4)
     - Config files are backed up to /home/steam/Valheim_backup
@@ -39,7 +39,7 @@
     - Valheim runs under valheim.service (service file in /home/steam/Valheim directory)
     - ByteBot runs under bytebot.service (service file in /home/steam/ByteBot)
 - Nginx - Proxy
-    - 192.168.0.20
+    - 10.0.0.20
     - Redirects all services to serviceName.chesley.net
     - reverse-proxy.conf must have an entry similar to this for and SSL site:
 
@@ -72,16 +72,16 @@
     ```
 
     - Have to set a DNS record for this in pihole to access via domain name.
-        - point [servicename.chesley.net](http://servicename.chesley.net) to nginx proxy IP
+        - point [servicename.chesley.cc](http://servicename.chesley.cc) to nginx proxy IP
     - Test nginx config changes with: `service nginx configtest`
     - Apply changes with `service nginx reload`
     - Ref this link for how I set up Nginx reverse proxy w/SSL [https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins)
 - Plex
-	- 192.168.0.119
+	- 10.0.0.119
 	- web exposed on port :32400/web/index.html 
-	- supposedly plex is added to apt repo? 
-## ODIN
+	 
+## Heimdall
 
-- 192.168.0.18
+- 10.0.0.118
 - Nextcloud
-- Plex
+- NFS

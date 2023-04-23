@@ -5,6 +5,6 @@
 
 I run with a Canon D1300 image class printer, hosts will need it's driver installed inorder to print with it. There is an ansible playbook setup to handle this that already has the driver with it. 
 
-Printer is at 192.168.0.90
-CUPS Server is at 192.168.0.91:631
+Printer is at 10.0.0.90
+CUPS Server is at 10.0.0.91:631
 * Ubuntu 22.04 LXC hosts the CUPS server. 
