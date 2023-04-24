@@ -121,3 +121,38 @@ Now we need to check if the GPU's Driver initalization is working.
     cd /dev/dri && ls -la
 
 The output should include the `renderD128`
+
+## Jellyfin QSV
+
+Jellyfin wasn't wanting to encode some videos but played others just fine, attempting install of intel video drivers to see if that resolves the issue: 
+
+pulled from: https://www.linuxfordevices.com/tutorials/ubuntu/install-intel-graphic-drivers
+
+Add intel repositories for Ubuntu Jammy: 
+Old method: 
+```bash
+sudo apt install -y gpg-agent wget
+wget -qO - https://repositories.intel.com/graphics/intel-graphics.key |
+  sudo apt-key add -
+sudo apt-add-repository \
+  'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu jammy main'
+```
+For Ubuntu 22.04: 
+
+```bash
+# sudo apt-get install -y gpg-agent wget # if not installed already
+wget -qO - https://repositories.intel.com/graphics/intel-graphics.key | \
+  sudo gpg --dearmor --output /usr/share/keyrings/intel-graphics.gpg
+echo 'deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/graphics/ubuntu jammy arc' | \
+  sudo tee  /etc/apt/sources.list.d/intel.gpu.jammy.list
+```
+Now update `apt` and install graphics package: 
+
+```bash
+sudo apt update
+sudo apt install \
+  intel-opencl-icd \
+  intel-level-zero-gpu level-zero \
+  intel-media-va-driver-non-free libmfx1
+```
+tested 4/23/2023 and still getting errors on HVEC playback. 
