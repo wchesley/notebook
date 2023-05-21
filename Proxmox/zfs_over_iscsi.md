@@ -17,7 +17,9 @@ annnnndddd I just fixed it....was the portal, I had it backwards in my head, por
 
 So, in the setup/testing process, I ended up with a lot of extra disks for vm 112 that I couldn't delete from GUI, first it complained about VM 112 existing. It was for testing so I deleted it. And I was still unable to remove the disk as GUI complained it didn't exist...yet I see it in the GUI and on iscsi host...Couldn't find disks on PVE host, but could see them with `pvesm scan iscsi <portal_ip_address>`. 
 
-Ended up SSHing into `portal` and ran `zfs list tank` which showed the orphaned VM disks that proxmox saw. I was able to remove them without issue with `zfs destroy /tank/vm-112-disk0`
+Ended up SSHing into `portal` and ran `zfs list tank` which showed the orphaned VM disks that proxmox saw. I was able to remove them without issue with `zfs destroy /tank/vm-112-disk0`. 
+
+Ran into an issue later on with a Kali install, rebooted VM and it couldn't see iscsi disks anymore, ended up deleting the VM as it was fresh install anyway. Disk is still showing up, couldn't delete it with the VM, can't remove it from proxmox, can't remove it from ZFS either...first option is going to be reboot of `heimdall`.
 
 ## Changing IP addresses
 
