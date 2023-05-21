@@ -5,6 +5,12 @@ Public IP is dynamic, ByteBot can tell you the IP if you have permission within 
 
 Server files live within Steam user's home directory on server: /home/steam/Valheim
 
+Steam lives in root directory at `~/.steam` 
+
+>Before updating the server, make a backup of the world. Saves are located at `/home/root/.config/unity3d/IronGate/Valheim/worlds`, backup this directory to `/home/steam/Valheim_backup/`. 
+
+Update the server with `steamcmd +login anonymous +force_install_dir /home/steam/Valheim +app_update 896660 +quit`
+
 Bash script to update valheim plus: 
 pseudo code: 
 - check for and download new release of Valheim Plus on github. 
