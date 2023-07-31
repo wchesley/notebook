@@ -12,16 +12,16 @@ From the forum:
 
 1. Install the authentication library:
 
-    `apt-get install libasal2-modules`
+    `apt-get install libsasl2-modules`
 
 2. If Gmail has 2FA enabled, go to [App Passwords](https://security.google.com/settings/security/apppasswords) and generate a new password just for Proxmox
 3. Create a password file:
 
-    `nano /etc/postfix/sasl_passwd`
+    `nano /etc/postfix/sasl/sasl_passwd`
 
 4. Insert your login details:
 
-    `smtp.gmail.com youremail@gmail.com:yourpassword`
+    `[smtp.gmail.com]:587 youremail@gmail.com:yourpassword`
 
 5. Save the password file
 6. Create a database from the password file:
@@ -38,17 +38,15 @@ From the forum:
 
 9. Add/change the following (certificates can be found in `/etc/ssl/certs/`):
 
-    ```
-     relayhost = smtp.gmail.com:587
-     smtp_use_tls = yes
-     smtp_sasl_auth_enable = yes
-     smtp_sasl_security_options =
-     smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-     smtp_tls_CAfile = /etc/ssl/certs/Entrust_Root_Certification_Authority.pem
-     smtp_tls_session_cache_database = btree:/var/lib/postfix/smtp_tls_session_cache
-     smtp_tls_session_cache_timeout = 3600s
-
-    ```
+```
+relayhost = smtp.gmail.com:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
+smtp_tls_security_level = encrypt
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+```
 
 10. Reload the updated configuration:
 
