@@ -36,6 +36,7 @@ After reading the timeout error when trying to view the disks on an iscsi mount,
 - [although a guide for freenas, this was immensely helpful](https://forum.proxmox.com/threads/iscsi-failed-to-connect-to-lun-iscsi_service-failed.82179/)
 - [Most excellent guide, auf deutch](https://deepdoc.at/dokuwiki/doku.php?id=virtualisierung:proxmox_kvm_und_lxc:proxmox_debian_als_zfs-over-iscsi_server_verwenden)
 - [another stackoverflow link iscsiadm cannot make connection to...connection refused](https://stackoverflow.com/questions/42096147/iscsiadm-cannot-make-connection-to-connection-refused)
+- [Link I found troubleshooting auth issues on new client](https://www.thegeekdiary.com/how-to-configure-iscsi-target-and-initiator-using-targetcli-in-centos-rhel-7/)
 
 ssh into storage server (heimdall in my case)  
 installed targetcli on heimdall where drives live.  
@@ -47,7 +48,7 @@ enable targetcli service `systemctl enable targetcli.service`
 
 FROM PVE SERVER: get iscsi initiator name from PVE: `cat /etc/iscsi/initiatorname.iscsi ` this will be used later for the ACL's, you will need this from each server using the iscsi target. 
 
-Run `sudo targetcli`
+FROM STORAGE SERVER (target) Run `sudo targetcli`
 - lands you in target cli shell
 ```bash
 / >  ls
@@ -65,8 +66,9 @@ o- / ...........................................................................
 
 - cd into iscsi `cd ./iscsi`
 - create one with `create` creates an iscsi target with default name.
-- create target portal group, ie `tpg1` 
-- create an initiator `create <initiatorname>` The `<initiatorname>` is the name we grabbed from `/etc/iscsi/initiatorname.iscsi`
+- `cd` into this new iscsi target
+  - create target portal group, ie `tpg1` 
+  - create an ACL for clients (initiator's `cd` into `acls`) `create <initiatorname>` The `<initiatorname>` is the name we grabbed from `/etc/iscsi/initiatorname.iscsi`
 - cd from `tpg1`, cd into `portals`
 - accept the default of `0.0.0.0:3260` or set the IP address of your server. 
 - run `saveconfig` then `exit`
