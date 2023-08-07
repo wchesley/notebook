@@ -1,0 +1,104 @@
+Internet
+Internet.shape: cloud
+LAN.Vexus ONT <-> Internet
+LAN: {
+  Edgerouter x
+  Edgerouter x <-> Cisco 3560G
+  Edgerouter x <-> Arris WAP
+  Edgerouter x <-> Vexus ONT
+  Cisco 3560G <-> Arris Office AP
+  Cisco 3560G <-> Proxmox.Odin
+  Cisco 3560G <-> Proxmox.Thor
+  Cisco 3560G <-> Proxmox.Loki
+  Cisco 3560G <-> Heimdal
+  Arris Office AP -> WiFi
+  Arris WAP -> WiFi
+  Arris Office AP <-> Walker Dekstop
+  Arris Office AP <-> Winston Dekstop
+  Arris Office AP <-> Linksys 100mb Switch
+  Linksys 100mb Switch <-> Canon Printer
+  Linksys 100mb Switch <-> PS4
+  Linksys 100mb Switch <-> Steam Link
+  Proxmox.Odin <-> Proxmox.Thor : Direct Connection (corosync)
+  WiFi: {
+    Pixel 7
+    Moto G Stylus (2021)
+    Nokia
+    Office TV
+    Bedroom TV
+    Livingroom TV
+    Alexa
+    Nixplay
+    Winstonn iPad
+    Walker iPad
+    Hannah Fire Tablet
+	Hannah Macbook Pro
+    Winston Switch
+    Walker Switch
+  }
+
+  Proxmox: {
+    Odin: {
+      PiHole
+      GitLab
+      Valheim
+      Minecraft
+      MongoDB
+      ByteBot
+      Fedora DevStation
+      Plex
+      Apt-Cache
+      Zabbix
+      Nessus
+      MacOSX
+      Collabora
+      CUPS
+    }
+    Loki: {
+      OpenVPN
+      Nginx
+    }
+    Thor: {
+      Jellyfin
+      MariaDB
+      PiHole2
+      Grafana
+      Gitlab-Runner
+    }
+  }
+}
+Cloud: {
+  AmaWChesleyOracle : {
+    wchesleyDev
+	MinIO
+  }
+  WchesleyOracle : {
+    Nginx
+	MailInABox
+  }
+  Cloudflare : {
+    DNS
+	WAF
+  }
+  Proton : {
+    Drive
+	Mail
+	VPN
+	Pass
+  }
+  Google : {
+    ama-w-chesley : {
+	  Drive
+	  Mail
+	}
+	chesley-walker : {
+	  Drive
+	  Mail
+	}
+  }
+}
+Cloud.WchesleyOracle.Nginx -> Internet
+Cloud.AmaWChesleyOracle.wchesleyDev -> Internet
+Cloud.Cloudflare.DNS -> Cloud.WchesleyOracle.Nginx
+Cloud.Cloudflare.DNS -> Cloud.AmaWChesleyOracle.wchesleyDev
+Cloud.Cloudflare.DNS -> Cloud.Proton.Mail
