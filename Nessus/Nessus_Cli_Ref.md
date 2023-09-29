@@ -66,3 +66,6 @@ curl --request GET \
 
 ### Check Nessus Version from Commandline: 
 `Get-Content "C:\ProgramData\Tenable\Nessus\Nessus\nessus.version"`
+
+### Download Nessus Plugins for offline updating: 
+`curl.exe "https://www.tenable.com/downloads/api/v1/public/pages/nessus/downloads/20783/download?i_agree_to_tenable_license_agreement=true" --output nessus-updates-10.6.1.tar.gz`
