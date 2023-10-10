@@ -80,8 +80,19 @@
 	- 10.0.0.119
 	- web exposed on port :32400/web/index.html 
 	 
-## Heimdall
+# Heimdall
 
 - 10.0.0.118
 - Nextcloud
 - NFS
+
+# Docker
+
+- Docktop
+  - 10.0.0.96
+  - paperless-ngx
+  - portainer
+- Njord (Surface)
+  - 10.0.1.69 (eth) & 10.0.100.69 (wifi)
+  - portainer
+  - heimdall
