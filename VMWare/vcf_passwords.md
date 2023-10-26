@@ -57,6 +57,14 @@ Once passwords are changed in NSXT-Edge and API service is restarted. Apply the 
 
 ref: https://docs.vmware.com/en/VMware-NSX-T-Data-Center/3.2/administration/GUID-8816B842-2EC4-40A8-A618-F68DB29FABD2.html
 
+ref: https://kb.vmware.com/s/article/60335
+
+VMWare KB [60335](https://kb.vmware.com/s/article/60335) is what proved to be the fix for our most recent NSXT Manager password sync issue with SDDC. Our NSXT manager was slightly different as far as disk set up goes in the article. We didn't have a partition at `/dev/sda6` as they suggested for Priv CLI passwd. When I reset passwd for only `/dev/sda2` it would fail after I exited admin shell, I couldn't use that passwd to sign back into admin account. Once I did the reset on `/dev/sda2` & `/dev/sda3` for our NSXT-B instance, I was able to remediate the passwd in SDDC. 
+
+For good measure, before I remediated passwd in SDDC, I ran `set user admin password` command as admin...and set the passwd to what I had just changed it to in the `shadow` file. 
+
+Also, just to note, the provided perl command in VMWare's article only returns `0*`, even on another machine (WSL-Ubuntu & Debian 12). Since I knew the root passwd, I just copied it's hash and placed it in admins place. 
+
 ##### Below is an excerpt from [https://vinsanity.uk](https://vinsanity.uk/2021/08/20/nsx-t-manager-account-has-been-locked/)
 
 Had a problem today trying to access via the UI to an NSX-T Manager with admin user, received the following error message:
