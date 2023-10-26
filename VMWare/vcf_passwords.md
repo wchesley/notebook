@@ -7,6 +7,7 @@
     - [NSXT Manager](#nsxt-manager)
         - [Below is an excerpt from https://vinsanity.uk](#below-is-an-excerpt-from-httpsvinsanityuk)
         - [End Excerpt](#end-excerpt)
+    - [Replace Expired SSL Certificates](#replace-expired-ssl-certificates)
 - [Links and References](#links-and-references)
 
 
@@ -131,8 +132,11 @@ pam_tally2 --user root --reset
 
 I wasn't able to remediate the password via CLI nor from webUI as I was told it was invalid caller or user in WebUI and CLI complained of the previous password being incorrect. The password is infact different between the root shell and nsxcli. I can run `passwd admin` from root shell and set the password to what I'd like, to only `su admin` and run `set user admin password` and input the same password I just set in root shell only to be told previous password is incorrect.  
 
+### Replace Expired SSL Certificates 
 
+Log into VCenter as root user. For WG-DC, we have the python script saved to root's home directory. The script is named `nsxtVmaCert.py`, needs to be run once foreach NSXT Manager, and once more for the Virtual IP (VIP). 
 
+ref: https://kb.vmware.com/s/article/89921
 
 ---
 # Links and References
@@ -145,3 +149,5 @@ I wasn't able to remediate the password via CLI nor from webUI as I was told it 
 - [Managing Passwords in VMware Cloud Foundation](https://docs.vmware.com/en/VMware-Cloud-Foundation/5.0/vcf-admin/GUID-1D25D0B6-E054-4F49-998C-6D386C800061.html)
 - [How to reset the VRM, SDDC Manager Controller, SDDC Manager Utility, VIA or Cloud Builder root user password (2149860)](https://kb.vmware.com/s/article/2149860)
 - [Steps to recover expired Service Accounts in VMware Cloud Foundation (83615)](https://kb.vmware.com/s/article/83615)
+- [Replace Expired or Self-signed NSX-T Manager Certificates with VMCA-Signed Certificates (89921)](https://kb.vmware.com/s/article/89921)
+- [Reset 'admin' and/or CLI Privilege Mode passwords for NSX Manager, NSX for vSphere 6.3 & 6.4 (60335)](https://kb.vmware.com/s/article/60335)
