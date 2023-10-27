@@ -19,3 +19,7 @@ This issue was resolved by removing all files and folders related to Veeam as we
 - HKLM:\SOFTWARE\Veeam
 
 Once these were removed we could install Veeam Agent from VBR server to the individual machines. 
+
+Well that worked on at least one site. Ran into issues again with a different site, same story, Veeam agent backups that are now managed by VBR. I ended up using a modified version of the svc_nessus setup script to setup the PC's for Veeam, allowed in ports 139, 445 and 6160, removed creation of 'westgate' user account, but left in portion to add 'westgate' to local admin group. WMI logic remains in tact as Veeam needs access to hidden shared of 'C\$', 'ADMIN\$' & 'IPC\$'. I honestly think it is a matter of time between when the script runs and when Veeam decides it wants to see the changes. More testing is required to determine the true cause. As last thing I did was white list Veeam Server IP for each host's firewall...not really an ideal solution. 
+
+> The uninstall issue is Veeam specific. The permissions issues are related to non-domain accounts specifically. 
