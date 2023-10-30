@@ -7,3 +7,4 @@ VMware Infrastructure is a collection of virtualization products from VMware (a 
 ## Notes
 
 - [VCF Passwords](./vcf_passwords.md)
+- [KB - 88287 - Applying individual product updates to VMware Cloud Foundation environments using Async Patch Tool (AP Tool)](https://kb.vmware.com/s/article/88287)
