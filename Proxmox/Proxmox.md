@@ -9,6 +9,8 @@ Free and Open Source Hypervisor. https://www.proxmox.com/en/proxmox-ve
 [Forums](https://forum.proxmox.com/)
 
 ## My docs and references: 
+- [Post-Install Setup](./Setup.md)
+- [2FA Setup](./2FA_Setup.md)
 - [Email Alerts](./Email-Alerts.md)
 - [Reset LXC password](./forgotLXC_passwd.md)
 - [Manually Create Template LXC/VM](./Manually-Create-Templates.md)
