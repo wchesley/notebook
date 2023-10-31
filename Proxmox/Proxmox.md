@@ -14,6 +14,7 @@ Free and Open Source Hypervisor. https://www.proxmox.com/en/proxmox-ve
 - [Manually Create Template LXC/VM](./Manually-Create-Templates.md)
 - [Backups](./Proxmox-Backup.md)
 - [Resize Disk](./resize_disk.md)
+- [Storage](./Storage.md)
 
 
 Make sure to add the community pve repo and get rid of the enterprise repo (you can skip this step if you have a valid enterprise subscription)
@@ -28,3 +29,23 @@ Sometimes VMs or LXC's get stuck, mostly I can kill them with stop, but sometime
   * `ps aux | grep "/usr/bin/kvm -id VMID"`
 * Once we find the PID we kill the process using the command.
   * `kill -9 PID`
+
+## Reset root password on PVE host
+
+- Boot into grub, select single user but do not press enter.
+- Press e to go into edit mode.
+- Scroll down to the kernel line you will boot from, it starts with "linux /boot/vmlinuz-……."
+- Scroll to the end of that line and press space key once and type init=/bin/bash
+- Press Ctrl X to boot
+
+
+**Remount / as Read/Write**  
+`mount -rw -o remount /`
+
+**Change the root account password with**  
+`passwd`
+
+**Change any other account password with**  
+`passwd username`
+
+**type new password, confirm and hit enter and then reboot.**
