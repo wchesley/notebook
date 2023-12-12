@@ -5,6 +5,7 @@ Created: April 12, 2021 10:57 PM
 Not a direct application to proxmox, but I was able to adapt this to my needs: 
 
 [How to Configure Postfix to Send Mail Using Gmail and Google Apps on Debian or Ubuntu](https://www.linode.com/docs/guides/configure-postfix-to-send-mail-using-gmail-and-google-apps-on-debian-or-ubuntu/)
+[Setting up Email notifications in proxmox using Gmail](https://www.naturalborncoder.com/linux/2023/05/19/setting-up-email-notifications-in-proxmox-using-gmail/)
 
 From the forum: 
 
