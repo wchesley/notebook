@@ -6,7 +6,7 @@ Work notes, there's a readme on my laptop that I've not yet commited.
 
 Added sysmon and a config. Sysmon is from [microsoft](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon) and the config is from [olafhartong/sysmon-modular](https://github.com/olafhartong/sysmon-modular). Wazuh also provides a config using the same repo to construct theirs: https://wazuh.com/resources/blog/detecting-process-injection-with-wazuh/sysmonconfig.xml
 
-Setup email alerts via postfix from Wazuh Server CLI, tests using CLI work and make it to my email, however I'm not seeing any alerts from Wazuh, despite having that configured. 
+~~Setup email alerts via postfix from Wazuh Server CLI, tests using CLI work and make it to my email, however I'm not seeing any alerts from Wazuh, despite having that configured.~~ This is working now, see [Email Alerts](./Email_Alerts.md)
 
 ## Rule Alerts (Windows)
 
