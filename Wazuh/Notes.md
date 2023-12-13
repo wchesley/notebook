@@ -8,6 +8,14 @@ Added sysmon and a config. Sysmon is from [microsoft](https://learn.microsoft.co
 
 ~~Setup email alerts via postfix from Wazuh Server CLI, tests using CLI work and make it to my email, however I'm not seeing any alerts from Wazuh, despite having that configured.~~ This is working now, see [Email Alerts](./Email_Alerts.md)
 
+### 12-12-2023
+
+Created dedicated wazuh.westgate gmail address, credentials and appPasswd are in ITGlue. 
+
+DHCP also gave issues, and this should have been done at server creation but I hadn't had an issue with it before...Reassigned VM to 50.63, and added DNS entry for Wazuh.domainname.local
+
+**Users changes** when creating a read-only user, ie audit user account. I had to specify their roles as 'readall' and 'kibanauser' else you can't use the WebUI properly. Further more, webUI user accounts need to be configured from Wazuh Web UI -> Main Menu (Three lines, top left of screen) -> Under "OpenSearch Plugins" Select "Security" -> Select "Internal Users". 
+
 ## Rule Alerts (Windows)
 
 <sub>taken from: https://www.reddit.com/r/Wazuh/comments/m7wi7h/windows_events_alerts_with_wazuh/</sub>
