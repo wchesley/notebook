@@ -60,6 +60,6 @@ The following sections outline some of the technical requirements that Wazuh sup
 
 - Additional criteria
 
-    - Availability - A1.1
+    - [Availability - A1.1](./TSC_Criteria/A1.1.md)
 
-    - Processing integrity - PI1.4
+    - [Processing integrity - PI1.4](./TSC_Criteria/PI1.4.md)
