@@ -50,9 +50,9 @@ The following sections outline some of the technical requirements that Wazuh sup
 
     - [Common criteria 3.1](./TSC_Criteria/CC3.1.md)
 
-    - Common criteria 5.1
+    - [Common criteria 5.1](./TSC_Criteria/CC5.1.md)
 
-    - Common criteria 6.1
+    - [Common criteria 6.1](./TSC_Criteria/CC6.1.md)
 
     - Common criteria 7.1
 
