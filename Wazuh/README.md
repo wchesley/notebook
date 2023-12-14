@@ -4,13 +4,15 @@ Free open source SIEM
 
 ## Notes to be stored later: 
 
-- [Notes from work](./Notes.md)
+- [Active Directory Rules](./AD_rules.md)
+- [TSC/SOC Compliance](./TSC-SOC.md)
 - [Email Alerts](./Email_Alerts.md)
+- [Notes from work](./Notes.md)
 
 configured 'operational' user on my edge router for wazuh, enabled it's ssh access, had to change it's login shell (default to `/usr/bin/nologin`) then give it control over it's `~/.ssh/authorized_keys` file, `chown wazuh:users /home/wazuh/.ssh/authorized_keys`.
 
 Enabled syslog on wazuh server: https://documentation.wazuh.com/current/user-manual/capabilities/log-data-collection/syslog.html
-configured edge router to send logs here in web UI. 
+configured edge router to send logs here in web UI. Swapped this from `tcp` to `udp` evening of 12/13 as I wasn't getting any logs from it, haven't looked at it since then. 
 
 also added edge router as agentless monitor: https://documentation.wazuh.com/current/user-manual/capabilities/agentless-monitoring/agentless-configuration.html
 
