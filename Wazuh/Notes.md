@@ -16,6 +16,12 @@ DHCP also gave issues, and this should have been done at server creation but I h
 
 **Users changes** when creating a read-only user, ie audit user account. I had to specify their roles as 'readall' and 'kibanauser' else you can't use the WebUI properly. Further more, webUI user accounts need to be configured from Wazuh Web UI -> Main Menu (Three lines, top left of screen) -> Under "OpenSearch Plugins" Select "Security" -> Select "Internal Users". 
 
+### 12-14-2023
+
+**Logon Failures**  
+- `rule.id: 60122` -> Logon failure - Unknown user or bad password.  
+- `data.win.eventdata.ipAddress: 127.0.0.1` -> in this case it was local host, as this example comes from me miss typing my password to my own machine.  
+
 ## Rule Alerts (Windows)
 
 <sub>taken from: https://www.reddit.com/r/Wazuh/comments/m7wi7h/windows_events_alerts_with_wazuh/</sub>
