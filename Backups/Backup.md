@@ -33,3 +33,5 @@ Anything that lives in Proxmox is backed up bi-weekly to `zData` pool on Heimdal
 Gameservers are 'special' and get backed up nightly, plus a full backup weekly. 
 
 There are a select few VM's and Containers that also get nightly backups to Tuxis, a cloud-based Proxmox Backup Server. 
+
+A new PBS server has been stood up for backups of all VM's, network is delivered over Tailscale and all 3 PVE hosts have their own user account there, and backups are working to this host (10.0.100.254?), This host needs to be delivered to the Lake house for off-site backups. The NFS backups have been removed in favor of this. Restoration still needs testing, and backup client needs to be installed on the PVE hosts and Heimdall. 
