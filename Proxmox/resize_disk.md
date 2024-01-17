@@ -11,6 +11,8 @@ Then got into the VM and ran the following:
 
 `- sudo /sbin/resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv`
 
+> As of 1/10/2024, provided LVM is used for file system, I've only had to run the above two commands to expand a disk and host see's changes live. 
+
 # Process per notebook
 Process per my hand written notes: 
 1. Power down VM
