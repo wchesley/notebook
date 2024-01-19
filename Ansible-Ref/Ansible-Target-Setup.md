@@ -1,12 +1,28 @@
 # Ansible Target Setup
 
-Created: July 13, 2021 4:12 PM
+Create ansible user:  
+`useradd ansible -s /bin/bash` 
 
-`adduser ansible` 
-
+Add ansible user to sudo group:  
 `usermod -aG sudo ansible`
 
-Copy over ssh key see 
+Set a password for ansible user:  
+`chpasswd ansible`
 
-Sign in at least once with ansible account, to avoid the accepting of host key.
-as
+Create home directory for ansible user:   
+`mkdir -p /home/ansible/.shh`
+
+Change ownership of home directory to ansible:  
+`chown -R ansible:ansible /home/ansible`
+
+Add passwordless sudo access for ansible:  
+`visudo`
+
+- add to the end of the file: 
+  - `ansible ALL=(ALL) NOPASSWD:ALL`
+- Save and exit visudo
+
+Copy over ssh key  
+`ssh-copy-id ansible@123.123.123.123`
+
+Sign in at least once with ansible account, to accept the host key if it's not already in your `known_hosts` list.
