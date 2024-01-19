@@ -43,7 +43,7 @@ This assumes you already have NodeJS, PayloadCMS installed and an empty payload 
 - Enter PSQL shell via `psql` command.
 - Configure a user for payloadCMS to talk to postgres with: 
 `CREATE USER payload WITH SUPERUSER LOGIN REPLICATION BYPASSRLS` 
-TODO: Figure out most basic permissions payloadCMS needs against Postgres and assign it only that.
+  - TODO: Figure out most basic permissions payloadCMS needs against Postgres and assign it only that.
 - Then set password for new `payload` user: 
 `\password payload`
 
