@@ -9,7 +9,14 @@
 ## Links
 - [Entity Framework](./efcore.md)
 
+## .NET Foundation
 
+.NET Runtime is a [.NET Foundation](https://www.dotnetfoundation.org/projects) project.
+
+There are many .NET related projects on GitHub.
+
+* [.NET home repo](https://github.com/Microsoft/dotnet) - links to 100s of .NET projects, from Microsoft and the community.
+* [ASP.NET Core home](https://docs.microsoft.com/aspnet/core) - the best place to start learning about ASP.NET Core.
 
 ## Useful Links (external)
 
