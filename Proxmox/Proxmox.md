@@ -25,6 +25,10 @@ echo "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >
 rm /etc/apt/sources.list.d/pve-enterprise.list
 ```
 
+## CPU Choice: 
+
+Some VM's will perform better if the CPU type is set to 'host'. ie. Erxes Dev machine at work, when building the site, CPU would spike and hover around ~105%. Essentially locking up the VM until the site completed build cycle. Changing CPU type to 'Host' and rebuilt the site casues CPU to stay between 70-90% use, VM still usable, and had faster build times. 
+
 ## Kill stuck VM or LXC
 Sometimes VMs or LXC's get stuck, mostly I can kill them with stop, but sometimes I forget and do shutdown instead. This hangs forever, stopping times out because it can't get the lock on the VM.  
 * Find the VM by it's ID
