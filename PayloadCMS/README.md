@@ -12,6 +12,12 @@ Out of the box, Payload gives you a lot of the things that you often need when d
 - A beautiful admin UI that's generated specifically to suit your data
 
 
+## Notes: 
+
+- if you've scaffolded your website (seeded from admin dashboard) there's some white-labling that needs to be done in `/src/app/_heros/PostHero` and `ProjectHero` to remove a link to the admin page. 
+- If you can't edit something in the web panel, head to the code. it's fairly logical, if a bit separated, by default. 
+- Admin custom components [here](https://payloadcms.com/docs/admin/components) Docs actually aren't half bad...used seeded code for reference and was basically plug n' play from there. 
+
 ## Installation:
 
 This assumes you are working with a fresh installation of Ubuntu 22.04 Server: 
