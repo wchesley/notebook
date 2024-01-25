@@ -3,6 +3,10 @@
 The experience operating system to grow your business better.  
 A single yet complete experience operating system (XOS) to build your own experience. https://erxes.io/
 
+## Links
+
+- [Plugins](./plugins.md)
+
 ## Installation on Ubuntu
  > Erxes code takes approximately 12GB storage space, make sure you have enough space in your device before going forward.
 
