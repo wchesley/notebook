@@ -29,7 +29,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-Confirm installation via
+#### Confirm installation via
 ```bash
 git --version
 nodejs --version
@@ -203,3 +203,5 @@ To get the dashboard from the repo: See [Issue #4867](https://github.com/erxes/e
 - `git checkout dashboard-from-plugin`
 - copied the packages/dashboard dir over to my examples/erxes/packages dir and it seemed to build ok.
 - Had to run `/bin/erxes.js dev --deps --bash` before things started working properly. After that, I've been running `/bin/erxes.js dev` to start the site. `pm2 kill` to end it. `pm2 restart all` for restarts, `pm2 logs -f` to watch logs. 
+
+1. Selfhosted Erxes.io -> Marketplace doesn't work. -- Basically anytime I go to load the marketplace it just spins forever and ever, nothing noteable is written out to `pm2` logs or browser dev logs. 
