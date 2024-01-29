@@ -24,3 +24,8 @@ sysmon config is added to win11 laptop, found a way to make it shut up about app
 also ref: 
 https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/localfile.html#log-format
 https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/localfile.html
+
+
+## Wazuh API failed to connect
+
+Happens occasionally after a reboot or change to wazuh config. Just restart wazuh-manager service via `systemctl restart wazuh-manager`. Give it a few minutes to restart, then check `systemctl status wazuh-manager`. 
