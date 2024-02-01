@@ -2,7 +2,10 @@
 
 The point is that the internal firewall only allows specific traffic between DMZ servers and internal servers. If a DMZ server is compromised, it will only be able to contact (f.e.) one server on one TCP port, not any server on any service.
 
+---
+
 [From Spiceworks](https://community.spiceworks.com/topic/400484-so-i-ve-been-asked-to-set-up-a-dmz-but-allow-access-to-the-internal-network)
+
 Having worked and helped design DMZ networks for companies that require high levels of security, and having worked side-by-side with Sr Security Officers with high government clearances, I have come to the following conclusions:
 
 1) Users should never directly touch content serving web servers
