@@ -6,6 +6,18 @@ are still scenarios or risks unique to an organization that these rules
 may not cover. To compensate for this, organizations can create custom 
 alert rules, which is the focus of this doc.
 
+- [Rules](#rules)
+- [Understanding Rules](#understanding-rules)
+  - [Rule Order](#rule-order)
+- [Custom Rules](#custom-rules)
+  - [Adding Local Rules (Linux)](#adding-local-rules-linux)
+  - [Ignoring Rule Alerts (Windows)](#ignoring-rule-alerts-windows)
+  - [Creating Rule Alerts (Windows)](#creating-rule-alerts-windows)
+- [Rules Syntax](#rules-syntax)
+  - [Overview](#overview)
+- [Reference](#reference)
+
+
 # Understanding Rules
 
 Here is an example of an alert rule that looks for the “svchost.exe” string in the “sysmon.image” field:
