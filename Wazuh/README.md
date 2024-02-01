@@ -4,7 +4,8 @@ Free open source SIEM
 
 ## Notes to be stored later: 
 
-- [Active Directory Rules](./AD_rules.md)
+- [Wazuh Rules](./rules.md)
+  - [Active Directory Rules](./AD_rules.md)
 - [TSC/SOC Compliance](./TSC-SOC.md)
 - [Email Alerts](./Email_Alerts.md)
 - [Notes from work](./Notes.md)
