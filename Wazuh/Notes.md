@@ -22,5 +22,7 @@ DHCP also gave issues, and this should have been done at server creation but I h
 - `rule.id: 60122` -> Logon failure - Unknown user or bad password.  
 - `data.win.eventdata.ipAddress: 127.0.0.1` -> in this case it was local host, as this example comes from me miss typing my password to my own machine.  
 
+### 02-02-2024
 
+Adding a Mac device is pretty simple, just have to run installer from bash shell instead of default zsh shell. Switch to bash via `/bin/bash` from terminal window, then run the installer as `sudo`. Past this, I don't see a need to configure a Mac device further. Most everything we're after appears configured out of the box. 
 
