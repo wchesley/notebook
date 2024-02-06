@@ -26,3 +26,7 @@ DHCP also gave issues, and this should have been done at server creation but I h
 
 Adding a Mac device is pretty simple, just have to run installer from bash shell instead of default zsh shell. Switch to bash via `/bin/bash` from terminal window, then run the installer as `sudo`. Past this, I don't see a need to configure a Mac device further. Most everything we're after appears configured out of the box. 
 
+# Troubleshooting
+
+`systemctl status wazuh-manager` seems to have the best output for troubleshooting. journalctl wasn't telling me much, the status at least had specific error messages when I had misstyped some XML in local_rules.xml. 
+
