@@ -1,8 +1,5 @@
 # Email alerts through Gmail: 
 
-> Note:  
-> I noticed when sending via gmail & postfix that only the address specified in `ossec.conf` was getting email alerts, despite the Wazuh GUI stating otherwise.
-
 ## Create a Recipeient Group
 
 - Login to Wazuh Web UI
