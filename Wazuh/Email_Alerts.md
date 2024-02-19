@@ -69,7 +69,7 @@ systemctl restart postfix
 echo "Test mail" | mail -s "Test Postfix" -r "nessus.westgatecomputers@gmail.com" wchesley@westgatecomputers.com
 ```
 
-> See `main mail` for more info on `mail` and it's arguements 
+> See `man mail` for more info on `mail` and it's arguements 
 
 > If you've received the test message from postfix you may proceed to the next step. If you've not received the email, check `/var/log/mail.log` to see what might have gone wrong. 
 
@@ -91,6 +91,9 @@ systemctl restart wazuh-manager
 ```
 
 ## Create Notification Channel
+
+> NOTE:  
+> When delivering email through postfix, only the `<email_to>` field of the `ossec.conf` will be sent emails. Regardless of what notification channels are used to send email alerts. 
 
 Back in the Wazuh Web UI, under notifications again. This time chose the top most option, `channels`
 - Click `Create Channel` in the top right. 
