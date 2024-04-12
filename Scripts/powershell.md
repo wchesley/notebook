@@ -1,5 +1,20 @@
 # Powershell
 
+## Uninstall any app by name: 
+
+- Get app name
+```powershell
+Get-WmiObject win32_product | findstr /I "yourAppName"
+```
+- Assign the `Name` to a variable
+```powershell
+$AppName = "Microsoft Silverlight"
+```
+- Remove the app: 
+```powershell
+Get-WmiObject Win32_product | Where {$_.name -eq $AppName} | ForEach { $_.Uninstall() }
+```
+
 ## Get Office 365 Update Channel: 
 
 ref: https://www.devhut.net/determine-the-office-update-channel/
