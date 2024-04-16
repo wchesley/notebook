@@ -31,6 +31,7 @@ public async Task<ActionResult> Edit(int? id)
     {
         return NotFound();
     }
+    //using CQRS pattern, but any DbContext<T> will do: 
     var bill = await _repository.queries.GetBillWithDetails(id.Value);
     if(bill == null)
     {
@@ -120,3 +121,68 @@ $(document).ready(function() {
 Now when the form is submitted all of the items within our list are added into the form, provided the rest of the model is valid. 
 
 > NOTE: This does not handle deleting items that already exist in the database. The code above will only remove the HTML from the page when the "remove" button is clicked. If the Detail item didn't exist in the database, then no harm done. Else, if "removed" from the page, upon form submission, it will still be present in the database and not get removed. 
+
+## Remove items from list
+
+Finally worked out a hacky solution for removing items from this list. Basically store all the ID's of the item that was removed in a hidden input field. Send back that list on form submission, convert the hidden input field into a `List<string>` then iterate over this list and remove the items by their ID. 
+
+Start with the `cshtml` page and add a hidden input anywhere wihtin the existing `<form>` block.
+
+`<input type="hidden" id="BoLDetailsToRemove" name="BoLDetailsToRemove" value="" />`
+
+Give your input an ID, name and empty value. Use this to store your ID's that have been removed. 
+
+Add a new javascript function to grap the ID of the item removed and append it to our list. I used comma separation foreach item: 
+
+```javascript
+// Handler for removing dynamically added rows
+$(document).on('click', '.btn-danger', function() {
+    //$(this).closest('.BoLDetailRow').remove();
+    let row = $(this).closest('.BoLDetailRow');
+    let index = row.index();
+    console.log(row);
+    let BoLId = $('#BolDetailsList_' + index + '__Id').val();
+    console.log(BoLId);
+    let BoLDetailsToRemove = $('#BoLDetailsToRemove');
+    BoLDetailsToRemove.val(BoLDetailsToRemove.val() + BoLId + ',');
+    row.remove();
+    console.log($('#BoLDetailsToRemove').val());
+```
+
+The controller method is updated to accept the new input as a string value. If the string has any data in it, it gets converted into a `List<string>` separated by the `,` separating each item. This list gets sent to the repository to be removed. The repository was updated to accept a new paramenter of `List<string>`, but it is defaulted to null. 
+
+```csharp
+public async Task<ActionResult> Edit(int? id, [FromForm]string? BoLDetailsToRemove, BoLViewModel model)
+{
+    if(id != model.BolId)
+    {
+        model.ErrorMessage = "ID mismatch";
+        return View(model);
+    }
+
+    if (ModelState.IsValid)
+    {
+        if (!string.IsNullOrEmpty(BoLDetailsToRemove))
+        {
+            //split the list if it's not null: 
+            var boLDetailsToRemoveList = BoLDetailsToRemove.Split(",").ToList();
+            var result = await _repository.commands.EditBillOfLading(model, boLDetailsToRemoveList);
+            if (!string.IsNullOrEmpty(result.ErrorMessage))
+            {
+                _logger.LogError($"Error returned: {result.ErrorMessage}");
+                model.ErrorMessage = result.ErrorMessage;
+                return View(model);
+            }
+        }
+        else
+        {
+            //continue as normal if no details were removed: 
+            var result = await _repository.commands.EditBillOfLading(model);
+            if (!string.IsNullOrEmpty(result.ErrorMessage))
+            {
+                _logger.LogError($"Error returned: {result.ErrorMessage}");
+                model.ErrorMessage = result.ErrorMessage;
+                return View(model);
+            }
+        }
+```
