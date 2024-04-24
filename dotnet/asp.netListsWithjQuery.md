@@ -117,8 +117,33 @@ $(document).ready(function() {
             $(this).closest('.BillDetailRow').remove();
         });
 ```
+> While the above code does indeed work for most situations, it is better practice to use an existing template (sting literal in JS or CSHTML partial) and input values into that rather than overwriting existing ones. 
+
+The current code does essentially this:
+
+- Clone the dirtied first item and append to the end
+- Modify the dirtied first item to make it clean again
+
+It would be better to use a clean prototype / template from which you can easily create clean new instances. Then the operations can become:
+
+- Move the dirtied first item to the end
+- Recreate the first item from the clean template
+
+The first approach is not so good, because:
+
+- Cloning is always a suspicious operation. For example, you have to make sure that:
+        all fields correctly copied
+        no references accidentally leaked
+        deep objects correctly deep-copied: although this is not a concern in this specific example, but I'm adding it anyway as a reminder of general concerns about the concept of cloning
+- Reseting an object to a clean state is always a suspicious operation. For example, you have to make sure that:
+        all fields are correctly reset: often duplicating the same logic that must exist (explicitly or implicitly) in the initializer / constructor
+
+The new approach doesn't have any of these tricky issues. It's conceptually much cleaner, with much fewer hidden traps and bugs waiting to happen.
+
 
 Now when the form is submitted all of the items within our list are added into the form, provided the rest of the model is valid. 
+
+See: [this](https://codereview.stackexchange.com/questions/69295/better-way-of-clone-and-then-replace-some-attributes-with-jquery) codereview.stackexchange post
 
 > NOTE: This does not handle deleting items that already exist in the database. The code above will only remove the HTML from the page when the "remove" button is clicked. If the Detail item didn't exist in the database, then no harm done. Else, if "removed" from the page, upon form submission, it will still be present in the database and not get removed. 
 
