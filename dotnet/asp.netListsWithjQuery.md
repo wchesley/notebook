@@ -145,7 +145,56 @@ Now when the form is submitted all of the items within our list are added into t
 
 See: [this](https://codereview.stackexchange.com/questions/69295/better-way-of-clone-and-then-replace-some-attributes-with-jquery) codereview.stackexchange post
 
-> NOTE: This does not handle deleting items that already exist in the database. The code above will only remove the HTML from the page when the "remove" button is clicked. If the Detail item didn't exist in the database, then no harm done. Else, if "removed" from the page, upon form submission, it will still be present in the database and not get removed. 
+Example duplicating HTML using string literal template: 
+
+```javascript
+    let currentIndex = @Model.Items.Count;
+    const duplicateRow = (jsonResponse) => {
+        console.log("index: ", currentIndex);
+        let newRow = `<div class="QItemsRow">
+                    <div class="d-flex flex-row row-sm-6 gap-3" style="padding: 2%" id="${jsonResponse.qitemsId}">
+                        <input name="Items[${currentIndex}].QitemsId" style="display:none" value="0" />
+                        <div class="form-group">
+                            <label for="Items[${currentIndex}].QitemsItemId" class="control-label">Item ID</label>
+                            <input id="Items_${currentIndex}__QitemsItemId" name="Items[${currentIndex}].QitemsItemId" class="form-control" style="display: none" value="${jsonResponse.qitemsItemId}"/>
+                            <p>${jsonResponse.qitemsItemId}</p>
+                            <span id="Items[${currentIndex}].QitemsItemId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Items[${currentIndex}].QitemsPricesDesc" class="control-label">Description</label>
+                            <input id="Items_${currentIndex}__QitemsPricesDesc" name="Items[${currentIndex}].QitemsPricesDesc" class="form-control" value="${jsonResponse.qitemsPricesDesc}" />
+                            <span for="Items[${currentIndex}].QitemsPricesDesc" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Items[${currentIndex}].QitemsQuantity" class="control-label">Quantity</label>
+                            <input id="Items_${currentIndex}__QitemsQuantity" name="Items[${currentIndex}].QitemsQuantity" class="form-control" value="${jsonResponse.qitemsQuantity}" />
+                            <span for="Items[${currentIndex}].QitemsQuantity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Items[${currentIndex}].QitemsSaleQty" class="control-label">Sale Quantity</label>
+                            <input id="Items_${currentIndex}__QitemsSaleQty" name="Items[${currentIndex}].QitemsSaleQty" type="number" class="form-control" value="${jsonResponse.qitemsSaleQty}" />
+                            <span for="Items[${currentIndex}].QitemsSaleQty" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Items[${currentIndex}].QitemsPrice" class="control-label">Price</label>
+                            <input id="Items_${currentIndex}__QitemsPrice" name="Items[${currentIndex}].QitemsPrice" type="number" class="form-control" value="${jsonResponse.qitemsPrice}" />
+                            <span for="Items[${currentIndex}].QitemsPrice" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Items[${currentIndex}].QitemsSaleValue" class="control-label">Sale Value</label>
+                            <input id="Items_${currentIndex}__QitemsSaleValue" name="Items[${currentIndex}].QitemsSaleValue" type="number" class="form-control" value="${jsonResponse.qitemsSaleValue}" />
+                            <span for="Items[${currentIndex}].QitemsSaleValue" class="text-danger"></span>
+                        </div>
+                    </div>
+                    </div>`;
+        
+        // Append the new row to the container
+        $(".QItemsRow:last").after(newRow);
+        currentIndex++; // Increment the index
+    }
+```
+
+For the above template and ASP.NET it's important to note that you will have to set the ID and Name fields by hand in your template, `asp-for` does not exist in this context and javascript will put your exact string literal into the page's HTML. Without these attributes set exactly as your controller/model is expecting, the values will not POST. 
 
 ## Remove items from list
 
