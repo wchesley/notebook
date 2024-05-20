@@ -8,6 +8,9 @@
 
 ## Links
 - [Entity Framework](./efcore.md)
+- [EditorConfig](./Editorconfig.md)
+- [ASP.NET Core](./asp.netCore.md)
+- [Snippits](./snippits.md)
 
 ## .NET Foundation
 
