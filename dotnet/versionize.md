@@ -2,6 +2,8 @@
 
 Dotnet tool to automate changelog generation based on [conventional commit](../Git/git.md) style. 
 
+- Github Repo: https://github.com/versionize/versionize
+
 ## Usage
 
 ```man
