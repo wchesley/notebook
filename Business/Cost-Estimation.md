@@ -91,3 +91,139 @@ Total Development Cost=550×100=$55,000\text{Total Development Cost} = 550 \ti
 **Final Price**:
 
 - Consider a price around $72,000 to $75,000, balancing all three models.
+
+# Example with `QuotesController.cs`
+
+|Attribute|Description|
+|--:|:--|
+|Domain > Expert|Software Engineering > Software Development|
+|Keywords|function point analysis, Bills of Lading, controller, MediatR, ASP.NET, MVC|
+|Goal|To conduct a function point analysis (FPA) on the provided code file with verbosity level 5.|
+|Assumptions|The user is looking for a detailed and comprehensive FPA for the provided `BillsofLadingController.cs` file. The analysis will include an identification of functionalities and their classification.|
+|Methodology|1. Identify and classify external inputs (EI), external outputs (EO), external inquiries (EQ), internal logical files (ILF), and external interface files (EIF). 2. Calculate the unadjusted function points (UFP). 3. Incorporate complexity adjustments. 4. Present the detailed results.|
+
+---
+
+**Function Point Analysis (FPA) for `BillsofLadingController.cs`**
+
+### 1. Identification and Classification of Functionalities
+
+#### External Inputs (EI)
+External Inputs are user inputs that affect the system's internal logic or data.
+
+- **Index Method**
+  - Inputs: `sortOrder`, `currentFilter`, `searchString`, `page`
+  - Functionality: Filtering, sorting, and pagination of bills of lading
+  - Complexity: Medium (due to multiple input parameters and interactions)
+
+- **Details Method**
+  - Inputs: `id`
+  - Functionality: Fetching and displaying details of a specific bill of lading
+  - Complexity: Low (single input parameter)
+
+- **GetPdf Method**
+  - Inputs: `id`
+  - Functionality: Generating a PDF for a specific bill of lading
+  - Complexity: Medium (error handling, PDF generation)
+
+- **Edit Methods (GET and POST)**
+  - Inputs: `id`, `BoLDetailsToRemove`, `BoLViewModel`
+  - Functionality: Fetching, displaying, and updating bill of lading details
+  - Complexity: High (data validation, multiple input parameters, state management)
+
+- **Delete Methods (GET and POST)**
+  - Inputs: `id`, `BillsOfLadingModel`
+  - Functionality: Deleting a specific bill of lading
+  - Complexity: Low (single input parameter)
+
+- **CreateBoLFromWorkOrder Method**
+  - Inputs: `id`, `customerId`, `shipToId`, `quoteNumber`, `poNumber`
+  - Functionality: Creating a bill of lading from an existing work order
+  - Complexity: High (multiple input parameters, dependency on work order details)
+
+#### External Outputs (EO)
+External Outputs are system outputs that are derived from internal logic.
+
+- **Index View**
+  - Outputs: Filtered, sorted, and paginated list of bills of lading
+  - Complexity: Medium
+
+- **Details View**
+  - Outputs: Detailed information of a specific bill of lading
+  - Complexity: Low
+
+- **PDF Generation**
+  - Outputs: PDF file
+  - Complexity: Medium
+
+- **Edit Confirmation**
+  - Outputs: Updated bill of lading details
+  - Complexity: High
+
+- **Delete Confirmation**
+  - Outputs: Confirmation of deletion
+  - Complexity: Low
+
+- **Creation Confirmation**
+  - Outputs: Confirmation of creation from work order
+  - Complexity: High
+
+#### External Inquiries (EQ)
+External Inquiries are user-initiated inputs that result in a direct retrieval of data.
+
+- **Index Method Search**
+  - Functionality: Searching through bills of lading
+  - Complexity: Medium
+
+- **Details Method Fetch**
+  - Functionality: Fetching bill of lading details
+  - Complexity: Low
+
+#### Internal Logical Files (ILF)
+Internal Logical Files are user identifiable groups of logically related data.
+
+- **Bills of Lading**
+  - Records: All bills of lading and their details
+  - Complexity: High (due to interrelations with other entities)
+
+#### External Interface Files (EIF)
+External Interface Files are user identifiable groups of logically related data used for reference.
+
+- **Customers**
+  - References: Customer details for bills of lading
+  - Complexity: Medium
+
+- **Work Orders**
+  - References: Work order details for creating bills of lading
+  - Complexity: Medium
+
+### 2. Calculation of Unadjusted Function Points (UFP)
+
+| Function Type | Count | Weight (Low) | Weight (Average) | Weight (High) | UFP |
+|---------------|-------|--------------|------------------|---------------|-----|
+| EI            | 7     | 3            | 4                | 6             | 42  |
+| EO            | 6     | 4            | 5                | 7             | 30  |
+| EQ            | 2     | 3            | 4                | 6             | 8   |
+| ILF           | 1     | 7            | 10               | 15            | 10  |
+| EIF           | 2     | 5            | 7                | 10            | 14  |
+
+**Total UFP:** 104
+
+### 3. Complexity Adjustments
+To adjust the function points, we typically use the General System Characteristics (GSCs) which include 14 factors like data communications, performance, heavily used configuration, transaction rate, etc. Assuming average complexity for the purpose of this analysis:
+
+- Adjustment Factor = 0.65 + 0.01 * (Σ GSC)
+- Assuming GSC = 35 (average complexity for each factor)
+- Adjustment Factor = 0.65 + 0.01 * 35 = 1.00
+
+### 4. Calculating Adjusted Function Points (AFP)
+- **AFP = UFP * Adjustment Factor**
+- **AFP = 104 * 1.00 = 104**
+
+### Conclusion
+The `BillsofLadingController.cs` file has an **Adjusted Function Point (AFP) count of 104**. This detailed function point analysis identifies the complexities and functional aspects of the controller, providing insights into its size and potential effort required for development and maintenance.
+
+> _See also:_ 
+> - [Function Point Analysis](https://www.google.com/search?q=Function+Point+Analysis)
+> - [ASP.NET MVC Controllers](https://www.google.com/search?q=ASP.NET+MVC+Controllers)
+> - [MediatR in ASP.NET Core](https://www.google.com/search?q=MediatR+in+ASP.NET+Core)
