@@ -4,25 +4,20 @@
 
 - [ASP.NET Lists with jQuery](./asp.netListsWithjQuery.md)
 
+## Note Links
+
+- [Lists with jQuery](./asp.netListsWithjQuery.md)
+- [.editorconfig](./Editorconfig.md)
+- [Snippits](./snippits.md)
 
 ## MVC Forms with API
 
 Ensure calls in Controllers are awaited, without this, your dbContext might be disposed of before results are ready for viewing. See [this](https://stackoverflow.com/questions/66830530/cannot-access-a-disposed-context-instance-ef-core) relevant StackOverflow post. 
 
-When creating a form, if you are using jQuery/JS to add some user interactivity on the page and posting that information to a local .NET API class. There are a few caveats to watch out for: 
 
-- in jQuery, ensure your parameter names match the method parameters. If your API method is defined like so: 
 
-```chsarp
-[HttpPost]
-[Route("DeleteFile")]
-public async Task<IActionResult> DeleteAttachedFile(
-    [FromForm] int id)
-    {
-        // method definiton
-    }
-```
+## Data Validation
 
-Then your jQuery method must also pass the `id` parameter named as `id`. Else the values will not map at all and your API class will see no, or null values passed to it. 
+### Partial Views
 
-- When POST-ing values from jQuery, ensure your method parameters are prefixed with `[FromForm]` attributes. Else your values might get passed in jQuery, but .NET will not see the values. 
+When using a partial view within a form. I've seen validation attributes not get sent to the partial view when it throws a validation error on POST-ing the form. The invalid field is correctly detected by jquery and cursor control is redirected to said invalid field, yet the error message is not present. I had tried the normal way with setting `<div asp-validation-for="ModelOnly"></div>` yet had no luck. It was only when I set the `asp-validation-for` value to `all` that I got the error message in the partial view. The caveat to this, the error message doesn't appear inline with the invalid element. Instead appears where the partial's `asp-validation-for` div is defined. 
