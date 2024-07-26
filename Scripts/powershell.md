@@ -1,5 +1,15 @@
 # Powershell
 
+# Snippits and small scripts
+
+## Get users currently logged into system: 
+
+```ps
+PS C:\Users\wchesley> query user
+ USERNAME              SESSIONNAME        ID  STATE   IDLE TIME  LOGON TIME
+>wchesley              console             1  Active      none   7/24/2024 7:36 AM
+```
+
 ## Uninstall any app by name: 
 
 - Get app name
@@ -53,6 +63,7 @@ the registry key lives at "HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\Configurat
     End Select
 ```
 Ended up with the following powershell: 
+```ps
 $OfficeUpdateChannel = "None"
 $CDNBaseUrl = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\Configuration" -Name CDNBaseUrl
 
@@ -70,3 +81,4 @@ switch ($UpdateChannel) {
     Default { $OfficeUpdateChannel = "Non CTR version / No Update Channel selected"}
 }
 Write-Host "O365 update channel: $OfficeUpdateChannel
+```
