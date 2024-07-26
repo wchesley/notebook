@@ -1,5 +1,25 @@
 # ASP.NET Core 8 - Lists in View with jQuery
 
+When creating a form, if you are using jQuery/JS to add some user interactivity on the page and posting that information to a local .NET API class. There are a few caveats to watch out for: 
+
+- in jQuery, ensure your parameter names match the method parameters. If your API method is defined like so: 
+
+```chsarp
+[HttpPost]
+[Route("DeleteFile")]
+public async Task<IActionResult> DeleteAttachedFile(
+    [FromForm] int id)
+    {
+        // method definiton
+    }
+```
+
+Then your jQuery method must also pass the `id` parameter named as `id`. Else the values will not map at all and your API class will see no, or null values passed to it. 
+
+- When POST-ing values from jQuery, ensure your method parameters are prefixed with `[FromForm]` attributes. Else your values might get passed in jQuery, but .NET will not see the values. 
+
+## Example
+
 Suppose there are two models, `Bill` and `BillDetail`. Where `BillDetail` is a `List<BillDetail>` object of the `Bill` model. A user creating a bill needs to be able to add details to the bill dynamically. Each Bill can have 0 or more details attached to it. Each model is backed by a table in a database. 
 
 ```csharp
