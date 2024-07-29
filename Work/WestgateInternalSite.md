@@ -60,7 +60,7 @@ Where querying with `QuoteNo` from view, to `INVDET` table's `IND_INVOICENO` col
 Once and Order is converted to an invoice (table `PINVOICE`), the `ORDERS.ORD_INVOICENO` becomes a negative value. Might be the method to determine if it's a build or not? This was found while exploring another db view called `vCustomerPurchases` 
 
 Determining if an order is a PC build or not: 
-- Initial thought is to filter based on number of items in Items_on_Quotes view...yet there can be orders that are not builds with more than 4 items (initail guess at minimum amount of items)
+- Initial thought is to filter based on number of items in Items_on_Quotes view...yet there can be orders that are not builds with more than ~~4~~ 5 items (~~initail guess at minimum amount of items~~ 5 seems to be a better fit for a build or not).
   - Filtering on this exponentially increases page load times. Could be because I'm on the same server as the DB? Or could be my own filtering logic I've applied...Trying new logic based on counts? we'll see by I have little hope for it. 
   - Initial filtering logic: 
     ```csharp
@@ -91,7 +91,7 @@ Determining if an order is a PC build or not:
         //Finally return the results: 
         return indexItems;```
 
-  - Modified to the following: 
+  - Modified to the following which resolves the issue, mostly, it's still slow, but not as slow as previous implementation: 
   ```csharp
    //Filter down list to only include items with a department that matches a build keyword: 
         var itemsOnOrderIndex = itemsOnOrder.FilterByItems(Departments.AllDepartments,
