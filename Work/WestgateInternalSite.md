@@ -61,8 +61,75 @@ Once and Order is converted to an invoice (table `PINVOICE`), the `ORDERS.ORD_IN
 
 Determining if an order is a PC build or not: 
 - Initial thought is to filter based on number of items in Items_on_Quotes view...yet there can be orders that are not builds with more than 4 items (initail guess at minimum amount of items)
-- Might be best to filter based on `Department` types, only filter for ones related to a PC build. 
-- If we can set some unique ID on the `ORD_SNUM` field, then we can easily filter by that and get only orders that are to be builds. 
+  - Filtering on this exponentially increases page load times. Could be because I'm on the same server as the DB? Or could be my own filtering logic I've applied...Trying new logic based on counts? we'll see by I have little hope for it. 
+  - Initial filtering logic: 
+    ```csharp
+    //Filter down list to only include items with a department that matches a build keyword: 
+        var itemsOnOrderIndex = await itemsOnOrder.FilterByItems(Departments.AllDepartments,
+            (item, keywd) => item.Department.Contains(keywd), true).ToListAsync(cancellationToken: cancellationToken);
+        
+        //Filter down list to only include items that are a potential build
+        var itemsOnOrderFiltered = new List<WestgateDomain.Models.ItemsOnQuote>();
+        foreach (var item in itemsOnOrderIndex)
+        {
+            var potentialBuild = itemsOnOrderIndex.SelectMany(i => itemsOnOrderIndex).Where(i => i.QuoteNo == item.QuoteNo).ToList();
+            //Generally speaking, any order with more than 5 items is a build: 
+            if (potentialBuild.Count >= 5)
+            {
+                itemsOnOrderFiltered.AddRange(potentialBuild);
+            }
+        }
+        
+        //filter down list again, removing duplicates and changing type to IQueryable:
+        var indexItems = itemsOnOrderFiltered.Select(i => new ItemsOnQuoteIndexDto()
+            {
+                Customer = i.Customer,
+                QuoteNo = i.QuoteNo,
+            }).Distinct()
+            .AsQueryable();
+            
+        //Finally return the results: 
+        return indexItems;```
+
+  - Modified to the following: 
+  ```csharp
+   //Filter down list to only include items with a department that matches a build keyword: 
+        var itemsOnOrderIndex = itemsOnOrder.FilterByItems(Departments.AllDepartments,
+            (item, keywd) => item.Department.Contains(keywd), true);
+        
+        //Filter down list to only include items that are a potential build
+        var itemsOnOrderFiltered = new List<WestgateDomain.Models.ItemsOnQuote?>();
+        Dictionary<int, int> potentialBuild = new Dictionary<int, int>();
+        foreach (var item in itemsOnOrderIndex)
+        {
+            if (!potentialBuild.TryAdd(item.QuoteNo.Value, 1))
+            {
+                potentialBuild[item.QuoteNo.Value] += 1;
+            }
+
+            //Generally speaking, any order with more than 5 items is a build: 
+            if (potentialBuild[item.QuoteNo.Value] >= 5)
+            {
+                itemsOnOrderFiltered.Add(itemsOnOrderIndex.Where(i => i.QuoteNo == item.QuoteNo).FirstOrDefault());
+            }
+        }
+        
+        //filter down list again, removing duplicates and changing type to IEnumerable:
+        var indexItems = itemsOnOrderFiltered.Select(i => new ItemsOnQuoteIndexDto()
+        {
+            Customer = i.Customer,
+            QuoteNo = i.QuoteNo,
+        }).DistinctBy(q => q.QuoteNo);
+            
+        //Finally return the results: 
+        return indexItems;```
+
+
+
+
+- Might be best to filter based on `Department` types, only filter for ones related to a PC build. This is best for creating the BuildSheet, not filtering the index list
+- Filtering the index list has been simplified to just counting the number of instances any `OrderId` occurs, if we have more than 5, assume it's a build and add that to the list. 
+- ~~If we can set some unique ID on the `ORD_SNUM` field, then we can easily filter by that and get only orders that are to be builds.~~ No option is presented by POS for us to set this value. 
 
 
 ## InService Page
@@ -79,7 +146,7 @@ string strSQL = "SELECT " +
         "CONVERT(varchar, dbo.prm_ConvertPRMDateTime(ORDERS.ORD_SALESDATE, 0), 101) AS DateIn, " +
         "ORDERS.ORD_INVOICENO AS RefID, " +
         "ORDERS.ORD_CALLED AS Days, " +
-        "CONVERT(varchar,dbo.prm_ConvertPRMDateTime(ORDERS.ORD_DATEDUE, 0), 101) AS DateOut, " +
+        "CONVERT(varchar,dbo.prm_ConvertPRMDateTime(ORDERS.ORD_DATEDUE, 0), 101) AS DateOut, " + 
         "dtbl_2.SAL_SALESNAME AS CheckedInBy, " +
         "ORDERS.ORD_SNUM AS Description, " +
         "ORDERS.ORD_SOSTAT AS Status " +
