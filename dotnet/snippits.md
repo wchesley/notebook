@@ -160,3 +160,64 @@ var newList = MainList
    .FilterByItems(keywords, (m, k) => m.Comments.Contains(k), true)
    .ToList();
 ```
+
+## Override bool/Boolean ToString
+
+Use a custom class to override default bool `.ToString()` method and replace `true` or `false` with a unicode `✓` or `✕`
+
+```csharp
+using System;
+
+public class CustomBoolean
+{
+    private bool _value;
+
+    public CustomBoolean(bool value)
+    {
+        _value = value;
+    }
+
+    public override string ToString()
+    {
+        return _value ? "\u2713" : "\u2717"; // Unicode check mark (✓) and X (✗)
+    }
+
+    // Implicit conversion from bool to CustomBoolean
+    public static implicit operator CustomBoolean(bool value)
+    {
+        return new CustomBoolean(value);
+    }
+
+    // Implicit conversion from CustomBoolean to bool
+    public static implicit operator bool(CustomBoolean customBool)
+    {
+        return customBool._value;
+    }
+}
+
+public class ExampleClass
+{
+    public CustomBoolean Property1 { get; set; }
+    public CustomBoolean Property2 { get; set; }
+
+    public ExampleClass(bool prop1, bool prop2)
+    {
+        Property1 = prop1;
+        Property2 = prop2;
+    }
+
+    public override string ToString()
+    {
+        return $"Property1: {Property1}, Property2: {Property2}";
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        ExampleClass example = new ExampleClass(true, false);
+        Console.WriteLine(example.ToString()); // Output: Property1: ✓, Property2: ✗
+    }
+}
+```
