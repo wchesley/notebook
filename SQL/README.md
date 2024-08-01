@@ -13,3 +13,17 @@ SQL became a standard of the American National Standards Institute (ANSI) in 198
 ## SQL Padding Whitespace to fields
 
 SQL Server returning values with extra whitespace added to the end of the object is a result of the columns datatype. ie. if set to `char(18)` and only 8 characters are entered into the field, the remaining 10 characters are set to whitespace. This is by design. To avoid this, change the column type to `varchar(18)` and SQL will only write the given 8 characters to disk. 
+
+## Updating Table Column
+
+Updating a column data type: 
+
+```sql
+ALTER TABLE WestgateWeb.dbo.SV_BUILDSHEETS ALTER COLUMN NumberOrdered nvarchar(MAX) NULL;
+```
+
+## Adding Column to Existing Table
+
+```sql
+ALTER TABLE WESTGATEDEV.dbo.SV_ORDERS ADD QuoteId int NULL;
+```
