@@ -1,6 +1,33 @@
 # Westgate Internal Site 
 ## Dev Diary
 
+- [Westgate Internal Site](#westgate-internal-site)
+  - [Dev Diary](#dev-diary)
+    - [Deployment Plan](#deployment-plan)
+    - [POSITIVE POS DB SQL Connection](#positive-pos-db-sql-connection)
+    - [Auto populate build list based on Order](#auto-populate-build-list-based-on-order)
+  - [InService Page](#inservice-page)
+
+### Deployment Plan
+
+Initial Deployment: 
+- Setup project to run as a service.
+- Stand up VM in DC, 4vCPU, 8GB RAM, 120GB Disk, Windows Server 2019
+  - Use WGC-APP server? no new instance to create in this case...
+- Separate Westgate Site database from Positive's DB
+  - Create Service accounts for each database: `WestgateWeb` & `WESTGATELIVE`
+  - `WESTGATELIVE` is set for readonly, writes are explicitly denied to this DB from the `PositiveDbContext` perspective. Set SQL permissions to also deny write ability from the service account.
+    - Service Account name for `WESTGATELIVE` -> WGCAppUser
+  - `WestgateWeb` is less restrictive. The application service account needs read/write/update/delete access to this database
+    - Service Account name for `WestgateWeb` -> WGCWebUser
+- Dump dev database `WestgateWeb` and restore as new database to WGC-POSDB server.
+
+### POSITIVE POS DB SQL Connection
+
+Have created a user, `WGCAppUser` for the application to read Positive's DB with. I can sign in directly to the server (SSMS), but cannot authenticate remotely. Might be network related? Not sure if SQL auth happens over a different port or not, but both the app and SSMS on the dev server cannot connect to WGC-POSDB\POSITIVE database. 
+
+DbContext for this is setup and ready to go once I get the login situation sorted out properly. I might need to restart SQL services? ~~Yet will also reach out to Howsmon to see if anything is blocking it.~~ Something is blocking the login, I was able to sign in to SQL server using the app's credentials from another machine in the DC (WGO1 specifically, used visual studio); using the same credentials I was using from the MSP network.  
+
 ### Auto populate build list based on Order
 
 Database View `Items_on_Quotes` seems to contain most, if not all the information I'm after for this feature. 
@@ -125,7 +152,32 @@ Determining if an order is a PC build or not:
         return indexItems;```
 
 
+Finally I have arrived at this for the filtering solution: 
 
+```csharp
+var itemsOnOrder = await _context.GetAll<WestgateDomain.Models.PositivePOS.ItemsOnQuote>();
+
+        var itemsOnOrderIndex = itemsOnOrder.FilterByItems(Departments.AllDepartments,
+            (item, keywd) => item.Department.Contains(keywd), true);
+
+        var potentialBuild = itemsOnOrderIndex
+            .GroupBy(item => item.QuoteNo)
+            .Where(group => group.Count() >= 5)
+            .Select(group => group.Key);
+
+        var indexItems = itemsOnOrderIndex
+            .Where(item => potentialBuild.Contains(item.QuoteNo))
+            .GroupBy(item => item.QuoteNo)
+            .Select(group => new ItemsOnQuoteIndexDto
+            {
+                Customer = group.First().Customer,
+                QuoteNo = group.Key
+            });
+
+        return await Task.FromResult(indexItems);
+```
+
+- This keeps the IQueryable from EFCore allowing us to use AsyncQueryable for better pagination, this greatly improved page load times, from 10sec down to about 1sec. 
 
 - Might be best to filter based on `Department` types, only filter for ones related to a PC build. This is best for creating the BuildSheet, not filtering the index list
 - Filtering the index list has been simplified to just counting the number of instances any `OrderId` occurs, if we have more than 5, assume it's a build and add that to the list. 
