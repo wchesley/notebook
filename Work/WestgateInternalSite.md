@@ -7,6 +7,7 @@
     - [POSITIVE POS DB SQL Connection](#positive-pos-db-sql-connection)
     - [Auto populate build list based on Order](#auto-populate-build-list-based-on-order)
   - [InService Page](#inservice-page)
+  - [Clarion Date Time Conversions](#clarion-date-time-conversions)
 
 ### Deployment Plan
 
@@ -211,4 +212,110 @@ string strSQL = "SELECT " +
         "AND (ORDERS.ORD_SNUM NOT LIKE 'Apple%') " +
         "AND (ORDERS.ORD_SNUM NOT LIKE 'RMA%') " +
         "ORDER BY RefID";
+```
+
+The above SQL string has been translated into the following: 
+
+```csharp
+ var query = from order in _context.Orders
+    join customer in _context.Cusmers on order.OrdCustid equals customer.CusCustId
+    join sales in _context.Salesids on order.OrdSalesid equals sales.SalSalesid
+    where EF.Functions.Like(order.OrdSostat, "@%") &&
+          !EF.Functions.Like(order.OrdSnum, "Apple%") &&
+          !EF.Functions.Like(order.OrdSnum, "RMA%")
+    orderby order.OrdInvoiceno
+    select new InWorkDto()
+    {
+        CustomerId = order.OrdCustid,
+        Name = customer.CusName,
+        DateIn = ClarionDateTimeConverter.ConvertClarionDate(order.OrdSalesdate.Value),
+        RefId = order.OrdInvoiceno,
+        Days = _today.Subtract(ClarionDateTimeConverter.ConvertClarionDate(order.OrdSalesdate.Value)).Days,
+        DateOut = ClarionDateTimeConverter.ConvertClarionDate(order.OrdDatedue.Value),
+        CheckedInBy = sales.SalSalesname,
+        Description = order.OrdSnum,
+        Status = order.OrdSostat,
+    };
+return query;
+```
+
+For Completed report, getting call notes via: 
+
+```csharp
+string strSQL2 = "SELECT " +
+  "CAL_INVOICENO AS RefID, " +
+  "CAL_RESULT AS cMessage " +
+  "FROM CALLED " +
+  "WHERE (CAL_INVOICENO = '" + e.Item.Cells[3].Text + "') ";
+```
+
+- Where `RefID` is the `ORD_INVOICENO` from `ORDERS` table. 
+
+
+## Clarion Date Time Conversions
+
+Positive DB stores their date time objects as Clarion Time, where the date time is found by the number of seconds that have elapsed since Dec. 28th, 1800. The following static classes are available in `WestgateApplicaiton` to convert Clarion time to .NET DateTime objects, and back again. 
+
+```csharp
+
+public class ClarionDateTimeConverter
+{
+    private static readonly DateTime ClarionEpoch = new DateTime(1800, 12, 28);
+
+    public static DateTime ConvertClarionDate(int clarionDate)
+    {
+        // Add the Clarion date to the Clarion epoch
+        return ClarionEpoch.AddDays(clarionDate);
+    }
+
+    public static DateTime ConvertClarionTime(int clarionTime)
+    {
+        // Calculate hours, minutes, seconds, and milliseconds from the Clarion time
+        int totalSeconds = clarionTime / 100;
+        int milliseconds = (clarionTime % 100) * 10;
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+
+        return new DateTime(1, 1, 1, hours, minutes, seconds, milliseconds);
+    }
+
+    public static DateTime ConvertClarionDateTime(int clarionDate, int clarionTime)
+    {
+        DateTime datePart = ConvertClarionDate(clarionDate);
+        DateTime timePart = ConvertClarionTime(clarionTime);
+
+        // Combine the date and time parts
+        return new DateTime(datePart.Year, datePart.Month, datePart.Day, timePart.Hour, timePart.Minute,
+            timePart.Second, timePart.Millisecond);
+    }
+}
+```
+
+```csharp
+public static class DateTimeToClarionConverter
+{
+    private static readonly DateTime ClarionEpoch = new DateTime(1800, 12, 28);
+
+    public static int ConvertToClarionDate(DateTime dateTime)
+    {
+        // Calculate the number of days between the given date and the Clarion epoch
+        return (dateTime - ClarionEpoch).Days;
+    }
+
+    public static int ConvertToClarionTime(DateTime dateTime)
+    {
+        // Calculate the number of hundredths of a second since midnight
+        int hundredthsOfSeconds = (dateTime.Hour * 3600 + dateTime.Minute * 60 + dateTime.Second) * 100 + dateTime.Millisecond / 10;
+        return hundredthsOfSeconds;
+    }
+
+    public static (int clarionDate, int clarionTime) ConvertToClarionDateTime(DateTime dateTime)
+    {
+        int clarionDate = ConvertToClarionDate(dateTime);
+        int clarionTime = ConvertToClarionTime(dateTime);
+
+        return (clarionDate, clarionTime);
+    }
+}
 ```
