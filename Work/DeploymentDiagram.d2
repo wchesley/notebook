@@ -1,0 +1,21 @@
+Westgate: {
+    User A
+    User B
+    User C
+    User A.shape: person
+    User B.shape: person
+    User C.shape: person
+}
+DataCenter:{
+    WGC-POSDB {
+        WestgateWeb
+        WESTGATELIVE
+        WestgateWeb.shape: cylinder
+        WESTGATELIVE.shape: cylinder
+    }
+    WGC-APP
+}
+
+Westgate <-> DataCenter.WGC-APP: http/https
+DataCenter.WGC-App <-> DataCenter.WGC-POSDB.WestgateWeb: Read & Write
+DataCenter.WGC-App <- DataCenter.WGC-POSDB.WESTGATELIVE: Readonly
