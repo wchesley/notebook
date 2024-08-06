@@ -8,6 +8,7 @@
     - [Auto populate build list based on Order](#auto-populate-build-list-based-on-order)
   - [InService Page](#inservice-page)
   - [Clarion Date Time Conversions](#clarion-date-time-conversions)
+  - [Inventory Views](#inventory-views)
 
 ### Deployment Plan
 
@@ -20,8 +21,28 @@ Initial Deployment:
   - `WESTGATELIVE` is set for readonly, writes are explicitly denied to this DB from the `PositiveDbContext` perspective. Set SQL permissions to also deny write ability from the service account.
     - Service Account name for `WESTGATELIVE` -> WGCAppUser
   - `WestgateWeb` is less restrictive. The application service account needs read/write/update/delete access to this database
+  - Granted DB ownership to 
     - Service Account name for `WestgateWeb` -> WGCWebUser
 - Dump dev database `WestgateWeb` and restore as new database to WGC-POSDB server.
+- Install .NET 8.0 Hosting bundle from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+  - Look under ASP.NET Core Runtime, the hosting bundle is a windows only installation. 
+- Create Service account in Active Directory for application to run under. 
+  - Name the account `svc_WestgateWeb` 
+  - Create randomized 22 character (minimum) password, with at least 
+    - one capitol letter, 
+    - one number, 
+    - one special character, 
+    - no sequentially repeating characters (ie `ii`, `ee`, `33`, `!!`), 
+    - no sequentially incrementing characters (ie `1234`, `abc`), 
+    - Do not use any word found in the english dictionary. 
+    - Be sure to encase special characters in the password when inputting the password into any `.json` file. See [this SO post](https://stackoverflow.com/questions/19176024/how-to-escape-special-characters-in-building-a-json-string) for more on escaping special characters in JSON strings. 
+  - Do not set the password to expire. This password will get changed yearly with the annual SOC audit. 
+  - Save the password to ITGlue for Westgate Computers. 
+  - Grant the `svc_WestgateWeb` permissions to logon as a service account. See [here](https://learn.microsoft.com/en-us/system-center/scsm/enable-service-log-on-sm?view=sc-sm-2022) for a guide. 
+- Create SSL certificate for site
+  - Used self-signed certificate instead of AD signed one, there was no option for web/SSL from AD provided templates. 
+  - TODO: Distribute SSL cert via GPO
+
 
 ### POSITIVE POS DB SQL Connection
 
@@ -318,4 +339,55 @@ public static class DateTimeToClarionConverter
         return (clarionDate, clarionTime);
     }
 }
+```
+
+## Inventory Views
+
+Will use sql view named `VW_INVLIST`, defined as: 
+
+```sql
+-- dbo.VW_INVLIST source
+
+CREATE VIEW dbo.VW_INVLIST
+AS
+SELECT DISTINCT 
+  TOP (100) PERCENT dbo.ITEMS.ITE_BARCODE AS SKU, dbo.ITEMS.ITE_DESCRIPTION AS DESCRIPTION, dbo.ITEMS.ITE_CATG AS CATEG, dtbl_1.ITC_IN_STOCK AS QUANTITY, dtbl_1.ITC_LASTCOST AS COST, 
+  dtbl_1.ITC_IN_STOCK * dtbl_1.ITC_LASTCOST AS TOTAL, dtbl_1.ITC_LastReceived, dbo.ITEMS.ITE_INVNO, dtbl_2.ITP_PRICE1 AS MSRP, dtbl_2.ITP_PRICE1 - dtbl_1.ITC_LASTCOST AS GROSS, 
+  dbo.ITEMS.ITE_MAN_ID AS MFG_ID, dtbl_2.MinINV, dtbl_2.MaxINV, dtbl_1.[Committed], dtbl_1.OnOrder
+FROM dbo.ITEMS INNER JOIN
+  (SELECT ITC_INVNO, ITC_IN_STOCK, ITC_LASTCOST, ITC_NORD AS OnOrder, ITC_NHOO AS [Committed], ITC_LastReceived
+    FROM dbo.ITMCount) AS dtbl_1 
+    ON dbo.ITEMS.ITE_INVNO = dtbl_1.ITC_INVNO INNER JOIN
+  (SELECT ITP_INVNO, ITP_PRICE1, ITP_MSTO AS MinINV, ITP_MXTK AS MaxINV
+    FROM dbo.ITPRICE) AS dtbl_2 
+    ON dbo.ITEMS.ITE_INVNO = dtbl_2.ITP_INVNO
+WHERE (dbo.ITEMS.ITE_BARCODE <> '                    ') 
+AND (dbo.ITEMS.ITE_BARCODE <> '*SECTION*           ') 
+AND (dbo.ITEMS.ITE_BARCODE <> '*SECTION/*          ') 
+AND (dbo.ITEMS.ITE_BARCODE <> 'SUBTOTAL            ') 
+AND
+  (dbo.ITEMS.ITE_BARCODE <> 'PRIORITY            ') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'SUBTOTAL            ') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'PACKAGE             ') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'NOTE:               ') 
+  AND 
+  (dbo.ITEMS.ITE_BARCODE NOT LIKE 'ZZZ%') 
+  AND (dbo.ITEMS.ITE_CATG NOT LIKE 'On Site%') 
+  AND (dbo.ITEMS.ITE_BARCODE NOT LIKE 'REB-%') 
+  AND (dbo.ITEMS.ITE_CATG NOT LIKE 'In House%') 
+  AND 
+  (dbo.ITEMS.ITE_CATG NOT LIKE 'Warranty%') 
+  AND (dbo.ITEMS.ITE_CATG NOT LIKE 'Freight%') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'GC') 
+  AND (dbo.ITEMS.ITE_BARCODE <> '267') 
+  AND (dbo.ITEMS.ITE_BARCODE <> '468') 
+  AND 
+  (dbo.ITEMS.ITE_BARCODE <> '469') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'APLMILE') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'Z268') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'ZZ268') 
+  AND (dbo.ITEMS.ITE_BARCODE <> 'ZZSECTION') 
+  AND 
+  (dbo.ITEMS.ITE_CATG NOT LIKE 'Service Checks%')
+ORDER BY CATEG;
 ```
