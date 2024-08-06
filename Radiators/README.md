@@ -2,6 +2,12 @@
 
 mostly notes and research from a project for a Radiator Manufacturing Company. 
 
+# Notes
+Ordered is required as well as Purchase  
+Serial numbers are generated on work order creation, should be sequential following last one created.   
+Folder Complete bool means drawing is done.   
+so long is shipped is less than scheduled, WO stays on the reports. else it's taken off.   
+
 ## Major software players in Radiator manufacturing
 
 ### ERP like or centered: 
@@ -10,3 +16,8 @@ mostly notes and research from a project for a Radiator Manufacturing Company.
 ### Manufacturing process specific
 
 <table><thead><tr><th>Vendor</th><th>Product(s)</th><th>Approximate Cost/Year</th></tr></thead><tbody><tr><td><strong>Autodesk</strong></td><td>AutoCAD, Fusion 360</td><td>$1,865 (AutoCAD), $495 (Fusion 360)</td></tr><tr><td><strong>Siemens</strong></td><td>NX, Solid Edge</td><td>$7,000-$20,000 (NX), $3,000 (Solid Edge)</td></tr><tr><td><strong>PTC</strong></td><td>Creo, Windchill</td><td>$2,200 (Creo), $20,000 (Windchill)</td></tr><tr><td><strong>Dassault Systèmes</strong></td><td>CATIA, SOLIDWORKS</td><td>$11,200 (CATIA), $5,290 (SOLIDWORKS)</td></tr><tr><td><strong>Altair</strong></td><td>HyperWorks, Inspire</td><td>$10,000 (HyperWorks), $3,600 (Inspire)</td></tr></tbody></table>
+
+# Glossary
+
+**MDMT** - Minimum Design Material Temperature  
+**MAEWP** - Max Allowable External Working Pressure
