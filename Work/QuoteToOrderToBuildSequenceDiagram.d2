@@ -1,0 +1,36 @@
+direction: right
+Quote To Order To Build Sequence Diagram: {
+GET Quotes Index: {
+    shape: sequence_diagram
+
+    User A; ItemsOnQuotesController; GetAllItemsOnQuotesQuery; Positive DB;
+
+    User A -> ItemsOnQuotesController: HTTP Request
+    ItemsOnQuotesController -> GetAllItemsOnQuotesQuery: MediatR
+    GetAllItemsOnQuotesQuery -> Positive DB: Request data from Positive Database
+    Positive DB -> GetAllItemsOnQuotesQuery: Response from database
+    GetAllItemsOnQuotesQuery -> GetAllItemsOnQuotesQuery: Filter results that match any given "Department" and contain 5 or more items
+    GetAllItemsOnQuotesQuery -> GetAllItemsOnQuotesQuery: Map Database entity to Web Model
+    GetAllItemsOnQuotesQuery -> ItemsOnQuotesController: Return data
+    ItemsOnQuotesController -> User A: Serve web page to user
+    }
+
+GET Create Build-Order : {
+    shape: sequence_diagram
+    User A; ItemsOnQuotesController; GetQuoteOrderQuery; ItemsOnQuoteDetailsQuery; Positive DB;
+    
+    User A -> ItemsOnQuotesController: GET Create Build-Order
+    ItemsOnQuotesController -> GetQuoteOrderQuery: MediatR
+    GetQuoteOrderQuery -> Positive DB: Get Order by InvoiceNo
+    Positive DB -> GetQuoteOrderQuery: Return data from DB
+    GetQuoteOrderQuery -> GetQuoteOrderQuery: Map to Web model
+    GetQuoteOrderQuery -> ItemsOnQuotesController: Return OrdersDto
+    ItemsOnQuotesController -> ItemsOnQuoteDetailsQuery: Get Items on Order
+    ItemsOnQuoteDetailsQuery -> Positive DB: Get all items matching order InvoiceNo
+    Positive DB -> ItemsOnQuoteDetailsQuery: Return data from DB
+    ItemsOnQuoteDetailsQuery -> ItemsOnQuoteDetailsQuery: Roll Items into list with single order
+    ItemsOnQuoteDetailsQuery -> ItemsOnQuotesController: Return ItemOnQuoteDetailsDto
+    ItemsOnQuotesController -> ItemsOnQuotesController: Create SvOrderCreateFromQuoteDto
+    ItemsOnQuotesController -> User A: Serve Create form to user
+    }
+}
