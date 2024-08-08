@@ -10,6 +10,12 @@ Free open source SIEM
 - [Email Alerts](./Email_Alerts.md)
 - [Notes from work](./Notes.md)
 
+## Migrating Wazuh agents to new server
+
+It really is as simple as changing the server IP in each agnets ossec.conf file then restarting the wazuh agent. 
+
+---
+
 configured 'operational' user on my edge router for wazuh, enabled it's ssh access, had to change it's login shell (default to `/usr/bin/nologin`) then give it control over it's `~/.ssh/authorized_keys` file, `chown wazuh:users /home/wazuh/.ssh/authorized_keys`.
 
 Enabled syslog on wazuh server: https://documentation.wazuh.com/current/user-manual/capabilities/log-data-collection/syslog.html
@@ -30,3 +36,16 @@ https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/localfi
 ## Wazuh API failed to connect
 
 Happens occasionally after a reboot or change to wazuh config. Just restart wazuh-manager service via `systemctl restart wazuh-manager`. Give it a few minutes to restart, then check `systemctl status wazuh-manager`. 
+
+Should that fail, check `wazuh-indexer` and `wazuh-dashboard` statuses via `systemctl`
+
+```bash
+systemctl status wazuh-dashboard
+systemctl status wazuh-indexer
+```
+
+Check for errors in the status logs or if the service has failed to start.  
+
+Most recently I had issues getting the indexer running properly, good place to look for errors there is the `/var/log/wazuh-indexer/wazuh-indexer-cluster.log`, this pointed to errors related to `kibanaserver` and `admin` users not signing into opensearch. 
+
+Another issue I had was when the opensearch reached near full disk capacity and then places itself into readonly mode. This is not fully resolved yet, I have expanded the disk space but am still not getting new alerts in wazuh (this is at westgate MSP). 
