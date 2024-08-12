@@ -33,4 +33,39 @@ GET Create Build-Order : {
     ItemsOnQuotesController -> ItemsOnQuotesController: Create SvOrderCreateFromQuoteDto
     ItemsOnQuotesController -> User A: Serve Create form to user
     }
+
+POST Create Build-Order : {
+    shape: sequence_diagram
+    User A; ItemsOnQuotesController; ItemsOnQuoteDetailsQuery; CreateBuildOrderFromQuoteCommand; GetQuoteOrderQuery; GetNextSvOrderIdQuery; CreateBuildSheet; Positive DB; WestgateWeb DB; 
+    
+    User A -> ItemsOnQuotesController: POST Create Build-Order Form
+    ItemsOnQuotesController -> ItemsOnQuotesController: Form Validation
+    ItemsOnQuotesController -> ItemsOnQuoteDetailsQuery: Ensure Items are attached to order object
+    ItemsOnQuoteDetailsQuery -> ItemsOnQuotesController: Return List of Items
+    ItemsOnQuotesController -> CreateBuildOrderFromQuoteCommand: MediatR
+    CreateBuildOrderFromQuoteCommand -> GetQuoteOrderQuery: Get Order record from DB
+    GetQuoteOrderQuery -> Positive DB: Retrive order
+    Positive DB -> GetQuoteOrderQuery: Return Order record
+    GetQuoteOrderQuery -> CreateBuildOrderFromQuoteCommand: Order Record
+    CreateBuildOrderFromQuoteCommand -> GetNextSvOrderIdQuery: Get next available SvOrderId
+    GetNextSvOrderIdQuery -> WestgateWeb DB: Find last SvOrder record and get next ID
+    WestgateWeb DB -> GetNextSvOrderIdQuery: Next SvOrderId
+    GetNextSvOrderIdQuery -> CreateBuildOrderFromQuoteCommand: SvOrderId
+    CreateBuildOrderFromQuoteCommand -> CreateBuildSheet: Create Buildsheet objects
+    CreateBuildSheet -> CreateBuildSheet: 1 buildsheet foreach system in order
+    CreateBuildSheet -> WestgateWeb DB: Save Buidsheets to database
+    CreateBuildSheet -> CreateBuildOrderFromQuoteCommand: Build sheets for Order
+    CreateBuildOrderFromQuoteCommand -> CreateBuildOrderFromQuoteCommand: Create SvOrder object
+    CreateBuildOrderFromQuoteCommand -> WestgateWeb DB: Save to database
+    WestgateWeb DB -> CreateBuildOrderFromQuoteCommand: Entity saved to database
+    CreateBuildOrderFromQuoteCommand -> CreateBuildOrderFromQuoteCommand: Map to SvOrderCreateFromQuoteDto object 
+    CreateBuildOrderFromQuoteCommand -> ItemsOnQuotesController: Return result
+    ItemsOnQuotesController -> User A: Redirect to Quotes Index page
+}
+
+GET Quotes Index -> GET Create Build-Order: GET Create page
+GET Create Build-Order -> POST Create Build-Order: POST Form
+POST Create Build-Order -> GET Quotes Index: On success
+POST Create Build-Order -> GET Create Build-Order: On Failure
+
 }

@@ -41,14 +41,14 @@ Initial Deployment:
   - Grant the `svc_WestgateWeb` permissions to logon as a service account. See [here](https://learn.microsoft.com/en-us/system-center/scsm/enable-service-log-on-sm?view=sc-sm-2022) for a guide. 
 - Create SSL certificate for site
   - Used self-signed certificate instead of AD signed one, there was no option for web/SSL from AD provided templates. 
-  - TODO: Distribute SSL cert via GPO
+  - ~~TODO: Distribute SSL cert via GPO~~ Fixed SSL cert and GPO deployment. 
 
 
 ### POSITIVE POS DB SQL Connection
 
 Have created a user, `WGCAppUser` for the application to read Positive's DB with. I can sign in directly to the server (SSMS), but cannot authenticate remotely. Might be network related? Not sure if SQL auth happens over a different port or not, but both the app and SSMS on the dev server cannot connect to WGC-POSDB\POSITIVE database. 
 
-DbContext for this is setup and ready to go once I get the login situation sorted out properly. I might need to restart SQL services? ~~Yet will also reach out to Howsmon to see if anything is blocking it.~~ Something is blocking the login, I was able to sign in to SQL server using the app's credentials from another machine in the DC (WGO1 specifically, used visual studio); using the same credentials I was using from the MSP network.  
+DbContext for this is setup and ready to go once I get the login situation sorted out properly. I might need to restart SQL services? ~~Yet will also reach out to Howsmon to see if anything is blocking it. Something is blocking the login, I was able to sign in to SQL server using the app's credentials from another machine in the DC (WGO1 specifically, used visual studio); using the same credentials I was using from the MSP network.~~ This was resolved by removing the port specification when connecting to the DB.   
 
 ### Auto populate build list based on Order
 

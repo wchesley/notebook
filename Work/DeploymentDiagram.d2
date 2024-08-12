@@ -5,6 +5,7 @@ Westgate: {
     User A.shape: person
     User B.shape: person
     User C.shape: person
+    MSP-PaloAlto
 }
 DataCenter:{
     WGC-POSDB {
@@ -14,8 +15,13 @@ DataCenter:{
         WESTGATELIVE.shape: cylinder
     }
     WGC-APP
+    DC-PaloAlto
 }
 
-Westgate <-> DataCenter.WGC-APP: http/https
+Westgate.User A <-> Westgate.MSP-PaloAlto
+Westgate.User B <-> Westgate.MSP-PaloAlto
+Westgate.User C <-> Westgate.MSP-PaloAlto
+Westgate.MSP-PaloAlto <-> DataCenter.DC-PaloAlto: http/https
+DataCenter.DC-PaloAlto <-> DataCenter.WGC-APP
 DataCenter.WGC-App <-> DataCenter.WGC-POSDB.WestgateWeb: Read & Write
 DataCenter.WGC-App <- DataCenter.WGC-POSDB.WESTGATELIVE: Readonly
