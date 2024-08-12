@@ -8,7 +8,7 @@ LAN: {
   Edgerouter x <-> Vexus ONT
   Cisco 3560G <-> Arris Office AP
   Cisco 3560G <-> Proxmox.Odin
-  Cisco 3560G <-> Proxmox.Thor
+  Cisco 3560G <-> Proxmox.Freja
   Cisco 3560G <-> Proxmox.Loki
   Cisco 3560G <-> Heimdal
   Arris Office AP -> WiFi
@@ -19,13 +19,13 @@ LAN: {
   Linksys 100mb Switch <-> Canon Printer
   Linksys 100mb Switch <-> PS4
   Linksys 100mb Switch <-> Steam Link
-  Proxmox.Odin <-> Proxmox.Thor : Direct Connection (corosync)
+  Proxmox.Odin <-> Proxmox.Freja : Direct Connection (corosync)
   Proxmox.Loki <-> Proxmox.Odin: Direct Connection (corosync)
-  Proxmox.Loki <-> Proxmox.Thor: Direct Connection (corosync)
+  Proxmox.Loki <-> Proxmox.Freja: Direct Connection (corosync)
   Heimdal -> Proxmox.Odin.Plex: iSCSI
   Heimdal -> Proxmox.Loki.BackupPcLocal: iSCSI
   Heimdal -> Proxmox.Odin.MacOSX: iSCSI
-  Heimdal -> Proxmox.Thor.Jellyfin: iSCSI
+  Heimdal -> Proxmox.Freja.Jellyfin: iSCSI
   Edgerouter x -> Proxmox.Loki.OpenVPN: VPN from WAN
   Proxmox.Loki.OpenVPN -> Cisco 3560G: VPN to LAN
   Edgerouter x <-> Proxmox.Loki.ReverseProxy: HTTP (WAN)
@@ -52,11 +52,9 @@ LAN: {
     Odin: {
       PiHole
       GitLab
-      Valheim
       Minecraft
       MongoDB
       ByteBot
-      Fedora DevStation
       Plex
       Apt-Cache
       Zabbix
@@ -64,18 +62,22 @@ LAN: {
       MacOSX
       Collabora
       CUPS
+      Wazuh: offline 
     }
     Loki: {
       OpenVPN
       ReverseProxy
       BackupPcLocal
+      Valheim
     }
-    Thor: {
+    Freja: {
       Jellyfin
       MariaDB
       PiHole2
       Grafana
       Gitlab-Runner
+      Technitum DNS
+      Wazuh
     }
   }
 }
@@ -86,7 +88,6 @@ Cloud: {
   }
   WchesleyOracle : {
     Nginx
-	MailInABox
   }
   Cloudflare : {
     DNS
