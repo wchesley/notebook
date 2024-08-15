@@ -1,0 +1,27 @@
+DataFlow: {
+    shape: sequence_diagram
+    direction: right
+Frontend: web pages
+Controller
+MediatR
+LoggingBehavior
+ValidationBehavior
+UnhandledExceptionBehavior
+Database
+
+Frontend -> Controller: User takes action on pages
+Controller -> MediatR: MediatR moves request from web to application layer
+MediatR -> LoggingBehavior: Request & Response are logged
+Commands are Validated: {
+MediatR -> ValidationBehavior: (optional) Request inputs are validated
+ValidationBehavior -> Controller: On Error, display errors to user
+}
+MediatR -> Database: Request is sent to database
+Database -> MediatR: Results returned from Database
+On any error: {
+MediatR -> UnhandledExceptionBehavior: (optional) Any unhandled error(s)
+UnhandledExceptionBehavior -> Controller: On Error, display errors to user
+}
+MediatR -> Controller: Result sent back to Controller
+Controller -> Frontend: Results send to User
+}
