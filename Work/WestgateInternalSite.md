@@ -3,12 +3,18 @@
 
 - [Westgate Internal Site](#westgate-internal-site)
   - [Dev Diary](#dev-diary)
+    - [Barcode Scanner](#barcode-scanner)
     - [Deployment Plan](#deployment-plan)
+      - [Logs for Production](#logs-for-production)
     - [POSITIVE POS DB SQL Connection](#positive-pos-db-sql-connection)
     - [Auto populate build list based on Order](#auto-populate-build-list-based-on-order)
   - [InService Page](#inservice-page)
   - [Clarion Date Time Conversions](#clarion-date-time-conversions)
   - [Inventory Views](#inventory-views)
+
+### Barcode Scanner
+
+Scanning from barcode scanner results in form submission. Scanner is sending enter keypress after it scans a barcode. Fixed this using [this](https://github.com/bigskysoftware/htmx/issues/1228) github issue from htmx repo. Basically append `onkeydown="if (event.keyCode === 13) event.preventDefault();"` to each input box that we don't want to accept enter key upon. This effectifly ignores the enter (KeyCode 13) keypress on this field only. 
 
 ### Deployment Plan
 
@@ -43,6 +49,9 @@ Initial Deployment:
   - Used self-signed certificate instead of AD signed one, there was no option for web/SSL from AD provided templates. 
   - ~~TODO: Distribute SSL cert via GPO~~ Fixed SSL cert and GPO deployment. 
 
+#### Logs for Production
+
+changed serilog to log to %TEMP% directory, which for `wgservice` account is: `C:\Users\wgservice\AppData\Local\Temp`
 
 ### POSITIVE POS DB SQL Connection
 
