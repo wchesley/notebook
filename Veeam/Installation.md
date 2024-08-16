@@ -79,3 +79,44 @@ When creating a `Proxy Server` Veeam B&R will install two components:
 - Veeam Installer Service: This gets used to check the server and upgrade software as required. 
 - Veeam Data Mover: This is the processing engine for the proxy server and does all the required tasks. 
 
+`Proxy Server` uses one of three different `transport modes` to retrieve data during backup. In order by most effecient: 
+
+- `Direct Storage Access`: The proxy is placed in the same network as your storage arrays and can retrieve data directly. 
+- `Virtual Appliance`: This mode mounts the VMDK files to the proxy server for what we typically call `Hot-Add Mode` to backup server data. 
+- `Network`: This is the least effecient mode, but will be used when the previous two methods are unavailable. It moves data through your network stack, strongly recommended against using 1Gb networks, and instead use at least 10Gb. 
+
+In addition to these standard transport modes, which are provided natively for VMware environments, Veeam provides two others: `Backup from Storage Snapshots` and `Direct NFS`. These provide storage specific transport options for NFS and storage systems that integrate directly with Veeam (Proxmox Backup Server coming Soon™).
+
+Aside from transport, the Proxy Server performs: 
+
+- Retrieving the VM data from storage
+- Compressing data during backup
+- Deduplicating data blocks so that only one copy is stored
+- Encrypting data in transit and at rest
+- Sending the data to the backup repository (backup job), or another backup proxy server (replication job)
+
+Veeam has a formula for calculating resources required by a proxy server: 
+
+- `D`: Source Data in MB
+- `W`: Backup Window in seconds
+- `T`: Trhoughput in MB/s = `D/W`
+- `CR`: Change Rate (how often does the data change? How much is changing per day)
+- `CF`: Cores required for a full backup = `T/100`
+- `CI`: Cores required for an incremental backup = `(T * CR)/25`
+
+Based on the formula above, we can use the following data sample to perform calculations: 
+
+- 500 VM's
+- 100 TB of data
+- 8 Hr backup window
+- 10% Change rate
+
+Using this data set, we can perform the following calculations: 
+
+We can use the numbers we calculated to dermine the required amount of cores needed to run both full and incremental backups to meet our defined SLA. 
+
+Considering that you require 2GB of RAM for each task, you need a VM with 36 vCPU's and 72GB of RAM. Sizing may seem considerable but so is the sample data set, In reality this will vary widely based on each environment. 
+
+Should you use a physical machine as the proxy, you should have a server with a 2-10 core CPU. Using the sample data you would require two physical machines. 
+
+If using VM's for a proxy, you should cap the vCPU size at 8 and add as many proxies as needed for your environment. Using the sample data set, you would need 5 VM's working as proxy servers. 
