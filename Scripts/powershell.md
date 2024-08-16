@@ -2,6 +2,26 @@
 
 # Snippits and small scripts
 
+## Set ACL to directory recusively 
+
+Pulled from [Stackoverflow](https://stackoverflow.com/questions/50481541/grant-domain-user-group-privilege-to-folders-recursively)
+
+For recursive permissions you need to set `ContainerInherit,ObjectInherit`
+
+Here is an example (Note it's not my code):
+
+```ps1
+$Path = "C:\temp\New folder"
+$Acl = (Get-Item $Path).GetAccessControl('Access')
+$Username = "Domain\User"
+$Ar = New-Object System.Security.AccessControl.FileSystemAccessRule($Username, 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow')
+$Acl.SetAccessRule($Ar)
+Set-Acl -path $Path -AclObject $Acl
+```
+
+For more details take a look at http://www.tomsitpro.com/articles/powershell-manage-file-system-acl,2-837.html
+
+
 ## Get users currently logged into system: 
 
 ```ps
