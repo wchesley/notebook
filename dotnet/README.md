@@ -29,3 +29,7 @@ There are many .NET related projects on GitHub.
 * [API docs writing guidelines](https://github.com/dotnet/dotnet-api-docs/wiki) - useful when writing /// comments
 * [.NET Discord Server](https://aka.ms/dotnet-discord) - a place to discuss the development of .NET and its ecosystem
 * Automatic changelog generation: [Versionize](https://github.com/versionize/versionize)
+
+## Notes
+
+- Classes marked as `abstract` cannot be directly instantiated, you must create them through one of it's inherited classes.
