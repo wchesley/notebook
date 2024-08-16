@@ -1,13 +1,11 @@
-# Westgate Internal Site 
-## Dev Diary
+# Westgate Internal Site - Dev Diary
 
-- [Westgate Internal Site](#westgate-internal-site)
-  - [Dev Diary](#dev-diary)
+- [Westgate Internal Site - Dev Diary](#westgate-internal-site---dev-diary)
     - [Barcode Scanner](#barcode-scanner)
-    - [Deployment Plan](#deployment-plan)
-      - [Logs for Production](#logs-for-production)
-    - [POSITIVE POS DB SQL Connection](#positive-pos-db-sql-connection)
-    - [Auto populate build list based on Order](#auto-populate-build-list-based-on-order)
+  - [Deployment Plan](#deployment-plan)
+    - [Logs for Production](#logs-for-production)
+  - [POSITIVE POS DB SQL Connection](#positive-pos-db-sql-connection)
+  - [Auto populate build list based on Order](#auto-populate-build-list-based-on-order)
   - [InService Page](#inservice-page)
   - [Clarion Date Time Conversions](#clarion-date-time-conversions)
   - [Inventory Views](#inventory-views)
@@ -16,7 +14,7 @@
 
 Scanning from barcode scanner results in form submission. Scanner is sending enter keypress after it scans a barcode. Fixed this using [this](https://github.com/bigskysoftware/htmx/issues/1228) github issue from htmx repo. Basically append `onkeydown="if (event.keyCode === 13) event.preventDefault();"` to each input box that we don't want to accept enter key upon. This effectifly ignores the enter (KeyCode 13) keypress on this field only. 
 
-### Deployment Plan
+## Deployment Plan
 
 Initial Deployment: 
 - Setup project to run as a service.
@@ -49,17 +47,17 @@ Initial Deployment:
   - Used self-signed certificate instead of AD signed one, there was no option for web/SSL from AD provided templates. 
   - ~~TODO: Distribute SSL cert via GPO~~ Fixed SSL cert and GPO deployment. 
 
-#### Logs for Production
+### Logs for Production
 
 changed serilog to log to %TEMP% directory, which for `wgservice` account is: `C:\Users\wgservice\AppData\Local\Temp`
 
-### POSITIVE POS DB SQL Connection
+## POSITIVE POS DB SQL Connection
 
 Have created a user, `WGCAppUser` for the application to read Positive's DB with. I can sign in directly to the server (SSMS), but cannot authenticate remotely. Might be network related? Not sure if SQL auth happens over a different port or not, but both the app and SSMS on the dev server cannot connect to WGC-POSDB\POSITIVE database. 
 
 DbContext for this is setup and ready to go once I get the login situation sorted out properly. I might need to restart SQL services? ~~Yet will also reach out to Howsmon to see if anything is blocking it. Something is blocking the login, I was able to sign in to SQL server using the app's credentials from another machine in the DC (WGO1 specifically, used visual studio); using the same credentials I was using from the MSP network.~~ This was resolved by removing the port specification when connecting to the DB.   
 
-### Auto populate build list based on Order
+## Auto populate build list based on Order
 
 Database View `Items_on_Quotes` seems to contain most, if not all the information I'm after for this feature. 
 
