@@ -16,7 +16,7 @@ The script will send notifications to the chesleyFamily Discord server, Alerts c
 Recently been trying to automate backup process further, added udev rule to automount drive when it's plugged in. Found [here](https://superuser.com/questions/1433539/automatically-execute-backup-script-when-external-hard-drive-is-plugged-with-sys). Suggests adding (or creating) `/etc/udev/rules.d/80-autocomplete.rules` with the following rule: `ACTION=="add", SUBSYSTEM=="block", ENV{ID_FS_UUID}=="xxxyyy-1234-4567-8910-aaabbb", ENV{SYSTEMD_WANTS}+="media-backup.mount"`
 > Finding device UUID with `sudo blkid` in my case "Elements" was also listed next to the partition `/dev/sdf1` listing.
 
-After creating the udev rule I created a systemd service that depends on the `ENV{SYSTEMD_WANTS}` name in the udev rule. The service should run when drive is mounted. 
+After creating the udev rule I created a systemd service that depends on the `ENV{SYSTEMD_WANTS}` name in the udev rule. The service should run when drive is mounted. Late update: it never ran when drive was attached, still had to manually mount the exHDD when attached to server.
 
 ## Client File-Level Backups
 
