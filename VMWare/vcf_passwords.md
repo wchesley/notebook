@@ -2,6 +2,7 @@
 
 - [VCF Passwords](#vcf-passwords)
   - [Passwords expired and can't be updated or remediated from SDDC](#passwords-expired-and-cant-be-updated-or-remediated-from-sddc)
+    - [VCF 4.x-5.x](#vcf-4x-5x)
     - [ESXi](#esxi)
     - [NSXT-Edge](#nsxt-edge)
     - [NSXT Manager](#nsxt-manager)
@@ -14,6 +15,60 @@
 ## Passwords expired and can't be updated or remediated from SDDC
 
 Had an issue where we couldn't update 2/4 ESXi hosts passwords for svc account or root, plus 1 NSXT-Edge host with the same issue. Even when we set the password to be the same as what SDDC saw as ESXi/NSXT-Edge hosts passwords, we still couldn't apply remediations on the passwords. 
+
+### VCF 4.x-5.x
+
+1. Login to the vCenter/vSphere UI and find the SDDC Manager VM.
+2. Once you click on the SDDC Manager VM, under the IP address should be the host FQDN for which ESXi the VM is sitting on.
+3. Open a new tab and paste the ESXi host FQDN into your browser and login to the host UI via root. 
+4. Click on Virtual Machines, then click on the SDDC Manager VM > Edit > VM Options > Boot Options
+5. Set the Boot Delay to 10000 milliseconds.
+6. Open the VM console and On the right-hand side of the console should be a button that says Actions. Click on Actions > Power > Reset.
+7. When you see the Photon screen, hit the 'e' key to get into the GRUB. 
+8. Use the arrow keys to navigate to the line beginning with linux and add the following to the end of the line
+
+    `rw init=/bin/bash`
+
+9. Press the `F10` key to continue booting the VM. 
+10. Run the following commands to unlock the vcf and root accounts:
+    - For VCF versions up to VCF 5.0.0.1, use :
+
+        `/usr/bin/pam_tally2 -u root -r`
+
+        `/usr/bin/pam_tally2 -u vcf -r`
+
+    - For VCF versions starting from VCF 5.1.0.0, use:
+
+        `/usr/sbin/faillock --user root --reset`
+        
+        `/usr/sbin/faillock --user vcf --reset`
+
+    - Note: If there are any failures, you will need to use the up arrow key to re-run the command until the failures column shows 0.
+11. Run the following commands to set the accounts to a temporary password: 
+
+    `passwd vcf`
+
+    `passwd root`
+
+12. Then reboot SDDC by running the following: 
+
+    `reboot -f`
+
+13. After a few minutes, SSH into the SDDC Manager with the vcf user and temp password and then su root and enter the temp password for root. 
+Then run the following command to clear the passwords:
+
+    `echo "" >/etc/security/opasswd` 
+
+13. Now we can reset the accounts to new passwords or a password previously used by using commands mentioned in Step # 11
+
+- Note: Make a note of what the vcf and root passwords were changed to.
+
+16. Here is the below command to change the age of the VCF and Root 
+
+VCF :  `chage -M 999 vcf`
+
+Root : `chage -M 999 root`
+
 
 ### ESXi
 
@@ -151,3 +206,4 @@ ref: https://kb.vmware.com/s/article/89921
 - [Steps to recover expired Service Accounts in VMware Cloud Foundation (83615)](https://kb.vmware.com/s/article/83615)
 - [Replace Expired or Self-signed NSX-T Manager Certificates with VMCA-Signed Certificates (89921)](https://kb.vmware.com/s/article/89921)
 - [Reset 'admin' and/or CLI Privilege Mode passwords for NSX Manager, NSX for vSphere 6.3 & 6.4 (60335)](https://kb.vmware.com/s/article/60335)
+- [Reset VCF and Root passwd in SDDC](https://knowledge.broadcom.com/external/article/323984/how-to-reset-sddc-manager-vcf-and-root-u.html)
