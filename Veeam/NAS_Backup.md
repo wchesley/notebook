@@ -39,3 +39,13 @@ Complete the following steps to setup a new file copy job, sending it directly t
 >
 > You can run your job immediatly by turning on the **Run the job when I click Finish** checkbox, which will not wait for the scheduled time, instead running your job immediatley. 
 
+### NAS Backup with Immutibility 
+
+You will need object-storage with immutibility support for this to function. 
+
+The process is the same as *NAS backup - Archive copy mode and direct-to-object storage*. The only difference is when you come to **Backup Repository** screen of the **New File Backup Job** wizard, you select an immutable repository to send your NAS backup to. 
+
+After your backup completes you will have a line in the summary screen that states `Setting immutability for backup completed successfully`. 
+
+## NFS backup publishing as an SMB share
+
