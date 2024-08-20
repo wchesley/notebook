@@ -6,7 +6,8 @@ Veeam Software is a Russian-founded and now privately held US-based information 
 
 1. [Installation (v12)](./Installation.md)
 2. [Security (v12)](./VBR_v12_Security_Updates.md)
-3. [User guide - warning 2.3k page pdf](https://www.veeam.com/veeam_backup_12_user_guide_vsphere_pg.pdf)
+3. [NAS Backups (v12)](./NAS_Backup.md)
+4. [User guide - warning 2.3k page pdf](https://www.veeam.com/veeam_backup_12_user_guide_vsphere_pg.pdf)
 
 *has to be installed on windows*
 
