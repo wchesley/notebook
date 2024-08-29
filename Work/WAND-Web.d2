@@ -1,0 +1,22 @@
+Proxmox VE: {
+    WAND-Web
+    PostgreSQL
+}
+
+Westgate: {
+    UserA
+    UserB
+    UserC
+}
+
+Cloud: {
+    DattoAPI
+    AutoTaskAPI
+}
+
+Proxmox VE.WAND-Web <-> Proxmox VE.PostgreSQL
+Proxmox VE.WAND-Web <-> Westgate.UserA
+Proxmox VE.WAND-Web <-> Westgate.UserB
+Proxmox VE.WAND-Web <-> Westgate.UserC
+Proxmox VE.WAND-Web -> Cloud.DattoAPI: Request device list
+Proxmox VE.WAND-Web -> Cloud.AutoTaskAPI: Request Site list
