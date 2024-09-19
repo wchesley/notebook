@@ -44,6 +44,12 @@ To convert `pfx` to `pub` (public key):
 
 From here, I added the public key to the code repository and set every project in the solution to use that cert for signing. I had some trouble with CI/CD pipeline not reading or finding the file. Well the file is not included in build output nor git repo (and rightly so). Updated tests script to copy the `.pub` file into the correct directories on the self-hosted github runner. 
 
+ref: [StackOverflow - Access DeveloperPowershell outside of Visual Studio](https://stackoverflow.com/questions/73161788/visual-studio-2022-how-to-access-the-built-in-developer-powershell-instead-of)
+
+The above link shows how to access developer powershell without launching Visual Studio, but Visual Studio must still be installed. 
+
+Powershell script that launches the profile is at `C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\Launch-VsDevShell.ps1`
+
 ### Powershell
 
 > #### Note:
