@@ -106,3 +106,8 @@ infrastructure components.
 >
 >For the list of ports used by the backup server to communicate with backup >repositories, see the Veeam Backup & Replication User Guide, section [Used Ports]>(https://helpcenter.veeam.com/docs/backup/vsphere/used_ports.html?ver=120#backup-repositories).
 
+# Issues
+
+One one PVE instance, I've had minimal trouble with the Veeam Proxy required to backup PVE VM's. In my homelab, I had issues where the Veeam Proxy wouldn't acquire an IP address. I did no major changes, failed attempts at logging into the VM itself. It was originally set for a static address, which originally worked to add the Veeam Worker. However, upon it's first job run, it failed to acquire an IP address and the whole job failed. I retried the job with no success, reconfigured the worker for DCHP, which acquired an IP address during the test but again, failed on job execution. I gave up that night, came back ~24hrs later and reset the worker back to a static IP address, tests passed and the job was successful.
+
+Backing up my NAS host (Heimdall) - originally when doing a 'full' backup of this host, since it serves as an iSCSI target, there are multiple LVM volumes under the name `ubuntu-vg/ubuntu-lv`, I couldn't rename the Heimdall's root LVM, even by it's uuid, I suspect the raid enforced by the server is the cause, but need to confirm that. To resolve the issue, I ended up migrating the ubuntu VM's that had the same LVM name as Heimdall to other storage locations. Only one actually existed, Plex's storage, the other was a left over from the removal of the PVE node Thor. 
