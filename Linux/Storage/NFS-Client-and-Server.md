@@ -205,16 +205,16 @@ empty.
 
 We’ll create two directories for our mounts:
 
-`• sudo mkdir -p /nfs/general
+- ` sudo mkdir -p /nfs/general`
 
-• sudo mkdir -p /nfs/home`
+- `sudo mkdir -p /nfs/home`
 
 Now that we have a location to put the remote shares and we’ve opened
  the firewall, we can mount the shares using the IP address of our **host** server:
 
-`• sudo mount host_ip:/var/nfs/general /nfs/general
+- `sudo mount host_ip:/var/nfs/general /nfs/general`
 
-• sudo mount host_ip:/home /nfs/home`
+- `sudo mount host_ip:/home /nfs/home`
 
 These commands will mount the shares from the host computer onto the **client** machine. You can double-check that they mounted successfully in several ways. You can check this with a `mount` or `findmnt` command, but `df -h` provides a more readable output:
 
