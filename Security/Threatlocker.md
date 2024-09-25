@@ -11,3 +11,9 @@ Use at least 2 variables when whitelisting custom applications. Don't whitelist 
 Can create policies that apply per user rather than per machine. 
 
 Storage Control as FIM: There's no option to ignore files of certain type or directory? It seems to be all or nothing. 
+
+## Certificates
+
+It's best to whitelist applications by their certificate. For custom code though, it'll need to be signed by a trusted 3rd party CA. I had attempted to use our own AD CA for a cert but it still shows as untrusted. 
+
+ThreatLocker KB article [here](https://threatlocker.kb.help/unverified-certificates/) 
