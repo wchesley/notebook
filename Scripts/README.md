@@ -1,5 +1,5 @@
 # Scripts
-Mostly notes about bash scripts, any other script I write would probably be in Python. 
+Mostly notes about bash & powershell scripts, any other script I write would probably be in Python. 
 
 ## Template Script: 
 
