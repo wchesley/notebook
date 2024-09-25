@@ -24,3 +24,10 @@ Reverse backups will always show the full backup as the latest restore point. Th
 Veeams terminology for keeping multiple backup copies, ie keeping 1 weekly, 1 monthly and 1 yearly, so you always have 3 full extra backups at earlier dates in time on top of your normal backups (full backup + incrementals) in short term storage. GFS is more typical for archival storage and plays a key role in a Retention Policy. 
 
 Retention policy is influenced by the frequency of backups, the way the backups are categorized, the total number of backups (Jobs, GFS, retention points), the rate of change in data foreach machine with a backup job. This also heavily influences the amount of storage you will need and where you will be able to store all backups and their copies. 
+
+# Replication
+
+When enabling replication between clusters (VMWare), you will need a Veeam Proxy on both source and destination ends. One to send the data to the replicated site/cluser and another to recieve and process the data. If source and destination are on different networks/physical locations, you will need Veeam B&R on both ends and they musts be able to communicate with eachother (BGP, VPN, etc...). If using VSphere, then both remote and local VSphere servers must be added to Veeam B&R. 
+
+You cannot store replication metadata in a Scale-Out Backup Repository, it must be in a normal repository. 
+
