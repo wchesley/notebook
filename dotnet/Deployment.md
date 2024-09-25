@@ -2,6 +2,12 @@
 
 Notes regarding deploying .NET based applications
 
+# General
+
+To build for release run the following command: 
+
+`dotnet build -c Release -o ./bin/Publish`
+
 # ASP.NET Core
 
 Using Kestrel as web server and run web app as windows service.  
