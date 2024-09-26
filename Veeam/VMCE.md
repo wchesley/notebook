@@ -31,3 +31,22 @@ When enabling replication between clusters (VMWare), you will need a Veeam Proxy
 
 You cannot store replication metadata in a Scale-Out Backup Repository, it must be in a normal repository. 
 
+## Failover
+
+Failover is a process of switching from the VM on the source host to its VM replica on a host in the disaster recovery site. Failback is a process of returning from the VM replica to the source VM.
+
+Veeam B&R provides the following failover and failback operations: 
+
+- Perform Failover
+- Perform Planned Failover
+- Create Failover Plan
+- Perform permanent failover
+- Undo failover
+- Perform failback:  
+When you perform failback, you shift all processes back to the source VM and send to the source VM all changes that took place while the VM replica was running. During failover, changes made on the source VM are not sent to the VM replica.  
+If the source host is not available, you can recover a VM with the same configuration as the source VM and switch to it. For more information on how failback is performed, see Failback.  
+When you perform failback, changes are only sent to the source/recovered VM but not published. You must test whether the source/recovered VM works with these changes. Depending on the test results, you can do the following:
+  - Commit failback
+  - Undo failback
+
+![Failover diagram](../Images/VeeamFailoverDiagram.png)
