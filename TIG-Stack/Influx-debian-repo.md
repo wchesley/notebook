@@ -1,5 +1,10 @@
 # Influx debian repo
 
+> ## Important!
+> The information below still applies to influxdb v2.x + However, as of 09-26-2024, influxdb 1.7 is in Debian (bookworm) 12's deafult repository and can be added with `apt install influxdb influxdb-client`
+>
+> For influxdb 2.x + installation see: https://docs.influxdata.com/influxdb/v2/install/#install-influxdb-as-a-service-with-systemd 
+
 Column: https://docs.influxdata.com/influxdb/v1.7/introduction/installation/
 
 have to add keys to TIG repo for updates: 
