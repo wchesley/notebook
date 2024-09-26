@@ -31,10 +31,9 @@ InfluxDbApiKey="InfluxDbApiKey"
 InfluxDB="BucketName" #Default Database (used as bucket in influxdb 2.0)
 InfluxDbOrg="Organization" #Default Organization (new in influxdb 2.0)
 # Endpoint URL for login action
-Password="VSPC-API-Key"
+Bearer="VSPC-API-Key"
 RestServer="https://vspc.local"
 RestPort="1280/api/v3" #Default Port
-#Bearer=$(curl -X POST --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" -d "grant_type=password&username=$Username&password=$Password" "$RestServer:$RestPort/token" -k --silent | jq -r '.access_token')
 
 # V3 Default Site UID: 
 # we only use one site to manage all tenants, you will need to change this to your site UID or update the logic to derrive each site UID from the VSPC API
