@@ -25,6 +25,6 @@ My collection of notes from, well, everything. Ranging from detailed and complet
 7.  [Reading](Reading-List/Reading-List.md)
 8.  [School](./School/README.md)
 9.  [Terraform](./Terraform/README.md)
-10. [TIG](TIG-Stack/Bytes-to-GB.md)
+10. [TIG](./TIG-Stack/README.md)
 11. [Windows](Windows/Using-Telegraf-on-Windows-Blog-InfluxData.md)
 12. [ZFS](ZFS/ZFS-Home.md)
