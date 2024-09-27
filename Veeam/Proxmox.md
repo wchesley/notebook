@@ -1,5 +1,14 @@
 # Veeam & Proxmox VE
 
+- [Veeam \& Proxmox VE](#veeam--proxmox-ve)
+  - [Solution Architecture](#solution-architecture)
+  - [How VM Backup Works](#how-vm-backup-works)
+  - [Ports](#ports)
+    - [Workers](#workers)
+    - [Backup Server](#backup-server)
+- [Issues](#issues)
+
+
 [Veeam B&R PVE Docs](https://helpcenter.veeam.com/docs/vbproxmoxve/userguide/overview.html?ver=1)
 
 With Veeam Backup & Replication 12.2, official support for Proxmox VE has been added! Though, the account used with VBR and PVE must have `root` priveleges. With Veeam Backup for PVE you can perform the following operations: 
