@@ -1,6 +1,70 @@
 # Powershell
 
+PowerShell is a task automation and configuration management program from Microsoft, consisting of a command-line shell and the associated scripting language. Initially a Windows component only, known as Windows PowerShell, it was made open-source and cross-platform on August 18, 2016, with the introduction of PowerShell Core. The former is built on the .NET Framework, the latter on .NET (previously .NET Core).
+
+- [Powershell](#powershell)
+- [Snippits and small scripts](#snippits-and-small-scripts)
+  - [Get password from Environment Variable:](#get-password-from-environment-variable)
+  - [Get Password from User Input:](#get-password-from-user-input)
+  - [Set password for user:](#set-password-for-user)
+  - [Create new Local User:](#create-new-local-user)
+  - [Add Local User to Administrators group:](#add-local-user-to-administrators-group)
+  - [Set Local User password to never expire:](#set-local-user-password-to-never-expire)
+  - [Set ACL to directory recusively](#set-acl-to-directory-recusively)
+  - [Get users currently logged into system:](#get-users-currently-logged-into-system)
+    - [Get Count of users with given name:](#get-count-of-users-with-given-name)
+  - [Uninstall any app by name:](#uninstall-any-app-by-name)
+  - [Get Office 365 Update Channel:](#get-office-365-update-channel)
+
+
 # Snippits and small scripts
+
+- [Docs](https://learn.microsoft.com/en-us/powershell/)
+- [Github](https://github.com/PowerShell/PowerShell)
+
+## Get password from Environment Variable: 
+
+```ps1
+$passwd = ConvertTo-SecureString $env:password -AsPlainText -Force
+```
+
+## Get Password from User Input: 
+
+This will prompt the user to enter their password twice, no output is echo'd to shell for passwords: 
+```ps1
+$passwd = Read-Host 'What is your password?' -AsSecureString
+```
+
+## Set password for user: 
+
+Option 1. - This prompts you to input password into console twice: 
+```ps1
+net user svcNessus *
+```
+
+Option 2. - Use password from a variable: 
+
+```ps1
+net user svcNessus $passwd
+```
+
+## Create new Local User: 
+
+```ps1
+New-LocalUser -Name "svcNessus" -Description "Nessus service account" -Password $passwd
+```
+
+## Add Local User to Administrators group: 
+
+```ps1
+Add-LocalGroupMember -Group Administrators -Member svcNessus -Verbose
+```
+
+## Set Local User password to never expire: 
+
+```ps1
+Set-LocalUser -Name "svcNessus" -PasswordNeverExpires 1
+```
 
 ## Set ACL to directory recusively 
 
@@ -28,6 +92,12 @@ For more details take a look at http://www.tomsitpro.com/articles/powershell-man
 PS C:\Users\wchesley> query user
  USERNAME              SESSIONNAME        ID  STATE   IDLE TIME  LOGON TIME
 >wchesley              console             1  Active      none   7/24/2024 7:36 AM
+```
+
+### Get Count of users with given name: 
+
+```ps1
+$count = Get-LocalUser | where-Object Name -eq "svcNessus" | Measure
 ```
 
 ## Uninstall any app by name: 
