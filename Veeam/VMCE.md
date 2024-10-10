@@ -2,6 +2,50 @@
 
 Exam notes as I go through VMCE training course targeting Veeam Backup & Replication version 12. 
 
+# 4 Key Components of Veeam Backup and Replication
+
+- Backup Server
+  - Installation point for Veeam backup and replication, VM or physical host, min 4vCPU and 8GB RAM.
+- Proxy Server
+  - Reads VM data from production storage (Dedupe, compression, encryption)
+  - Transfers data from production storage to backup repository.
+  - Transport Modes: Direct Storage Access, Virtual Appliance (HotAdd), Network
+  - Can be physical or VM, if physical, 2 Proxies are recommended
+- Repository Server
+  - Storage location for backup files, VM Copies and metadata for replicated VM's
+  - Recommended to be physical machines
+  - Storage Types: DAS, NAS (NFS 3.0 or 4.1 recommended), SMB, Dedupe Storage Appliances, Object storage (S3)
+    - NOTE: All types of storage except Direct Attached Storage (DAS) will require a Gateway Server to host the Veeam Data mover components. Gateway server are automatically selected, but will default to the VBR server if no other components are available. 
+  - Hardened Repos: Linux Hardened Repos
+    - Malware-Safe, Immutable (Requires: backup job: forward inc with synth or active periodic full backups. Backup Copy Job: GFS enabled Retention policy)
+    - Non-Root single-use account - Temporary credentials to add to VBR server, uses certificate based auth after initial handshake. 
+    - Offline Tape Storage (Veeam is almost best-in class for this)
+    - Object storage: 
+      - Immutability, single port communication, no API calls, multiple locations available (On-Prem, Cloud or multi-cloud)
+        - ASW S3, Glacier S3, Snowball Edge
+        - Azure Blob, Archive, Data Box
+        - IBM Cloud
+        - Wasabi S3
+        - S3 Compatible: MinIO, Cloudian, ObjectFirst, BackBlaze etc...
+- Database Server
+  - Microsoft SQL Server (manual setup required) or PostgreSQL (PostgreSQL is preffered)
+
+# The Golden Rule
+
+3-2-1-1-0 rule is an industry recognized term that refers to best practices for data backup and recovery. It entails: 
+- 3 different copies of backups
+- 2 different media types
+- 1 backup copy kept on site
+- 1 backup copy kept off site
+- 0 errors after backup recovery verification (SureBackup - unique to Veeam, for other software, refer to it's documentation or create your own recovery plan and test it regularly!)
+
+Veeam SureBackup feature verifies the recoverability of backups by mounting them, running scripts and testing services and applications
+
+## RPO & RTO
+- RTO: Recovery Time Objective - The amount of time it takes to restore an application from the moment it goes down to the moment it is fully operational again. The maximum amount of time a business can tolerate being offline. 
+  - RTO is only achieved when the application is functions as it did before the outage. 
+- RPO: Recovery Point Objective - How much data loss is acceptable? This aligns with backup frequency, with a typical 24hr interval, resulting in a maximum of 24 hours of data loss.
+
 ## Forward vs Reverse Incremental Backups
 
 ![Forward vs Reverse Incremental Backups diagram](../Images/FwdVsReverseIncrementalBackups.jpg)
