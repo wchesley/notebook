@@ -27,6 +27,20 @@ Recently migranted LAN to new subnet of 10.0.0.0/16. I updated `storage.cfg` to 
 
 After reading the timeout error when trying to view the disks on an iscsi mount, I noticed PVE was trying to use an ssh key with the new IP address. I was able to rename the public and private keys in PVE, verified I could still sign in with them and restarted `iscsid.service`. Then I just needed to start the VM's that live on iscsi target and all was well. 
 
+## Add new server
+
+To add a new consumer of the target iSCSI LUN. 
+
+From the consumer (PVE host that will consume the iSCSI LUN), run `cat /etc/iscsi/initiatorname.iscsi`, copy the name after the `=` sign, ie: `InitiatorName=iqn.1993-08.org.debian:01:f9bd3b6f65df` 
+
+Log into iSCSI target (server hosting iSCSI LUNs), run `targetcli` to open iSCSI controlls.
+
+> If not already there, navigate to the target group you need to add the server to, in my case it's `tgp1`
+
+From the root of your target group, ie `tgp1`,  `cd` into the `acls` directory. 
+
+Run `create <InitiatorNam>` to add your consumer to the server. (Where `<InitiatorName>` is the value copied from the consumer in the first step.)
+
 # My setup for ZFS over ISCSI
 
 2x300gb 10krpm SAS drives in zfs stripe - This is a testing ground, idgaf about data here. For Production, I'd use 4 drives in a striped mirror. Enabled lz4 compression and deduplication for this pool.
