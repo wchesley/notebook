@@ -29,17 +29,22 @@ After reading the timeout error when trying to view the disks on an iscsi mount,
 
 ## Add new server
 
-To add a new consumer of the target iSCSI LUN. 
+If you try to start a VM on a new PVE node where the VM disk is stored on an iSCSI LUN, and encounter an error like: `kvm: -drive file=iscsi://10.0.0.118/iqn.2003-01.org.linux-iscsi.heimdall.x8664:sn.f461fed3663d/0,if=none,id=drive-scsi0,discard=on,format=raw,cache=none,aio=io_uring,detect-zeroes=unmap: iSCSI: Failed to connect to LUN : Failed to log in to target. Status: Authorization failure(514)
+TASK ERROR: start failed: QEMU exited with code 1`. Your PVE node is not setup on the iSCSI server and needs to be added in the target groups ACL. 
 
-From the consumer (PVE host that will consume the iSCSI LUN), run `cat /etc/iscsi/initiatorname.iscsi`, copy the name after the `=` sign, ie: `InitiatorName=iqn.1993-08.org.debian:01:f9bd3b6f65df` 
+### To add a new consumer of the target iSCSI LUN. 
 
-Log into iSCSI target (server hosting iSCSI LUNs), run `targetcli` to open iSCSI controlls.
+1. From the consumer (PVE host that will consume the iSCSI LUN), run `cat /etc/iscsi/initiatorname.iscsi`, copy the name after the `=` sign, ie: `InitiatorName=iqn.1993-08.org.debian:01:f9bd3b6f65df` 
+
+2. Log into iSCSI target (server hosting iSCSI LUNs), run `targetcli` to open iSCSI controlls.
 
 > If not already there, navigate to the target group you need to add the server to, in my case it's `tgp1`
 
-From the root of your target group, ie `tgp1`,  `cd` into the `acls` directory. 
+3. From the root of your target group, ie `tgp1`,  `cd` into the `acls` directory. 
 
-Run `create <InitiatorNam>` to add your consumer to the server. (Where `<InitiatorName>` is the value copied from the consumer in the first step.)
+4. Run `create <InitiatorNam>` to add your consumer to the server. (Where `<InitiatorName>` is the value copied from the consumer in the first step.)
+
+5. No further setup of PVE or iSCSI target are required, you should be able to start the VM now or use storage provided by the iSCSI target. 
 
 # My setup for ZFS over ISCSI
 
