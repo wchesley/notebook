@@ -10,6 +10,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Create new Local User:](#create-new-local-user)
   - [Add Local User to Administrators group:](#add-local-user-to-administrators-group)
   - [Set Local User password to never expire:](#set-local-user-password-to-never-expire)
+  - [List folder size:](#list-folder-size)
   - [Set ACL to directory recusively](#set-acl-to-directory-recusively)
   - [Get users currently logged into system:](#get-users-currently-logged-into-system)
     - [Get Count of users with given name:](#get-count-of-users-with-given-name)
@@ -64,6 +65,12 @@ Add-LocalGroupMember -Group Administrators -Member svcNessus -Verbose
 
 ```ps1
 Set-LocalUser -Name "svcNessus" -PasswordNeverExpires 1
+```
+
+## List folder size: 
+
+```ps1
+[math]::Round((Get-ChildItem -Path C:\Temp -Recurse | Measure-Object -Property Length -Sum).Sum / 1GB,2)
 ```
 
 ## Set ACL to directory recusively 
