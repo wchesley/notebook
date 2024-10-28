@@ -1,0 +1,62 @@
+Item1Controller: {
+  label: "Item1Controller"
+  shape: class
+    +Item1Controller(IMediator, ILogger): new Item1Controller
+    -IMediator: mediator
+    -ILogger(Item1Controller): logger
+    +string(TempData): StatusMessage
+    +Index(IActionResult): string sortOrder, string currentFilter, int? page)
+    +Task(IActionResult): Details(int? id)
+    +IActionResult: Create()
+    +Create(IActionResult): Create(ItemsModel item1)
+    +Edit(IActionResult): Edit(int? id): View.Edit
+    +Edit(IActionResult): Edit(ItemPartsModel itemWithParts)
+    +Delete(IActionResult): Delete(int? id)
+    +DeleteConfirmed(IActionResult): DeleteConfirmed(int id)
+    +GetItemDetailsRow(IActionResult): GetItemDetailsRow(int? id)
+    +GetEditItemRow(IActionResult): GetEditItemRow(int? id)
+    +UpdateItemRow(IActionResult): UpdateItemRow(ItemsModel item)
+    +GetAllItemsPartial(IActionResult): GetAllItemsPartial()
+}
+
+UpdateItemCommand: {
+  shape: class
+  +Handle(ItemPartsModel): UpdatedItem
+}
+
+Item1Controller -> UpdateItemCommand: +IRequest
+
+Item1Controller -> GetAllItemsQuery: +uses {
+  source-arrowhead: 0..*
+  target-arrowhead: *
+}
+
+Item1Controller -- GetItemWithPartsQuery: {
+  source-arrowhead: 1..*
+  target-arrowhead: 1..*
+}
+
+Item1Controller -- CreateItemCommand: {
+  source-arrowhead: 0..1
+  target-arrowhead: 1
+}
+
+Item1Controller -- UpdateItemWithParts: {
+  source-arrowhead: 1..*
+  target-arrowhead: 1..1
+}
+
+Item1Controller -- GetPartNamesList: {
+  source-arrowhead: 0..*
+  target-arrowhead: List..*
+}
+
+Item1Controller -- GetItemByIdQuery: {
+  source-arrowhead: 1
+  target-arrowhead: 1
+}
+
+Item1Controller -- DeleteItemCommand: {
+  source-arrowhead: 1
+  target-arrowhead: 1
+}

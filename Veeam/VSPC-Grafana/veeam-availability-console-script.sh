@@ -26,13 +26,12 @@
 # Endpoint URL for InfluxDB
 InfluxDBURL="172.16.0.62"
 InfluxDBPort="8086/api/v2" #Default Port
-InfluxDbUser="username"
-InfluxDbApiKey="InfluxDbApiKey"
-InfluxDB="BucketName" #Default Database (used as bucket in influxdb 2.0)
-InfluxDbOrg="Organization" #Default Organization (new in influxdb 2.0)
+InfluxDbApiKey="hAECQwGJSBvaFJ588EiqoxK-ORgCprGSe2K_r3Md2_V_wvMbIaluozN-XnMr32DNn1LO2_HP_Fmps2PIT_11CA=="
+InfluxDB="WGDC-Veeam" #Default Database (used as bucket in influxdb 2.0)
+InfluxDbOrg="WGDC" #Default Organization (new in influxdb 2.0)
 # Endpoint URL for login action
-Bearer="VSPC-API-Key"
-RestServer="https://vspc.local"
+Bearer="2df4e6ca10e520f71Rjxa6kBKhG1lEPMDOSsakkZYR8TBFer2vWmyKGLXCOiozaAjzoFIhVlhCI0EYdO7uSE3SjRnJ3R25SYXafN4i2fi2CXZ7uehN1XgoglY8T7apmK"
+RestServer="https://172.16.0.56"
 RestPort="1280/api/v3" #Default Port
 
 # V3 Default Site UID: 
@@ -64,136 +63,99 @@ echo "$TenantUrl" | jq -c '.data[]' | while read id; do
     TenantVBPublicCloudManagementEnabled=$(echo "$id" | jq --raw-output '.companyServices.isVBPublicCloudManagementEnabled')
 
     curl -i -XPOST "http://$InfluxDBURL:$InfluxDBPort/write?bucket=$InfluxDB&org=$InfluxDbOrg" --header "Authorization: Token $InfluxDbApiKey" --data-binary "veeam_vac_tenant,companyName=$TenantName status=\"$TenantStatus\",canManageBackupServer=$TenantBackupServerManagementEnabled,canManageBackupAgent=$TenantBackupAgentManagementEnabled,canRestoreFiles=$TenantFileRestoreEnabled,canManageVBPublicCloud=$TenantVBPublicCloudManagementEnabled"
+
+    echo =====================================
+    echo Backup resources......
+    echo
+
+    VACUrl="$RestServer:$RestPort/v3/organizations/companies/$TenantId/sites/$SiteUid/backupResources"
+    BackupResourcesUrl=$(curl -X GET --header "Accept:application/json" --header "Authorization:Bearer $Bearer" "$VACUrl" -k 2>&1 -k --silent)
+    declare -i arrayresources=0
+    echo "$BackupResourcesUrl" | jq -c '.data[]' | while read id; do
+    # echo TODO This is run.... but inside the loop is not
+    # for id in $(echo "$BackupResourcesUrl" | jq -r ".[].instanceUid"); do
+	#     echo TODO: THIS IS NEVER RUN!!!!!!
+        cloudRepositoryName=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].cloudRepositoryName"| awk '{gsub(/ /,"\\ ");print}')
+    storageQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].storageQuota")
+    storageQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].storageQuotaUnits")
+    case $storageQuotaUnits in
+        B)
+            storageQuota=$(echo "scale=4; $storageQuota / 1048576" | bc -l)
+        ;;
+        KB)
+            storageQuota=$(echo "scale=4; $storageQuota / 1024" | bc -l)
+        ;;
+        MB)
+        ;;
+        GB)
+            storageQuota=$(echo "scale=4; $storageQuota * 1024" | bc -l)
+        ;;
+        TB)
+            storageQuota=$(echo "scale=4; $storageQuota * 1048576" | bc -l)
+        ;;
+        esac
+    vMsQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].vMsQuota")
+    trafficQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].trafficQuota")
+    trafficQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].trafficQuotaUnits")
+    case $trafficQuotaUnits in
+        B)
+            trafficQuota=$(echo "scale=4; $trafficQuota / 1048576" | bc -l)
+        ;;
+        KB)
+            trafficQuota=$(echo "scale=4; $trafficQuota / 1024" | bc -l)
+        ;;
+        MB)
+        ;;
+        GB)
+            trafficQuota=$(echo "scale=4; $trafficQuota * 1024" | bc -l)
+        ;;
+        TB)
+            trafficQuota=$(echo "scale=4; $trafficQuota * 1048576" | bc -l)
+        ;;
+        esac
+    wanAccelerationEnabled=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].wanAccelerationEnabled")
+    usedStorageQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedStorageQuota")
+    usedStorageQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedStorageQuotaUnits")
+    case $usedStorageQuotaUnits in
+        B)
+            usedStorageQuota=$(echo "scale=4; $usedStorageQuota / 1048576" | bc -l)
+        ;;
+        KB)
+            usedStorageQuota=$(echo "scale=4; $usedStorageQuota / 1024" | bc -l)
+        ;;
+        MB)
+        ;;
+        GB)
+            usedStorageQuota=$(echo "scale=4; $usedStorageQuota * 1024" | bc -l)
+        ;;
+        TB)
+            usedStorageQuota=$(echo "scale=4; $usedStorageQuota * 1048576" | bc -l)
+        ;;
+        esac
+    usedTrafficQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedTrafficQuota")
+    usedTrafficQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedTrafficQuotaUnits")
+    case $usedTrafficQuotaUnits in
+        B)
+            usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota / 1048576" | bc -l)
+        ;;
+        KB)
+            usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota / 1024" | bc -l)
+        ;;
+        MB)
+        ;;
+        GB)
+            usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota * 1024" | bc -l)
+        ;;
+        TB)
+            usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota * 1048576" | bc -l)
+        ;;
+        esac
+    #echo "veeam_vac_backupresources,companyName=$TenantName,cloudRepositoryName=$cloudRepositoryName,wanAccelerationEnabled=$wanAccelerationEnabled storageQuota=$storageQuota,vMsQuota=$vMsQuota,trafficQuota=$trafficQuota,usedStorageQuota=$usedStorageQuota,usedTrafficQuota=$usedTrafficQuota"
+    curl -i -XPOST "http://$InfluxDBURL:$InfluxDBPort/write?precision=s&bucket=$InfluxDB" --header "Authorization: Token $InfluxDbUser:$InfluxDbApiKey" --data-raw "veeam_vac_backupresources,companyName=$TenantName,cloudRepositoryName=$cloudRepositoryName,wanAccelerationEnabled=$wanAccelerationEnabled storageQuota=$storageQuota,vMsQuota=$vMsQuota,trafficQuota=$trafficQuota,usedStorageQuota=$usedStorageQuota,usedTrafficQuota=$usedTrafficQuota"
+    arrayresources=$arrayresources+1
     done
     arraylicense=$arraylicense+1
-
-# for id in $(echo "$TenantUrl" | jq -r ".data[]"); do
-#     TenantId=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].instanceUid")
-#     TenantName=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].name" | awk '{gsub(/ /,"\\ ");print}')
-#     TenantEnabled=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].isEnabled")
-#     TenantmaxConcurrentTasks=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].maxConcurrentTasks")
-#     TenantbandwidthThrottlingEnabled=$(ecsho "$TenantUrl" | jq --raw-output ".data[$arraylicense].bandwidthThrottlingEnabled")
-#     TenantallowedBandwidth=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].allowedBandwidth")
-#     TenantallowedBandwidthUnits=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].allowedBandwidthUnits")
-#     TenantvMsBackedUp=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].vMsBackedUp")
-#     TenantvMsReplicated=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].vMsReplicated")
-#     TenantvMsBackedUpToCloud=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].vMsBackedUpToCloud")
-#     TenantmanagedPhysicalWorkstations=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].managedPhysicalWorkstations")
-#     TenantmanagedCloudWorkstations=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].managedCloudWorkstations")
-#     TenantmanagedPhysicalServers=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].managedPhysicalServers")
-#     TenantmanagedCloudServers=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].managedCloudServers")
-#     TenantexpirationEnabled=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].expirationEnabled")
-#     if [ "$TenantexpirationEnabled" = "true" ];then
-#         TenantexpirationDate=$(echo "$TenantUrl" | jq --raw-output ".data[$arraylicense].expirationDate") 
-#         TenantexpirationDateUnix=$(date -d "$TenantexpirationDate" +"%s")
-#     else
-#         declare -i TenantexpirationDateUnix=$NoExpiration
-#     fi
-
-#     #echo "veeam_vac_tenant,companyName=$TenantName,enabled=$TenantEnabled,expirationEnabled=$TenantexpirationEnabled,expirationDate=$TenantexpirationDate maxConcurrentTasks=$TenantmaxConcurrentTasks,bandwidthThrottlingEnabled=$TenantbandwidthThrottlingEnabled,allowedBandwidth=$TenantallowedBandwidth,vMsBackedUp=$TenantvMsBackedUp,vMsReplicated=$TenantvMsReplicated,vMsBackedUpToCloud=$TenantvMsBackedUpToCloud,managedPhysicalWorkstations=$TenantmanagedPhysicalWorkstations,managedCloudWorkstations=$TenantmanagedCloudWorkstations,managedPhysicalServers=$TenantmanagedPhysicalServers,managedCloudServers=$TenantmanagedCloudServers"
-#     # FIX NULLS!!!
-#     TenantmaxConcurrentTasks=0
-#     if [ "$TenantbandwidthThrottlingEnabled" == "null" ]
-#     then
-# 	TenantbandwidthThrottlingEnabled="false";
-#     	TenantallowedBandwidth=0;
-#     fi
-
-#     curl -i -XPOST "http://$InfluxDBURL:$InfluxDBPort/write?precision=s&bucket=$InfluxDB" --header "Authorization: Token $InfluxDbUser:$InfluxDbApiKey" --data-raw "veeam_vac_tenant,companyName=$TenantName,enabled=$TenantEnabled,expirationEnabled=$TenantexpirationEnabled,bandwidthThrottlingEnabled=$TenantbandwidthThrottlingEnabled expirationDate=$TenantexpirationDateUnix,maxConcurrentTasks=$TenantmaxConcurrentTasks,allowedBandwidth=$TenantallowedBandwidth,vMsBackedUp=$TenantvMsBackedUp,vMsReplicated=$TenantvMsReplicated,vMsBackedUpToCloud=$TenantvMsBackedUpToCloud,managedPhysicalWorkstations=$TenantmanagedPhysicalWorkstations,managedCloudWorkstations=$TenantmanagedCloudWorkstations,managedPhysicalServers=$TenantmanagedPhysicalServers,managedCloudServers=$TenantmanagedCloudServers"
-#     done
-
-
-#     echo =====================================
-#     echo Backup resources......
-#     echo
-
-#     VACUrl="$RestServer:$RestPort/v3/organizations/companies/$TenantId/sites/$SiteUid/backupResources"
-#     BackupResourcesUrl=$(curl -X GET --header "Accept:application/json" --header "Authorization:Bearer $Bearer" "$VACUrl" 2>&1 -k --silent)
-#     declare -i arrayresources=0
-#     echo TODO This is run.... but inside the loop is not
-#     for id in $(echo "$BackupResourcesUrl" | jq -r ".[].instanceUid"); do
-# 	    echo TODO: THIS IS NEVER RUN!!!!!!
-#     cloudRepositoryName=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].cloudRepositoryName"| awk '{gsub(/ /,"\\ ");print}')
-#     storageQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].storageQuota")
-#     storageQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].storageQuotaUnits")
-#     case $storageQuotaUnits in
-#         B)
-#             storageQuota=$(echo "scale=4; $storageQuota / 1048576" | bc -l)
-#         ;;
-#         KB)
-#             storageQuota=$(echo "scale=4; $storageQuota / 1024" | bc -l)
-#         ;;
-#         MB)
-#         ;;
-#         GB)
-#             storageQuota=$(echo "scale=4; $storageQuota * 1024" | bc -l)
-#         ;;
-#         TB)
-#             storageQuota=$(echo "scale=4; $storageQuota * 1048576" | bc -l)
-#         ;;
-#         esac
-#     vMsQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].vMsQuota")
-#     trafficQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].trafficQuota")
-#     trafficQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].trafficQuotaUnits")
-#     case $trafficQuotaUnits in
-#         B)
-#             trafficQuota=$(echo "scale=4; $trafficQuota / 1048576" | bc -l)
-#         ;;
-#         KB)
-#             trafficQuota=$(echo "scale=4; $trafficQuota / 1024" | bc -l)
-#         ;;
-#         MB)
-#         ;;
-#         GB)
-#             trafficQuota=$(echo "scale=4; $trafficQuota * 1024" | bc -l)
-#         ;;
-#         TB)
-#             trafficQuota=$(echo "scale=4; $trafficQuota * 1048576" | bc -l)
-#         ;;
-#         esac
-#     wanAccelerationEnabled=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].wanAccelerationEnabled")
-#     usedStorageQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedStorageQuota")
-#     usedStorageQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedStorageQuotaUnits")
-#     case $usedStorageQuotaUnits in
-#         B)
-#             usedStorageQuota=$(echo "scale=4; $usedStorageQuota / 1048576" | bc -l)
-#         ;;
-#         KB)
-#             usedStorageQuota=$(echo "scale=4; $usedStorageQuota / 1024" | bc -l)
-#         ;;
-#         MB)
-#         ;;
-#         GB)
-#             usedStorageQuota=$(echo "scale=4; $usedStorageQuota * 1024" | bc -l)
-#         ;;
-#         TB)
-#             usedStorageQuota=$(echo "scale=4; $usedStorageQuota * 1048576" | bc -l)
-#         ;;
-#         esac
-#     usedTrafficQuota=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedTrafficQuota")
-#     usedTrafficQuotaUnits=$(echo "$BackupResourcesUrl" | jq --raw-output ".[$arrayresources].usedTrafficQuotaUnits")
-#     case $usedTrafficQuotaUnits in
-#         B)
-#             usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota / 1048576" | bc -l)
-#         ;;
-#         KB)
-#             usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota / 1024" | bc -l)
-#         ;;
-#         MB)
-#         ;;
-#         GB)
-#             usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota * 1024" | bc -l)
-#         ;;
-#         TB)
-#             usedTrafficQuota=$(echo "scale=4; $usedTrafficQuota * 1048576" | bc -l)
-#         ;;
-#         esac
-#     #echo "veeam_vac_backupresources,companyName=$TenantName,cloudRepositoryName=$cloudRepositoryName,wanAccelerationEnabled=$wanAccelerationEnabled storageQuota=$storageQuota,vMsQuota=$vMsQuota,trafficQuota=$trafficQuota,usedStorageQuota=$usedStorageQuota,usedTrafficQuota=$usedTrafficQuota"
-#     curl -i -XPOST "http://$InfluxDBURL:$InfluxDBPort/write?precision=s&bucket=$InfluxDB" --header "Authorization: Token $InfluxDbUser:$InfluxDbApiKey" --data-raw "veeam_vac_backupresources,companyName=$TenantName,cloudRepositoryName=$cloudRepositoryName,wanAccelerationEnabled=$wanAccelerationEnabled storageQuota=$storageQuota,vMsQuota=$vMsQuota,trafficQuota=$trafficQuota,usedStorageQuota=$usedStorageQuota,usedTrafficQuota=$usedTrafficQuota"
-#     arrayresources=$arrayresources+1
-#     done
-#     arraylicense=$arraylicense+1
-# done
+done
 
 # ##
 # # Veeam Availability Console, Cloud Connect and Veeam Backup & Replication Licensing - This section will retrieve the licensing of the Veeam Availability Console, Veeam Cloud Connect and every managed Veeam Backup & Replication Server
