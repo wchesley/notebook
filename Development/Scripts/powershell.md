@@ -4,6 +4,7 @@ PowerShell is a task automation and configuration management program from Micros
 
 - [Powershell](#powershell)
 - [Snippits and small scripts](#snippits-and-small-scripts)
+  - [Install msi from powershell script:](#install-msi-from-powershell-script)
   - [Get password from Environment Variable:](#get-password-from-environment-variable)
   - [Get Password from User Input:](#get-password-from-user-input)
   - [Set password for user:](#set-password-for-user)
@@ -22,6 +23,20 @@ PowerShell is a task automation and configuration management program from Micros
 
 - [Docs](https://learn.microsoft.com/en-us/powershell/)
 - [Github](https://github.com/PowerShell/PowerShell)
+- [Powershell Profile](./powershell_profile.md)
+- [Powershell Script Template](./Powershell_template.md)
+
+## Install msi from powershell script: 
+
+Use [`Start-Process`](https://ss64.com/ps/start-process.html) to installs the msi package from PowerShell using `msiexec` with the `/i` and`/qn` parameters. You can optionally test using the `-wait` parameter of `Start-Process` in case it helps in your particular case. There is also a `/norestart` parameter to use with `msiexec`.
+
+```ps1
+$pkg = "D:\a\test\ultimate\WindowsApplicationDriver_1.2.1.msi";
+Start-Process msiexec "/i $pkg /qn";
+##Start-Process msiexec "/i $pkg /qn" -Wait;
+##Start-Process msiexec "/i $pkg /norestart /qn" -Wait;
+
+```
 
 ## Get password from Environment Variable: 
 
