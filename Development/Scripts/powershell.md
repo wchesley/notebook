@@ -4,6 +4,7 @@ PowerShell is a task automation and configuration management program from Micros
 
 - [Powershell](#powershell)
 - [Snippits and small scripts](#snippits-and-small-scripts)
+  - [Check if Port is in use:](#check-if-port-is-in-use)
   - [Install msi from powershell script:](#install-msi-from-powershell-script)
   - [Get password from Environment Variable:](#get-password-from-environment-variable)
   - [Get Password from User Input:](#get-password-from-user-input)
@@ -25,6 +26,15 @@ PowerShell is a task automation and configuration management program from Micros
 - [Github](https://github.com/PowerShell/PowerShell)
 - [Powershell Profile](./powershell_profile.md)
 - [Powershell Script Template](./Powershell_template.md)
+
+## Check if Port is in use: 
+
+```ps1
+Get-NetTCPConnection | where Localport -eq 5000 | select Localport,OwningProcess
+Localport OwningProcess
+--------- -------------
+    5000          1684
+```
 
 ## Install msi from powershell script: 
 
