@@ -1,0 +1,80 @@
+title: |md
+    # Work Order Edit - Sequence Diagram
+
+    Data process when a user requests and updates an existing Work Order
+|
+direction: right
+Edit: {
+    shape: sequence_diagram
+    UserA: {
+        shape: person
+    }
+    Edit: Edit - Controller Action
+    Database: {
+        shape: cylinder
+    }
+    Customers
+    Quotes
+    Parts
+    Files
+    ProductionWorkOrders
+    DueDates
+    BillsOfLading
+    
+    UserA -> Edit: Selects
+    
+    GatherRequiredData: Get all Work Order Data from Database {
+        Edit -> Database: GatherRequiredData
+        Database -> Database: Get Work Order By ID
+        InvalidFormData: {
+        Database -> UserA: Work Order Not Found, Return Not Found Error
+        }
+        Database -> Customers: Get Customer Select list
+        Customers -> Edit: Populate Customer Select List
+        Database <-> Quotes: Get Quote attached to Work Order
+        Quotes -> Edit: Populate Quote object (if any)
+        Database <-> Parts: Get List of Parts
+        Pats -> Edit: Populate Parts Select List
+        Database <-> Files: Get file associated with Work Order
+        Files -> Edit: Populate Attached Files list (if any)
+        Database <-> ProductionWorkOrders: Get ProductionWorkOrders
+        ProductionWorkOrders -> Populate ProductionWorkOrders List (if any)
+        Database <-> DueDates: Get additional due dates for Work Order
+        DueDates -> Edit: Populate DueDates List (if any)
+        Database -> Edit: Return data to user
+    }
+    
+    Edit -> UserA: Display data to user
+    CreateProductionWorkOrder: Create New Production Work Order {
+        UserA -> Edit: Create New Production Work Order button clicked
+        Edit -> ProductionWorkOrders: Create Production Work Order from work order information
+        ProductionWorkOrders -> Database: Save new ProductionWorkOrder
+        Database -> UserA: Return new ProductionWorkOrder to user
+    }
+    UploadFiles: User Uploads New Work Order Files {
+        UserA -> Edit: Attaches new files and uploads them
+        Edit -> Files: POST data to `/AttachFiles/Attach`
+        Files -> Database: Save file data to database
+        Database -> UserA: Return WorkOrderPathModel to user. 
+    }
+    UserA -> Edit: Saves modified form
+    Edit -> Edit: Validate form
+    InvalidFormData: {
+        Edit -> UserA: Return bad form to user
+    }
+    
+    UpdateDatabase: Update Work Order in Database {
+        Edit -> Database: Update database
+        Database -> Database: EditWorkOrderCommand.cs
+        InvalidFormData: {
+        Database -> UserA: Failed to Update Work Order. Return Error Message.
+        }
+        Database <-> ProductionWorkOrders: UpdateProductionWorkOrderRange.cs
+        Database <-> DueDates: UpdateWorkOrderDueDateRange.cs
+        SerialNumbers: If Serial Numbers are set: {
+            Database -> BillsOfLading: AddBillsOfLadingSerialNumberCommand.cs
+        }
+        Database -> Edit: Return data to user
+    }
+    Edit -> UserA: Redirect to Details View w/Updated data
+}

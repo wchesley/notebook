@@ -1,0 +1,45 @@
+direction: right
+title: |md
+    # Work Order Sequence Diagrams
+|
+Creation: {
+
+    shape: sequence_diagram
+    UserA: {
+        shape: person
+    }
+    Create
+    CreateFromDefault
+    CreateFromParts
+    Database: {
+        shape: cylinder
+    }
+    Choice: User Chooses one of the two options {
+        DefaultCreate: Create From Default Work Order {
+            UserA -> CreateFromDefault: Option A
+            CreateFromDefault -> Database: Read All Deafult Work Orders
+            Database ->  CreateFromDefault: Return data
+            CreateFromDefault -> UserA: Present data to user
+            UserA -> CreateFromDefault: Selects Deafult Work Order
+            CreateFromDefault -> CreateFromDefault: Create new work order object
+            CreateFromDefault -> Create: Redirect to Create View
+        }
+        PartsCreate: Create From Existing Parts {
+            UserA -> CreateFromParts: Option B
+            CreateFromParts -> Database: Aggregate of Parts by Item ID
+            Database -> CreateFromParts: Return data
+            CreateFromParts -> UserA: Present data to user
+            UserA -> CreateFromParts: Selects Part
+            CreateFromParts -> CreateFromParts: Create new work order object
+            CreateFromParts -> Create: Redirect to Create View
+        }
+    }
+    Create -> UserA: Display new work order to user
+    UserA -> UserA: Modifies Form
+    UserA -> Create: Form Submission
+    Create -> Create: Form Validation
+    Create -> Database: Save work order to database
+    Database -> Create: Return Data
+    Create -> UserA: Return new work order
+}
+
