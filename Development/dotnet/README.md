@@ -11,6 +11,7 @@
 - [EditorConfig](./Editorconfig.md)
 - [ASP.NET Core](./asp.netCore.md)
 - [Snippits](./snippits.md)
+- [Templates](./Templates/README.md)
 
 ## .NET Foundation
 
