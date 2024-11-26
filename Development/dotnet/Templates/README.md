@@ -1,6 +1,6 @@
 # Dotnet Templates
 
-With .NET 7+, you can create and deploy templates that generate projects, files, and resources.
+With .NET 7+, you can create and deploy templates that generate projects, files, and resources. See the git repo [here](https://github.com/dotnet/templating/tree/main)
 
 # My Templates
 

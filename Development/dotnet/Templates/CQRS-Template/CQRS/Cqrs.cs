@@ -1,7 +1,7 @@
 using Cqrs.Application.Common;
 using MediatR;
 
-namespace Cqrs.Application.FeatureName.Commands.CleanArchitectureUseCase;
+namespace Cqrs.Application;
 
 public record CleanArchitectureUseCaseCommand : IRequest<object>
 {
