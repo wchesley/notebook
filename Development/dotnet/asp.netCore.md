@@ -24,3 +24,49 @@ When using a partial view within a form. I've seen validation attributes not get
 
 
 If you return `PartialView()` from your controllers (instead of return `View()`), then `_viewstart.cshtml` will not be executed. [ref [StackOverflow](https://stackoverflow.com/questions/4081811/correct-way-to-use-viewstart-cshtml-and-partial-razor-views/4082220#4082220)]
+
+## .cshtml file output when app is built
+
+I was curious one day so asked chatGPT this question after a few reworded google questions didn't lead me in the right direction: when an asp.net core MVC application is compiled, what happens to the cshtml files? Where are they located in the build output? 
+
+When an ASP.NET Core MVC application is built, the handling of `.cshtml` files depends on whether **Razor compilation** is set for **runtime** or **precompiled**.
+
+### **1\. Default Behavior (Runtime Compilation)**
+
+-   **What Happens?**
+    
+    -   `.cshtml` files are **not compiled into the build output** during the build process. Instead, they remain as-is and are compiled **dynamically at runtime** when a view is rendered for the first time.
+-   **Why?**
+    
+    -   This approach allows developers to edit `.cshtml` files without rebuilding the application, making it convenient during development.
+-   **Location in Build Output**:
+    
+    -   Razor views (`.cshtml` files) are copied to the `\Views` folder within the **output directory** (e.g., `bin\Debug\netX.X\Views`).
+
+* * *
+
+### **2\. Precompiled Razor Views**
+
+-   **What Happens?**
+    
+    -   Razor views are **precompiled** into `.dll` assemblies as part of the build or publish process. This removes the `.cshtml` files from the output and speeds up view rendering since no runtime compilation is needed.
+-   **How to Enable?**
+    
+    -   Use the `Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation` package and enable **Razor view compilation** in the `.csproj` file:
+        
+
+-   -   `<PropertyGroup>     <RazorCompileOnBuild>true</RazorCompileOnBuild>     <RazorCompileOnPublish>true</RazorCompileOnPublish> </PropertyGroup>`
+        
+-   **Location in Build Output**:
+    
+    -   Razor views are compiled into a `MyApp.Views.dll` (or equivalent) file, located alongside the main application assembly in the `bin\Debug\netX.X` or `bin\Release\netX.X` directory.
+    -   No `\Views` folder with `.cshtml` files is present in the output.
+
+* * *
+
+### **3\. Development vs. Production Considerations**
+
+-   **Development**: Runtime compilation allows live editing of `.cshtml` files without rebuilding.
+-   **Production**: Precompiled Razor views improve performance and reduce deployment size.
+
+* * *
