@@ -18,6 +18,7 @@ PowerShell is a task automation and configuration management program from Micros
     - [Get Count of users with given name:](#get-count-of-users-with-given-name)
   - [Uninstall any app by name:](#uninstall-any-app-by-name)
   - [Get Office 365 Update Channel:](#get-office-365-update-channel)
+  - [Get Active Directory Users \& Groups - Output to CSV](#get-active-directory-users--groups---output-to-csv)
 
 
 # Snippits and small scripts
@@ -203,4 +204,57 @@ switch ($UpdateChannel) {
     Default { $OfficeUpdateChannel = "Non CTR version / No Update Channel selected"}
 }
 Write-Host "O365 update channel: $OfficeUpdateChannel
+```
+
+## Get Active Directory Users & Groups - Output to CSV
+
+```ps1
+# Import the Active Directory module
+Import-Module ActiveDirectory
+
+# Get all AD groups
+$groups = Get-ADGroup -Filter *
+
+# Create an array to store the results
+$results = @()
+
+# Loop through each group
+foreach ($group in $groups) {
+    # Get members of the group
+    $members = Get-ADGroupMember -Identity $group.DistinguishedName | Where-Object {$_.objectClass -eq "user"}
+    
+    # If the group has members
+    if ($members) {
+        foreach ($member in $members) {
+	 # Get user details including the enabled status
+            $user = Get-ADUser -Identity $member.SamAccountName -Properties Enabled
+            # Create a custom object with group and user information
+            $result = [PSCustomObject]@{
+                GroupName = $group.Name
+                UserName = $member.Name
+                UserSamAccountName = $member.SamAccountName
+		UserEnabled = $user.Enabled
+            }
+            # Add the result to the array
+            $results += $result
+        }
+    } else {
+        # If the group has no members, add an entry with empty user fields
+        $result = [PSCustomObject]@{
+            GroupName = $group.Name
+            UserName = ""
+            UserSamAccountName = ""
+  	    UserEnabled = $null
+        }
+        $results += $result
+    }
+}
+
+# Export the results to a CSV file
+$results | Export-Csv -Path "C:\ADGroupsAndUsers.csv" -NoTypeInformation
+
+# Display the results in the console
+$results | Format-Table -AutoSize
+
+Write-Host "Results have been exported to C:\ADGroupsAndUsers.csv"
 ```
