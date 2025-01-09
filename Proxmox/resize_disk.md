@@ -1,19 +1,12 @@
-# Resize disks PVE - Ubuntu 20.04
-
-Massive issues resizing a disk when plex was full: eventually resolved by this article: <https://forum.proxmox.com/threads/full-disk-usage-on-ubuntu-vm.53157/>
+# Resize disks PVE - LVM
 
 ## Steps
 
-I first resized disk in web UI 
+From PVE WebGUI:  
+Select the desired VM, and extend it's storage by your desired amount.   
 Then got into the VM and ran the following: 
 
-`- sudo /sbin/lvresize -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv`
-
-`- sudo /sbin/resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv`
-
-> As of 1/10/2024, provided LVM is used for file system, I've only had to run the above two commands to expand a disk and host see's changes live. 
-
-# Process per notebook
+# Resize LVM Disk: 
 Process per my hand written notes: 
 1. Power down VM
 	1. Add space to disk via proxmox webUI
@@ -28,8 +21,15 @@ Process per my hand written notes:
 5. Run `sudo pvresize /dev/sda3` use whatever /dev/sda your root partition is on, check back on `fdisk -l` if you forget. 
 6. Run `sudo lvextend -l 100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv` Have LVM consume rest of partition
 7. run `sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv` Have filesystem consume rest of free space. 
+   1. **Optionally:** steps 6 & 7 can be combined into one command, like so: `sudo lvextend -r -l 100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv` where the `-r` invokes `resizefs`. Run `lvextend -h` for more information. 
 
 Though I'm not 100% on the specifics for any of this, I know it works, have had to resize Plex VM a few times now. 
+
+`- sudo /sbin/lvresize -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv`
+
+`- sudo /sbin/resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv`
+
+> As of 1/10/2024, provided LVM is used for file system, I've only had to run the above two commands to expand a disk and host see's changes live. Provided the file system is LVM
 
 ## From PVE Wiki: 
 
@@ -152,10 +152,10 @@ List logical volumes:
 
 Enlarge the logical volume and the filesystem (the file system can be mounted, works with ext4 and xfs). Replace "{volume group name}" with your specific volume group name:
 
-#This command will increase the partition up by 20GB
+### This command will increase the partition up by 20GB
 
 	lvresize --size +20G --resizefs /dev/{volume group name}/root 
 
-#Use all the remaining space on the volume group  
+### Use all the remaining space on the volume group  
 
 	lvresize --extents +100%FREE --resizefs /dev/{volume group name}/root
