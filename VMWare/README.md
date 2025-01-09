@@ -8,6 +8,8 @@
 
 Collection of useful links or unfinished notes related to VMWare: 
 
+Resizing Linux VM host disks using LVM is a similar process to Proxmox, see: [resize disk](../Proxmox/resize_disk.md)
+
 ### Links: 
 
 - [VMWare Security Advisories](https://www.vmware.com/security/advisories.html)
