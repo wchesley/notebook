@@ -2,6 +2,10 @@
 
 Free tier v12 limitations: 10 Workloads limit, NO tech support, NO malware detection, NO object storage and NO backup testing.
 
+Direct download links (as of 01/07/2025)
+Veeam 12.3 download URL: https://download2.veeam.com/VDPP/v12/VeeamDataPlatform_v12.3_20241212.iso
+Veeam Agent 6.3.0.177 download URL: https://download2.veeam.com/VAW/v6/VeeamAgentWindows_6.3.0.177.zip
+
 ## Hardware Requirements
 
 | Specification | Requirement | 
@@ -120,3 +124,59 @@ Considering that you require 2GB of RAM for each task, you need a VM with 36 vCP
 Should you use a physical machine as the proxy, you should have a server with a 2-10 core CPU. Using the sample data you would require two physical machines. 
 
 If using VM's for a proxy, you should cap the vCPU size at 8 and add as many proxies as needed for your environment. Using the sample data set, you would need 5 VM's working as proxy servers. 
+
+# Veeam Agent Installation (Silent)
+
+## Installation
+<sub>[ref](https://helpcenter.veeam.com/docs/agentforwindows/userguide/installation_unattended.html?ver=60#)
+</sub>
+
+To install Veeam Agent for Microsoft Windows version 6.3, use a command with the following syntax:
+
+<path\_to\_exe> /silent /accepteula /acceptthirdpartylicenses /acceptlicensingpolicy /acceptrequiredsoftware
+
+where <path\_to\_exe> — path to the Veeam Agent for Microsoft Windows installation file.
+
+Veeam Agent for Microsoft Windows uses the following codes to report about the installation results:
+
+-   1000 — Veeam Agent for Microsoft Windows has been successfully installed.
+-   1001 — prerequisite components required for Veeam Agent for Microsoft Windows have been installed on the machine. Veeam Agent for Microsoft Windows has not been installed. The machine needs to be rebooted.
+-   1002 — Veeam Agent for Microsoft Windows installation has failed.
+-   1004 — migration to SQLite database has failed.
+-   1101 — Veeam Agent for Microsoft Windows has been installed. The machine needs to be rebooted.
+
+
+### VSPC Mode
+
+Loginto VSPC console
+
+Navigate to the `Discovery` tab on the right nav bar. 
+
+Select `Download Management Agent`.
+
+Fill in the form for the company we are deploying the agent to. 
+
+Generate and download the link. Our VSPC is not available on the internet so the .exe will need to be moved to the client machine via another means. For example, Datto Agent Browser, manage files on device, upload to `C:\Temp`. Then user powershell to silently install the agent.
+
+Suppose you want to install preconfigured Veeam Service Provider Console management agent to the service provider infrastructure:
+
+-   Installation log location: C:\\ProgramData\\Veeam\\Setup\\Temp\\Logs\\VACAgentSetup.txt
+
+-   No user interaction
+-   Path to the setup file: C:\\Veeam\\VAC\\ManagementAgent.MyCompany.exe
+-   Accept 3rd party license agreement
+-   Accept Veeam license agreement
+
+-   Accept Veeam licensing policy
+-   Accept required software agreements
+
+The command to install Veeam Service Provider Console management agent with such configuration will have the following parameters:
+
+```ps1
+"C:\Veeam\VAC\ManagementAgent.MyCompany.x64.exe" /qn /l*v C:\ProgramData\Veeam\Setup\Temp\Logs\VACAgentSetup.txt ACCEPT_THIRDPARTY_LICENSES="1" ACCEPT_EULA="1" ACCEPT_REQUIRED\_SOFTWARE="1" ACCEPT_LICENSING\_POLICY="1"
+```
+
+Alternative means of execution: 
+```ps1
+Start-Process -Wait -FilePath C:\Temp\ManagementAgent.Precision_Excavation_Remote.exe -ArgumentList "/qn /L*v C:\Temp\VeeamMgmtSetupLog.txt ACCEPT_THIRDPARTY_LICENSES='1' ACCEPT_EULA='1' ACCEPT_REQUIRED_SOFTWARE='1' ACCEPT_LICENSING_POLICY='1'" -PassThru
+```
