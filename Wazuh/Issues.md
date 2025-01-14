@@ -22,3 +22,9 @@ One or more files that contains the passwords for Wazuh might get updated if one
 - Only then was I able to get back into wazuh dashboard AND have data present. 
 
 **UPDATE 12-13-2024** Ended up needing to reset passsword on different wazuh installation that I manage and that admin password has been lost or changed since it was last logged in our password manager. (In the previous instance I knew the old admin password.) I did something different this time as the error messages I got were different. I kept getting complaints from the script that the password didn't meet the security requirements...when in fact it did. I attempted password as string literal and shell variable but kept getting the same error. So I tried to use the password file as it's something I'd not attempted before. In fact, using this way provided a better error message as it told me the special characters I were using were not allowed, in fact only `+?*` are allowed. Armed with this new info I was able to update the admin password of the wazuh insatll, using both passwords file and inline variables as script arguements. 
+
+## Disk Space Issues
+
+Wazuh logs, alot, and some seems to be duplicated, or at least it's already kept within OpenSearch instance. [See this](https://zaferbalkan.com/2023/08/08/wazuh-pain-points.html#poor-monitoring-cluster). I was running into disk space issues due to the Alerts log files consuming 20Gb of space. Following the [Documentation](https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/global.html#alerts-log), I edited `/var/ossec/etc/ossec.conf` to disable alerts.log files from being written. The `alerts.json` files are required for Wazuh to function. 
+
+I then removed the old `alerts.log` files located at `/var/ossec/log/alerts/<Year>/<Month>`  
