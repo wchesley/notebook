@@ -1,0 +1,219 @@
+  /infrastructure/backupAgents/jobs:
+    get:
+      tags:
+      - Backup Agent Jobs
+      summary: Get All Veeam Backup Agent Jobs
+      description: Returns a collection resource representation of all Veeam backup agent jobs protecting Windows computers.
+      operationId: GetBackupAgentJobs
+      parameters:
+      - name: filter
+        in: query
+        description: Specifies the conditions that a resource must meet to be returned in the output.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterParameter'
+        x-veeam-pagination-filter: true
+      - name: sort
+        in: query
+        description: Specifies the order in which resources are returned from the collection.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SortParameter'
+        x-veeam-pagination-sort: true
+      - name: limit
+        in: query
+        description: Specifies the first N resources that must be returned in the output.
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+          format: int32
+          default: 100
+        x-veeam-pagination-limit: true
+      - name: offset
+        in: query
+        description: Excludes the first N resources from the query output.
+        schema:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+        x-veeam-pagination-offset: true
+      - name: X-Request-id
+        in: header
+        description: >-
+          Random UID that you can assign to a request for idempotence and async action progress tracking.
+
+          >Note that an operation is idempotent only during 5 minute time interval.
+        schema:
+          type: string
+          format: uuid
+        example: ba547d14-c556-42bb-b85c-eeeb16e2f5e7
+      - name: X-Client-Version
+        in: header
+        description: Version of Veeam Service Provider Console RESTful API supported by client.
+        schema:
+          type: string
+        example: 3.5
+      - name: select
+        in: query
+        description: Returns explicitly requested properties.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelectParameter'
+        x-veeam-pagination-select: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/ResponseMetadata'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BackupAgentJob'
+                    readOnly: true
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ResponseError'
+                    nullable: true
+                    readOnly: true
+              example:
+                data:
+                - instanceUid: 1f974f00-1b94-6925-87e2-d8189c836367
+                  backupAgentUid: 861d3b42-f46f-b0c7-4f6f-4e8c507e7b5c
+                  organizationUid: 30780260-6bed-47eb-b1ac-d12de2ce5b9d
+                  name: Job
+                  description: Created by VBR\Administrator at 7/15/2019 3:12 PM.
+                  configUid: e0e29206-2860-49de-974b-781d6c2fedb2
+                  systemType: Windows
+                  backupPolicyUid: 
+                  backupPolicyFailureMessage: 
+                  status: Failed
+                  operationMode: Workstation
+                  destination: C:\backups\
+                  restorePoints: 2
+                  lastRun: 2023-11-19T09:40:52.8670000+01:00
+                  lastEndTime: 2023-11-19T09:41:11.9340000+01:00
+                  lastDuration: 19
+                  nextRun: 
+                  avgDuration: 19
+                  backupMode: File
+                  targetType: LocalFolder
+                  isEnabled: false
+                  scheduleType: Daily
+                  failureMessage: 'Error: Operation was canceled by user WORKGROUP\SYSTEM'
+                  backedUpSize: 392183808
+                - instanceUid: 67f5ad62-1a94-6e0a-929c-ae79cd76f2ec
+                  backupAgentUid: 861d3b42-f46f-b0c7-4f6f-4e8c507e7b5c
+                  organizationUid: 30780260-6bed-47eb-b1ac-d12de2ce5b9d
+                  name: Windows workstation - Personal files_r2vbr
+                  description: This policy processes user profile folder including all user settings and data.
+                  configUid: 4610eb17-b41c-4cc5-81d1-938ee6d89b7a
+                  systemType: Windows
+                  backupPolicyUid: 70069387-2799-489b-9592-4b11c55012d7
+                  backupPolicyFailureMessage: 
+                  status: Running
+                  operationMode: Workstation
+                  destination: VSPC1.tech.local
+                  restorePoints: 0
+                  lastRun: 2023-11-19T12:06:00.8300000+01:00
+                  lastEndTime: 
+                  lastDuration: 127
+                  nextRun: 
+                  avgDuration: 0
+                  backupMode: File
+                  targetType: CloudRepository
+                  isEnabled: false
+                  scheduleType: Daily
+                  failureMessage: 
+                  backedUpSize: 418041856
+                - instanceUid: f82def99-5311-6838-8b38-97a5ba43b904
+                  backupAgentUid: 861d3b42-f46f-b0c7-4f6f-4e8c507e7b5c
+                  organizationUid: 30780260-6bed-47eb-b1ac-d12de2ce5b9d
+                  name: Windows server - Entire computer_r2vbr
+                  description: 'This policy should be used if you want to create a backup of the entire computer image. When you restore data from such backup, you will be able to recover the entire computer image as well as data on specific computer volumes: files, folders, application data and so on.'
+                  configUid: 9f3bf058-5f78-401b-8067-9b1ede504759
+                  systemType: Windows
+                  backupPolicyUid: 85e5898a-cf39-404c-a1da-d55bf41e4d2c
+                  backupPolicyFailureMessage: 
+                  status: None
+                  operationMode: Server
+                  destination: VSPC1.tech.local
+                  restorePoints: 0
+                  lastRun: 
+                  lastEndTime: 
+                  lastDuration: 
+                  nextRun: 
+                  avgDuration: 0
+                  backupMode: EntireComputer
+                  targetType: CloudRepository
+                  isEnabled: false
+                  scheduleType: Daily
+                  failureMessage: 
+                  backedUpSize: 
+                - instanceUid: bd9ba2f3-0791-6d7e-9011-4a315155a0ac
+                  backupAgentUid: 861d3b42-f46f-b0c7-4f6f-4e8c507e7b5c
+                  organizationUid: 30780260-6bed-47eb-b1ac-d12de2ce5b9d
+                  name: WWrkstFileFolder_r2vbr
+                  description: temp description
+                  configUid: 69c3f585-8f9f-4e02-8888-169431b4e37a
+                  systemType: Windows
+                  backupPolicyUid: af6f1467-ae1f-4edd-8cf3-b0cc4c7a360e
+                  backupPolicyFailureMessage: 
+                  status: None
+                  operationMode: Workstation
+                  destination: C:\VeeamBackup\
+                  restorePoints: 0
+                  lastRun: 
+                  lastEndTime: 
+                  lastDuration: 
+                  nextRun: 
+                  avgDuration: 0
+                  backupMode: File
+                  targetType: LocalFolder
+                  isEnabled: false
+                  scheduleType: Daily
+                  failureMessage: 
+                  backedUpSize: 
+                meta:
+                  pagingInfo:
+                    total: 4
+                    count: 4
+                    offset: 0
+        202:
+          description: Request has been queued for execution.
+          headers:
+            Location:
+              description: 'Contains a link to the async action tracking endpoint. Example: https://vspc:1280/api/v3/asyncActions/97431954-0dd7-472a-8cb7-d0cb0fbccaf7'
+              schema:
+                type: string
+        default:
+          description: All client errors (400–499) are returned with the associated HTTP status codes. All server errors (≥500) are returned with the 520 HTTP status code. For details, see the response body.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-veeam-vspc-admitted-roles:
+      - PortalAdministrator
+      - LocationAdministrator
+      - LocationUser
+      - CompanyOwner
+      - Subtenant
+      - PortalOperator
+      - ServiceProviderGlobalAdministrator
+      - ServiceProviderOperator
+      - ServiceProviderUser
+      - ServiceProviderAdministrator
+      - SiteAdministrator
+      - CompanyAdministrator
+      - ReadOnlyUser6
