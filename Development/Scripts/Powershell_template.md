@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Powershell Template
 
 Powershell script template, pulled from [this gist](https://gist.github.com/9to5IT/18ff0ddf706ec23be997) and my own scripts. 

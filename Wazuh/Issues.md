@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Wazuh Issues & Solutions
 
 Issues I've encoutered with Wazuh and the potential solutions I've found, if any. 

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Rules
 
 Out of the box, Wazuh has a comprehensive set of pre-configured rules. 

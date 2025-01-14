@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Android Parental Controls
 
 ## Set up new phone: 

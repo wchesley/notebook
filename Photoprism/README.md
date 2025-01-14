@@ -1,3 +1,5 @@
+[back](../README.md)
+
 # Photoprism
 - [Docker-compose Install Docs](https://docs.photoprism.app/getting-started/docker-compose/)
 - [Photoprism Homepage](https://www.photoprism.app/)

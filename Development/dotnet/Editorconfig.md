@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Editor Config
 
 Help keep consistent style across projects and teams. 

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # ASP.NET Core 8 - Lists in View with jQuery
 
 When creating a form, if you are using jQuery/JS to add some user interactivity on the page and posting that information to a local .NET API class. There are a few caveats to watch out for: 

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Using Telegraf on Windows | Blog | InfluxData
 
 Created: January 8, 2021 10:18 AM

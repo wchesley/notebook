@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # HTML Dismissable Alerts without JS
 
 Taken from: https://codepen.io/rlemon/pen/krxjpB 

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Powershell
 
 PowerShell is a task automation and configuration management program from Microsoft, consisting of a command-line shell and the associated scripting language. Initially a Windows component only, known as Windows PowerShell, it was made open-source and cross-platform on August 18, 2016, with the introduction of PowerShell Core. The former is built on the .NET Framework, the latter on .NET (previously .NET Core).
@@ -19,6 +21,12 @@ PowerShell is a task automation and configuration management program from Micros
   - [Uninstall any app by name:](#uninstall-any-app-by-name)
   - [Get Office 365 Update Channel:](#get-office-365-update-channel)
   - [Get Active Directory Users \& Groups - Output to CSV](#get-active-directory-users--groups---output-to-csv)
+- [Set Event Log Size limits (increase or decrease)](#set-event-log-size-limits-increase-or-decrease)
+  - [Syntax](#syntax)
+  - [Description](#description)
+  - [Examples](#examples)
+    - [Example 1: Increase the size of an event log](#example-1-increase-the-size-of-an-event-log)
+    - [Example 2: Retain an event log for a specified duration](#example-2-retain-an-event-log-for-a-specified-duration)
 
 
 # Snippits and small scripts
@@ -258,3 +266,51 @@ $results | Format-Table -AutoSize
 
 Write-Host "Results have been exported to C:\ADGroupsAndUsers.csv"
 ```
+
+# Set Event Log Size limits (increase or decrease)
+
+Sets the event log properties that limit the size of the event log and the age of its entries.
+
+[](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/limit-eventlog?view=powershell-5.1#syntax)
+
+## Syntax
+
+```ps1
+Limit-EventLog
+        [-LogName] <String[]>
+        [-ComputerName <String[]>]
+        [-RetentionDays <Int32>]
+        [-OverflowAction <OverflowAction>]
+        [-MaximumSize <Int64>]
+        [-WhatIf]
+        [-Confirm]
+        [<CommonParameters>]
+```
+
+[ref](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/limit-eventlog?view=powershell-5.1#description)
+
+## Description
+
+The `Limit-EventLog` cmdlet sets the maximum size of a classic event log, how long each event must be retained, and what happens when the log reaches its maximum size. You can use it to limit the event logs on local or remote computers.
+
+The cmdlets that contain the EventLog noun (the EventLog cmdlets) work only on classic event logs. To get events from logs that use the Windows Event Log technology in Windows Vista and later versions of Windows, use `Get-WinEvent`.
+
+## Examples
+
+### Example 1: Increase the size of an event log
+
+```ps1
+Limit-EventLog -LogName "Windows PowerShell" -MaximumSize 20KB
+```
+
+This command increases the maximum size of the Windows PowerShell event log on the local computer to 20480 bytes (20 KB).
+
+[](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/limit-eventlog?view=powershell-5.1#example-2-retain-an-event-log-for-a-specified-duration)
+
+### Example 2: Retain an event log for a specified duration
+
+```ps1
+Limit-EventLog -LogName Security -ComputerName "Server01", "Server02" -RetentionDays 7
+```
+
+This command ensures that events in the Security log on the Server01 and Server02 computers are retained for at least 7 days.

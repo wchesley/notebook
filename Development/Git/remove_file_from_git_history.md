@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Remove File from Git History
 
 It is straight forward to remove a file from the current commit or HEAD but if you want remove entirely from the repository’s history then you need to run couple of commands. For example, to remove a file from current HEAD, `git rm pathtofile`

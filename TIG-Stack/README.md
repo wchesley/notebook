@@ -1,3 +1,5 @@
+[back](../README.md)
+
 # The TIG Stack (Telegraf, Influxdb, Grafana)
 
 The TIG stack is an open-source alternative to legacy data historians. [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) solves data collection challenges, [InfluxDB](https://www.influxdata.com/products/influxdb-cloud/) stores and manages time series data, and [Grafana](https://www.influxdata.com/grafana/) enables visualization of that data. Let’s dive deeper into each part of the stack.

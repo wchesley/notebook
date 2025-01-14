@@ -1,3 +1,5 @@
+[back](./README.md)
+
 <h1 id="vmware-cloud-foundation-and-completed-bring-up">VMware Cloud Foundation and Completed Bring-Up</h1>
 <p>VMware Cloud Foundation is a hybrid cloud platform combining the features of VMware vSphere, VMware vSAN, VMware NSX-T Data Center, vSphere with Tanzu, and VMware vRealize Suite. You manage VMware Cloud Foundation by using SDDC Manager and tools that might already be familiar to you as an administrator, such as the vSphere Client.</p>
 <p><strong>Management Domain</strong><br><img src="/ui/assets/markdown/bringup-page/management-domain.svg" alt="The core components of the management domain are SDDC Manager, vCenter Server, ESXi, NSX-T Data Center, and vSAN. Additional solutions can be based on vRealize Suite." title="Management Domain"></p>

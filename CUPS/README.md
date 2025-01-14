@@ -1,3 +1,5 @@
+[back](../README.md)
+
 # CUPS Printing Server
 * [Cups Docs](ttp://www.cups.org/documentation.html)
 * [RHEL CUPS setup and config guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_using_a_cups_printing_server/configuring-printing_configuring-and-using-a-cups-printing-server)

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Plugins (Self-hosted)
 
 ## Issue: Cannot load Marketplace

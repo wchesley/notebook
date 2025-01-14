@@ -1,3 +1,5 @@
+[back](./README.md)
+
 Score: 1 / 1
 
 #### A backup administrator must enable guest file system indexing for a backup job of a Linux file server VM. All required credentials are added to the Veeam Backup & Replication server. VMware Tools (VIX) cannot be used due to security regulations. What should be done to make it possible in the following environment?

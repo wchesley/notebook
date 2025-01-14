@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # SQL Server Database Analysis Queries
 
 Adapted from: https://blog.nimblepros.com/blogs/sql-server-database-analysis-queries/

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # What is risk?
 
 Risk is commonly defined as: `risk = impact * likelihood`

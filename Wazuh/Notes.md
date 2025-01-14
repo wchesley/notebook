@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Wazuh Notes
 
 Work notes, there's a readme on my laptop that I've not yet commited. 

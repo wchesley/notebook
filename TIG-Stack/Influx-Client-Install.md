@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Download and install the influx CLI
 
 The influx command line interface (CLI) includes commands to manage many aspects of InfluxDB, including buckets, organizations, users, tasks, etc.

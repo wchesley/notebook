@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Influx/Telegraf downloads
 
 Column: https://portal.influxdata.com/downloads/

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Wazuh Customizations
 
 The Wazuh dashboard white-labeling feature allows you to replace the following elements with custom ones.

@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Download and install InfluxDB v2
 
 ###### [reference docs](https://docs.influxdata.com/influxdb/v2/install/?t=Linux#install-influxdb-as-a-service-with-systemd)

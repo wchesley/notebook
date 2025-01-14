@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Plesk
 
 Plesk is designed to help IT specialists manage web, DNS, mail and other services through a comprehensive and user-friendly GUI. Plesk is a hosting control panel, an intermediary between system services and users. For example, when a user creates a website through the Plesk GUI, Plesk propagates this request to a web server, either Apache or IIS, and the latter adds a new virtual host to the system. This method of administering all system services from a single web interface reduces maintenance costs and gives administrators more flexibility and control.

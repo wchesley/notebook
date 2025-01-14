@@ -1,3 +1,5 @@
+[back](./README.md)
+
 # Managing Data in Influx CLI
 
 Column: https://docs.influxdata.com/influxdb/v1.8/query_language/manage-database/#drop-series-from-the-index-with-drop-series

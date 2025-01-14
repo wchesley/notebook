@@ -1,3 +1,5 @@
+[back](../README.md)
+
 # Security
 
 Specifically, Cybersecurity. 
@@ -5,6 +7,7 @@ Specifically, Cybersecurity.
 See: [OWASP testing framework](https://github.com/OWASP/wstg/tree/f33d49364c72f4e5ad082cca0eea1de64ffe1ceb/document)  
 [Mitre ATT&CK](https://attack.mitre.org/resources/)  
 [CentralOps.net](https://centralops.net/co/)  
+[Malware Archaeology - Cheat Sheets](https://www.malwarearchaeology.com/cheat-sheets/)  
 
 ## Threat Modeling
 
