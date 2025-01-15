@@ -4,7 +4,6 @@
 
 ## Upgrade Agents
 
-
 ### Remote
 
 [Remote Agent Upgrade Docs](https://documentation.wazuh.com/current/user-manual/agent/agent-management/remote-upgrading/upgrading-agent.html)
