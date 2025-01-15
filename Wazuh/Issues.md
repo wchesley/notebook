@@ -28,3 +28,20 @@ One or more files that contains the passwords for Wazuh might get updated if one
 Wazuh logs, alot, and some seems to be duplicated, or at least it's already kept within OpenSearch instance. [See this](https://zaferbalkan.com/2023/08/08/wazuh-pain-points.html#poor-monitoring-cluster). I was running into disk space issues due to the Alerts log files consuming 20Gb of space. Following the [Documentation](https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/global.html#alerts-log), I edited `/var/ossec/etc/ossec.conf` to disable alerts.log files from being written. The `alerts.json` files are required for Wazuh to function. 
 
 I then removed the old `alerts.log` files located at `/var/ossec/log/alerts/<Year>/<Month>`  
+
+## Wazuh API failed to connect
+
+Happens occasionally after a reboot or change to wazuh config. Just restart wazuh-manager service via `systemctl restart wazuh-manager`. Give it a few minutes to restart, then check `systemctl status wazuh-manager`. 
+
+Should that fail, check `wazuh-indexer` and `wazuh-dashboard` statuses via `systemctl`
+
+```bash
+systemctl status wazuh-dashboard
+systemctl status wazuh-indexer
+```
+
+Check for errors in the status logs or if the service has failed to start.  
+
+Most recently I had issues getting the indexer running properly, good place to look for errors there is the `/var/log/wazuh-indexer/wazuh-indexer-cluster.log`, this pointed to errors related to `kibanaserver` and `admin` users not signing into opensearch. 
+
+Another issue I had was when the opensearch reached near full disk capacity and then places itself into readonly mode. This is not fully resolved yet, I have expanded the disk space but am still not getting new alerts in wazuh (this is at westgate MSP). 
