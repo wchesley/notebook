@@ -8,6 +8,11 @@ are still scenarios or risks unique to an organization that these rules
 may not cover. To compensate for this, organizations can create custom 
 alert rules, which is the focus of this doc.
 
+> Note: 
+>
+> To make Wazuh more effective with windows, and to utalize most of these rules. 
+> The windows host will need [sysmon](../Windows/Sysmon/README.md) installed and configured. 
+
 - [Rules](#rules)
 - [Understanding Rules](#understanding-rules)
   - [Rule Order](#rule-order)
