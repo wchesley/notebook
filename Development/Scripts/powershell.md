@@ -27,6 +27,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Examples](#examples)
     - [Example 1: Increase the size of an event log](#example-1-increase-the-size-of-an-event-log)
     - [Example 2: Retain an event log for a specified duration](#example-2-retain-an-event-log-for-a-specified-duration)
+  - [Get Hard Drive (Disk) Information](#get-hard-drive-disk-information)
 
 
 # Snippits and small scripts
@@ -314,3 +315,43 @@ Limit-EventLog -LogName Security -ComputerName "Server01", "Server02" -Retention
 ```
 
 This command ensures that events in the Security log on the Server01 and Server02 computers are retained for at least 7 days.
+
+## Get Hard Drive (Disk) Information
+
+apart from the classic tools like the Disk Management Utility or Diskpart.
+
+The corresponding Powershell cmdlets can be retrieved with the following command:
+
+    Get-Command -Module Storage -Name Get*
+    
+
+-   **Get-PhysicalDisk** allows you to get information about physical disks and device characteristics.
+-   **Get-Disk display** gets disk information at the logical level of the operating system.
+-   **Get-Partition** shows partition information on all drives.
+-   **Get-Volume** displays volume information on all disks.
+
+Ex:
+
+```ps1
+Get-PhysicalDisk |ft -Wrap
+```
+
+![Get-PhysicalDisk](https://danielschwensen.github.io/assets/2020/Get-PhysicalDisk.png)
+
+```ps1
+Get-Disk
+```
+
+![Get-Disk](https://danielschwensen.github.io/assets/2020/Get-Disk.png)
+
+```ps1
+Get-Partition
+```
+
+![Get-Partition](https://danielschwensen.github.io/assets/2020/Get-Partition.png)
+
+```ps1
+Get-Volume
+```
+
+![Get-Volume](https://danielschwensen.github.io/assets/2020/Get-Volume.png)
