@@ -2,6 +2,8 @@
 
 # CMD & Powershell Reference
 
+For powershell, go [here](../Development/Scripts/powershell.md)
+
 Created: April 8, 2021 12:04 PM
 ## General use: (CMD)
 - list items with `dir` instead of `ls`
