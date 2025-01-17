@@ -20,7 +20,7 @@
     Add-ReadMeBackLink
 #>
 
-#-------------------------- [Initialisations] --------------------------
+#-------------------------- [Initialisations] -------------------------
 
 # Set Error Actions: 
 $ErrorView = 'NormalView'
@@ -29,97 +29,67 @@ $ErrorActionPreference = 'Stop'
 trap {Write-Error "Error found: $_"; break;}
 
 #---------------------------- [Constants] -----------------------------
-$rootReadme = "./README.md"
+# Define paths
+#$rootReadme = "README.md"
 
 #---------------------------- [Functions] -----------------------------
 
-# Function to find or create the root README.md file
-function Ensure-RootReadme {
-    if (-not (Test-Path $rootReadme)) {
-        Write-Host "No README.md found in the current directory. Creating one..." -ForegroundColor Yellow
-        Set-Content -Path $rootReadme -Value "# Project Root" -Force
-    }
+# Define the root README.md file path
+$rootReadme = "README.md"
+
+# Ensure the root README.md file exists
+if (-Not (Test-Path $rootReadme)) {
+    Write-Error "Root README.md not found at $rootReadme."
+    exit
 }
 
-# Function to find the first numbered list in a markdown file
-function Get-NumberedList {
-    param (
-        [string]$FilePath
-    )
-    $lines = Get-Content -Path $FilePath
-    $startIndex = $null
-    $endIndex = $null
+# Read the entire content of the root README.md
+$rootContent = Get-Content -Path $rootReadme -Raw
 
-    for ($i = 0; $i -lt $lines.Count; $i++) {
-        if ($lines[$i] -match "^\d+\.\s+\[.+\]\(.+\)") {
-            if (-not $startIndex) { $startIndex = $i }
-            $endIndex = $i
-        } elseif ($startIndex -and $endIndex -and $lines[$i] -notmatch "^\d+\.\s+\[.+\]\(.+\)") {
-            break
-        }
-    }
-    return @{ Start = $startIndex; End = $endIndex; Lines = $lines }
+# Regex pattern to identify the entire numbered list block
+$numberedListPattern = "(?ms)^(\s*1\.\s.*?(?:\n\s*\d+\.\s.*?)*)(\n+|$)"
+
+# Match the numbered list
+$listMatch = [regex]::Match($rootContent, $numberedListPattern)
+
+if (-Not $listMatch.Success) {
+    Write-Error "No valid numbered list found in the root README.md."
+    exit
 }
 
-# Function to update the numbered list
-function Update-ReadmeList {
-    param (
-        [string]$RootReadme,
-        [array]$NewLinks
-    )
-    $listInfo = Get-NumberedList -FilePath $RootReadme
-    $existingLinks = if ($listInfo['Start'] -ne $null) {
-        $listInfo['Lines'][$listInfo['Start']..$listInfo['End']] -match "\[.+\]\((.+)\)"
-    } else { @() }
+# Extract the content before and after the numbered list
+$header = $rootContent.Substring(0, $listMatch.Index).TrimEnd()
+$footer = $rootContent.Substring($listMatch.Index + $listMatch.Length).TrimStart()
 
-    $allLinks = @{}
-    foreach ($link in $existingLinks) {
-        if ($link -match "\[(.+?)\]\((.+?)\)") {
-            $allLinks[$Matches[1]] = $Matches[2]
-        }
-    }
-    foreach ($link in $NewLinks) {
-        if (-not $allLinks.ContainsKey($link.Name)) {
-            $allLinks[$link.Name] = $link.Path
-        }
-    }
-
-    $sortedLinks = $allLinks.GetEnumerator() | Sort-Object Key
-    $newList = @()
-    $i = 1
-    foreach ($link in $sortedLinks) {
-        $newList += "$i. [$($link.Key)]($($link.Value))"
-        $i++
-    }
-
-    # Update the README
-    if ($listInfo['Start'] -ne $null) {
-        $listInfo['Lines'][$listInfo['Start']..$listInfo['End']] = $newList
-        Set-Content -Path $RootReadme -Value $listInfo['Lines'] -Force
-    } else {
-        Add-Content -Path $RootReadme -Value $newList
-    }
+# Find all immediate subdirectories with README.md files
+$subDirectories = Get-ChildItem -Path . -Directory | Where-Object {
+    Test-Path "$($_.FullName)\README.md"
 }
 
-#---------------------------- [Main Script] ---------------------------
-
-Ensure-RootReadme
-
-$subdirs = Get-ChildItem -Directory
+# Generate the updated numbered list
 $newLinks = @()
-
-foreach ($dir in $subdirs) {
-    $subReadme = Join-Path -Path $dir.FullName -ChildPath "README.md"
-    if (Test-Path $subReadme) {
-        $relativePath = (Resolve-Path -Path $subReadme).Path
-        $newLinks += [PSCustomObject]@{
-            Name = $dir.Name
-            Path = $relativePath
-        }
-    }
+$i = 1
+foreach ($dir in $subDirectories) {
+    # Relative path for Markdown links
+    $relativePath = (Resolve-Path "$($dir.FullName)\README.md" -Relative).TrimStart(".\")
+    $newLinks += "$i. [$($dir.Name)]($relativePath)"
+    $i++
 }
 
-Update-ReadmeList -RootReadme $rootReadme -NewLinks $newLinks
+# Join the new numbered list into Markdown format
+$newListMarkdown = $newLinks -join "`n"
 
-Write-Host "README.md updated successfully." -ForegroundColor Green
-exit $LASTEXITCODE
+# Combine the header, new list, and footer
+$updatedContent = @($header, $newListMarkdown, $footer) -join "`n`n"
+
+# Check if the content has changed
+if ($updatedContent -ne $rootContent) {
+    try {
+        Set-Content -Path $rootReadme -Value $updatedContent -Encoding UTF8
+        Write-Host "Root README.md has been successfully updated."
+    } catch {
+        Write-Error "Failed to update README.md: $_"
+    }
+} else {
+    Write-Host "No changes detected. README.md remains unchanged."
+}
