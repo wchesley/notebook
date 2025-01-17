@@ -7,6 +7,7 @@ The OS everyone (seems to) love™ from Microsoft.
 - [Windows](#windows)
   - [Table of Contents](#table-of-contents)
 - [Notes](#notes)
+  - [Brute-force get cli args of exe? (untested)](#brute-force-get-cli-args-of-exe-untested)
   - [Disable BitLocker automatic device encryption](#disable-bitlocker-automatic-device-encryption)
           - [source](#source)
 
@@ -22,6 +23,17 @@ List of Windows Documents:
 # Notes
 
 scratch notes that have no home yet... 
+
+## Brute-force get cli args of exe? (untested)
+Have a vendor executable with unknown command-line options? Don’t want to reverse-engineer? Brute force in Windows shell!
+
+```
+:: Extract strings from program
+strings.exe program.exe >> strings.txt
+
+:: Run each string as program argument
+for /f %a IN (strings.txt) DO “program.exe” %a
+```
 
 ## Disable BitLocker automatic device encryption
 
