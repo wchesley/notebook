@@ -35,8 +35,6 @@ trap { Write-Error "Error found: $_"; break; }
 $rootReadme = "./"
 
 #---------------------------- [Functions] -----------------------------
-# Define the function for checking and inserting links
-
 # Check if the provided directory exists
 if (-Not (Test-Path -Path $rootReadme -PathType Container)) {
     Write-Host "Error: The specified directory '$rootReadme' does not exist." -ForegroundColor Red
@@ -49,24 +47,38 @@ $Directories = Get-ChildItem -Path $rootReadme -Directory -Recurse
 # Include the root directory in processing
 $Directories += Get-Item -Path $rootReadme
 $BackLink = "[back](./README.md)"
-$BackLinkTest = "*$BackLink*";
+$BackLinkTest = [regex]::Escape($BackLink)  # Escape for regex usage
+
+$processedFiles = @()  # Array to track processed files
+$processedReadmes = @() # Array to track processed README.md files
 
 foreach ($Dir in $Directories) {
     $ReadMePath = Join-Path -Path $Dir.FullName -ChildPath 'README.md'
         
+    # Skip processing the root directory's README file
+    if ($Dir.FullName -eq (Resolve-Path $rootReadme).Path) {
+        continue
+    }
+
     # Check if the directory contains a README.md file
     if (Test-Path -Path $ReadMePath) {
         $MarkdownFiles = Get-ChildItem -Path $Dir.FullName -Filter '*.md' -File | Where-Object { $_.FullName -ne $ReadMePath }
             
         foreach ($MarkdownFile in $MarkdownFiles) {
-            $FirstLine = Get-Content -Path $MarkdownFile.FullName -TotalCount 1
-
-            if ($FirstLine -notlike $BackLinkTest) {
-                $FileContent = [System.IO.File]::ReadAllText($MarkdownFile.FullName)
-
+            # Skip if the file has already been processed
+            if ($processedFiles -contains $MarkdownFile.FullName) {
+                continue
+            }
+            
+            # Read the full content of the file
+            $FileContent = Get-Content -Path $MarkdownFile.FullName -Raw
+            # Check if the backlink exists anywhere in the file using regex
+            if (-not ($FileContent -match "^\s*\[back\]\(./README.md\)")) {
+                # Insert the backlink at the start of the file
                 [System.IO.File]::WriteAllText($MarkdownFile.FullName, "$BackLink`n`n" + $FileContent)
 
                 Write-Host "Updated $($MarkdownFile.FullName) with link to $ReadMePath" -ForegroundColor Green
+                $processedFiles += $MarkdownFile.FullName
             } 
             else {
                 Write-Host "File $($MarkdownFile.FullName) already contains the link." -ForegroundColor Yellow
@@ -76,16 +88,20 @@ foreach ($Dir in $Directories) {
         # Handle parent directory README links
         $ParentDir = $Dir.Parent
         $ReadMeExists = Test-Path -Path (Join-Path -Path $ParentDir.FullName -ChildPath 'README.md')
-        if ($ParentDir -and $ReadMeExists) {
+        
+        # Skip if the parent directory doesn't have a README.md file
+        if ($ParentDir -and $ReadMeExists -and -not ($processedReadmes -contains $ParentDir.FullName)) {
             $ParentReadMePath = Join-Path -Path $ParentDir.FullName -ChildPath 'README.md'
-            $FirstLine = Get-Content -Path $ReadMePath -TotalCount 1
+            
+            # Read the full content of the parent README.md
+            $ParentContent = Get-Content -Path $ParentReadMePath -Raw
+            # Check if the backlink exists anywhere in the parent README.md using regex
+            if (-not ($ParentContent -match "^\s*\[back\]\(../README.md\)")) {
+                # Insert the backlink at the start of the parent README
+                [System.IO.File]::WriteAllText($ParentReadMePath, "[back](../README.md)`n`n" + $ParentContent)
 
-            if ($FirstLine -notlike "*[back](../README.md)*") {
-                $FileContent = [System.IO.File]::ReadAllText($ReadMePath)
-
-                [System.IO.File]::WriteAllText($ReadMePath, "[back](../README.md)`n`n" + $FileContent)
-
-                Write-Host "Updated $ReadMePath with link to parent $ParentReadMePath" -ForegroundColor Green
+                Write-Host "Updated $ParentReadMePath with link to parent $ReadMePath" -ForegroundColor Green
+                $processedReadmes += $ParentDir.FullName
             }
         }
     }
