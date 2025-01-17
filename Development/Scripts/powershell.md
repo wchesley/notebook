@@ -28,6 +28,7 @@ PowerShell is a task automation and configuration management program from Micros
     - [Example 1: Increase the size of an event log](#example-1-increase-the-size-of-an-event-log)
     - [Example 2: Retain an event log for a specified duration](#example-2-retain-an-event-log-for-a-specified-duration)
   - [Get Hard Drive (Disk) Information](#get-hard-drive-disk-information)
+  - [Create System Link (symlink)](#create-system-link-symlink)
 
 
 # Snippits and small scripts
@@ -355,3 +356,21 @@ Get-Volume
 ```
 
 ![Get-Volume](https://danielschwensen.github.io/assets/2020/Get-Volume.png)
+
+## Create System Link (symlink)
+
+**Windows 10 (and Powershell 5.0 in general) allows you to [create symbolic links via the New-Item cmdlet](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-item).**
+
+Usage:
+
+```ps1
+New-Item -Path C:\LinkDir -ItemType SymbolicLink -Value F:\RealDir
+```
+
+Or in your profile:
+
+```ps1
+function make-link ($target, $link) {
+    New-Item -Path $link -ItemType SymbolicLink -Value $target
+}
+```
