@@ -30,12 +30,9 @@ trap {Write-Error "Error found: $_"; break;}
 
 #---------------------------- [Constants] -----------------------------
 # Define paths
-#$rootReadme = "README.md"
+$rootReadme = "README.md"
 
 #---------------------------- [Functions] -----------------------------
-
-# Define the root README.md file path
-$rootReadme = "README.md"
 
 # Ensure the root README.md file exists
 if (-Not (Test-Path $rootReadme)) {
