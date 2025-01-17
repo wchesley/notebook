@@ -22,7 +22,7 @@
     Add-ReadMeBackLink -RootDirectory "C:\Users\Walker\Documents\GitHub\MyProject"
 #>
 
-#---------------------------------------------------------[Initialisations]--------------------------------------------------------
+#-------------------------- [Initialisations] --------------------------
 
 # Set Error Actions: 
 $ErrorView = 'NormalView'

@@ -5,7 +5,7 @@
 Powershell script template, pulled from [this gist](https://gist.github.com/9to5IT/18ff0ddf706ec23be997) and my own scripts. 
 
 ```ps1
-#requires -version 4
+#requires -version 5
 <#
 .SYNOPSIS
   <Overview of script>
@@ -28,13 +28,13 @@ Powershell script template, pulled from [this gist](https://gist.github.com/9to5
   <Example goes here. Repeat this attribute for more than one example>
 #>
 
-#---------------------------------------------------------[Script Parameters]------------------------------------------------------
+#----------------------------- [Parameters] ---------------------------
 
 Param (
   #Script parameters go here
 )
 
-#---------------------------------------------------------[Initialisations]--------------------------------------------------------
+#-------------------------- [Initialisations] -------------------------
 
 # Set Error Actions: 
 $ErrorView = 'NormalView'
@@ -42,12 +42,12 @@ $ErrorActionPreference = 'Stop'
 
 #Import Modules & Snap-ins
 
-#----------------------------------------------------------[Declarations]----------------------------------------------------------
+#--------------------------- [Declarations] ---------------------------
 
 # Trap Error & Exit: 
 trap {"Error found: $_"; break;}
 
-#-----------------------------------------------------------[Functions]------------------------------------------------------------
+#---------------------------- [Functions] -----------------------------
 
 <#
 Function <FunctionName> {
@@ -73,7 +73,7 @@ Function <FunctionName> {
 }
 #>
 
-#-----------------------------------------------------------[Execution]------------------------------------------------------------
+#---------------------------- [Main Script] ---------------------------
 
 #Script Execution goes here
 
