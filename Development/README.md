@@ -6,6 +6,7 @@ Notes on development, projects and programming in general, as broad of a subject
 
 ## Links
 
+- [Deployment](./Deployment/README.md)
 - [Dotnet](./dotnet/README.md)
 - [Erxes](./Erxes/README.md)
 - [Flutter](./Flutter/README.md)
