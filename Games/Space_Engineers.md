@@ -1,0 +1,19 @@
+[back](./README.md)
+
+# Space Engineers
+
+_**Space Engineers**_ is a [voxel](https://en.wikipedia.org/wiki/Voxel "Voxel")\-based [sandbox game](https://en.wikipedia.org/wiki/Open_world "Open world"), developed and published by [Czech](https://en.wikipedia.org/wiki/Czech_Republic "Czech Republic") independent developer [Keen Software House](https://en.wikipedia.org/wiki/Keen_Software_House "Keen Software House"). In 2013, the initial developmental release of the game joined the [Steam](https://en.wikipedia.org/wiki/Steam_(service) "Steam (service)") [early access](https://en.wikipedia.org/wiki/Early_access "Early access") program. During the following years of active development, _Space Engineers_ sold over one million units. In total as of 2024 the game has sold over 5 million copies[\[5\]](https://en.wikipedia.org/wiki/Space_Engineers#cite_note-indiedb.com-5)[\[6\]](https://en.wikipedia.org/wiki/Space_Engineers#cite_note-Space_Engineers_Game_News-6) In May 2015, for approximately a year and a half, the game's [source code](https://en.wikipedia.org/wiki/Source_code "Source code") was officially available and maintained by KSH to assist the [modding](https://en.wikipedia.org/wiki/Mod_(video_games) "Mod (video games)") community.[\[7\]](https://en.wikipedia.org/wiki/Space_Engineers#cite_note-rpssourcecode-7)[\[8\]](https://en.wikipedia.org/wiki/Space_Engineers#cite_note-mrsourcecode-8) On December 15, 2016, the game entered [Beta](https://en.wikipedia.org/wiki/Software_release_life_cycle#Beta "Software release life cycle") and was later officially released on February 28, 2019.
+
+## Mods
+
+Most mods I get are from Steam Workshop as opposed to mod.io. Steam automatically updates the mods subscribed too. However, will not remove the mod if you unsubscribe from it. Normally to remove the mod from a saved game, you will 'Edit Settings' when loading the save and remove the mod from the 'Mods' list. 
+
+I ran into an instance where particular mod was constantly crashing the game, as evidenced by the crash log (default location: `C:\Users\UserName\AppData\Roaming\SpaceEngineers\`, I sorted by date and chose the most recent log file). The log files can be quite large (50Mb for insance), start from the bottom and work up, whatever caused the crash will be among the last things  written in the log file. From here it can take some detective work to figure out which mod it is as some are mentioned by name only, some include the mod ID and the name. You will need to know the Mod ID to remove it from your filesystem. Navigate to `C:\Program Files (x86)\steam\steamapps\workshop\content\244850\` to find a list of anything you've downloaded from steam workshop for Space Engineers. Each mod is in it's own folder, but named after the mod's ID and not it's name. 
+
+Should your log file tell you the ID of the mod giving issues, it's trivial to go in and delete that mod's directory. If not, most mods include their thumbnail image in their directory, view it to help determine which mod or blueprint you're looking at. 
+
+### Remove Mod from Save Game Manually
+
+I had removed this mod `Inspired Weaponry` from Steam (unsubscribed), and my saved game, yet still was getting crashes and the logs pointed to this mod as the issue. I had removed the mod from the file system manually, but upon relaunch of the saved game, Steam redownloaded the mod. Despite it not being listed as an available mod in space engineers. 
+
+To resolve this, I went into this particular worlds directory, and edited the file `sandbox.sbc`, which is really just an `XML` file. Located where the game was asking for `Inspired Weaponry` and removed the declaration for it. Save the file and launch Space Engineers again to have the mod fully removed from your save/world. 
