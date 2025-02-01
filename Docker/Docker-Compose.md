@@ -60,3 +60,14 @@ volumes:
 I have not tested it with the version 2 of the compose file format, but https://docs.docker.com/compose/compose-file/compose-versioning/#version-2 does not indicate, that it should not work.
 
 I've also not tested it on Windows...
+
+
+## Updating docker compose containers
+
+Manually, you can log into the docker host, navigate to the directory with your `compose.yml` file and run: 
+
+```bash
+docker compose down && docker compose pull && docker compose up -d && docker image prune -af
+```
+
+This command series will stop the current compose container(s), pull updated image(s) foreach image needing an update. Once new images are pulled, restart the compose container(s) and detach the console from them (`-d` flag). Lastly, clean up any unused docker images. The last step is optional but should be run semi-regularly else unused images will consume space on your drive. 
