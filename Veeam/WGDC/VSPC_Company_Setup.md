@@ -30,3 +30,7 @@ Brief overview on how to setup a new company in VSPC.
 14. Click `Next` to go to `Summary`
     1.  Review the information you have entered and confirm everything is correct. 
 15. Click `Finish` when you're ready to create the new Company. 
+
+## Afterwards
+
+When complete, you will need to setup backups on the client end to use the cloud repository. You will need the VSPC login credentials created in the previous steps to complete client side setup. Please see [VBR](./WGC-Setup.md) or [Agent](./WGC-Agent-Setup.md) setup guides for details on setting up either VBR server or installing Veeam agent for backup governance. 
