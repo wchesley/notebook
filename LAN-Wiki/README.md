@@ -10,5 +10,11 @@ Typically try to follow Norse Mythology, even though only one server fits the sc
 | PVE(odin) | 10.0.0.112 | PVE 8.0 | Hypervisor
 | Loki | 10.0.0.200 | PVE 8.0 | Hypervisor
 | Freja | 10.0.0.212 | PVE 8.0 | Hypervisor
-| GarageFloor | Can't recall rn | PBS | Backup Server
-| Thor | 10.0.0.112 | PVE 8.0 | Hypervisor (To be moved to Backup Server) 
+| Baldr | 10.0.100.254 | PBS | Backup Server (primary)
+| Thor | 10.0.0.112 | PVE 8.0 | Hypervisor (To be moved to a Secondary Backup Server, currently offline) 
+| DockerVM | 10.0.2.4 | Debian 12.4 | Docker host, Arr stack and photoprism 
+| Docker01 | 10.0.2.3 | Debian 12.4 | Physical Docker host
+| TheMachine | 10.0.0.2 | Windows 11 Edu | Walker's Desktop
+| Hosaka Mk. II | 10.0.0.8 | Fedora 40 | Walker's Laptop
+
+### Docker
