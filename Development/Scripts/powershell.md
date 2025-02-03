@@ -29,6 +29,7 @@ PowerShell is a task automation and configuration management program from Micros
     - [Example 2: Retain an event log for a specified duration](#example-2-retain-an-event-log-for-a-specified-duration)
   - [Get Hard Drive (Disk) Information](#get-hard-drive-disk-information)
   - [Create System Link (symlink)](#create-system-link-symlink)
+  - [Rejoin computer to domain](#rejoin-computer-to-domain)
 
 
 # Snippits and small scripts
@@ -75,6 +76,7 @@ $passwd = Read-Host 'What is your password?' -AsSecureString
 ## Set password for user: 
 
 Option 1. - This prompts you to input password into console twice: 
+
 ```ps1
 net user svcNessus *
 ```
@@ -374,3 +376,13 @@ function make-link ($target, $link) {
     New-Item -Path $link -ItemType SymbolicLink -Value $target
 }
 ```
+
+## Rejoin computer to domain
+
+As of server 2008 R2, `Test-ComputerSecureChannel` was added as a cmdlet in powershell, making this an easy process. 
+
+```ps1
+Test-ComputerSecureChannel -Repair -Credential (Get-Credential)
+```
+
+Will require that you input domain admin credentials in a window pop-up before it will repair the relationship.
