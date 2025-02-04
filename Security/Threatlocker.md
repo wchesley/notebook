@@ -16,7 +16,7 @@ Storage Control as FIM: There's no option to ignore files of certain type or dir
 
 ## Certificates
 
-It's best to whitelist applications by their certificate. For custom code though, it'll need to be signed by a trusted 3rd party CA. I had attempted to use our own AD CA for a cert but it still shows as untrusted. 
+It's best to whitelist applications by their certificate. For custom code though, it'll need to be signed by a trusted 3rd party CA. ~~I had attempted to use our own AD CA for a cert but it still shows as untrusted~~. So long as the certificate is used within your own domain and is trusted by your CA, threatlocker will allow you to approve by certificate. 
 
 ThreatLocker KB article [here](https://threatlocker.kb.help/unverified-certificates/) 
 
