@@ -36,3 +36,65 @@ Navigate to this directory in Admin CMD. Then run this command:
 `sentinelctl config -p agent.safeBootProtection -v false`
 
 We had tamper protection enabled, so you would throw a -`k “Pass Phrase From Sentinel One Web Console Here”` on the end. But the passphrase for that device wasn’t working in my case. So I turned off tamper protection for the group (only the one server was in there) and I edited the config. On the device details in Sentinel one you can go to Actions> Configuration to see the SafeBootProtection settings and confirm when it updates from True to False then re enable tamper protection.
+
+## How to migrate Veeam agent to associate with a New VBR Server
+
+When a Veeam rescann or backup job fails for the following reason: 
+
+`Error: Failed to generate certificate for office: host is managed by another backup server <HostName>.`
+
+> If the original VBR server exists, remove the afflicted PC from any jobs or protection groups it is apart of. The new VBR server should be able to take over after a restart of the Veeam-Agent service of the target machine. 
+
+Typically, once a machine has been removed from all jobs and protection groups on a Veeam Backup Server, records tying that Veeam Agent deployment to that Veeam Backup Server should be removed.
+
+However, if the Veeam Backup Server managing the Veeam Agent deployment is no longer available or has been decommissioned, perform the following procedure to reset the Veeam Agent configuration, forcing it into standalone operation mode.
+
+> **Note:** These steps should **not** be performed if the managing Veeam Backup Server is still active and accessible.
+
+### **Standalone Reset Commands**
+
+[ref KB-4548](https://www.veeam.com/kb4548)
+
+For **Veeam Agent *for Microsoft Windows***, open an Administrative PowerShell prompt and execute:
+
+`& 'C:\Program Files\Veeam\Endpoint Backup\Veeam.Agent.Configurator.exe' -removeOwner /i /force`
+
+If the Veeam Agent *for Microsoft Windows* deployment was operating in [Managed by Server mode](https://helpcenter.veeam.com/docs/backup/agents/agent_job_protection_mode.html?zoom_highlight=%22Managed%20by%20backup%20server%22), the above command will exit with code 3:
+
+```
+Unable to set agent to self-managed mode because this backup agent is already managed by the backup server.
+
+```
+
+Use the Manual Standalone Reset Script below to forcibly untether the Veeam Agent *for Microsoft Windows* deployment from Veeam Backup & Replication.
+
+**Manual Standalone Reset Script**
+            
+        
+**Note:** When Veeam Agent *for Microsoft Windows* is deployed in [Managed by Server](https://helpcenter.veeam.com/docs/backup/agents/agent_job_protection_mode.html?zoom_highlight=%22Managed%20by%20backup%20server%22)
+ mode, no shortcuts for the application are created in the start menu. 
+The commands below to disassociate the deployment will not create those 
+shortcuts. This procedure is only intended for migrating a Veeam Agent *for Microsoft Windows*
+ deployment from being managed by a dead Veeam Backup Server to a new 
+one. To achieve actual standalone operation, uninstall Veeam Agent *for Microsoft Windows* and reinstall using the [standalone package](https://www.veeam.com/windows-backup-download.html).
+Open an Administrative PowerShell console and run the following commands:
+*This process mimics the reset procedure the Veeam Agent Configurator would perform.*
+
+```ps1
+Remove-Item -Path $(Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.FriendlyName -eq "Veeam Agent Certificate" }).PSPath -Confirm:$false
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam Agent for Microsoft Windows\ManagedMode" -Name "License" -Value "" -ErrorAction Ignore
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -Name "DisableNotifications" -Value 0 -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "SerializedConnectionParams" -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "ManagedModeInstallation" -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "VbrServerName" -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "CatchAllOwnership" -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "VBRServerId" -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "JobSettings" -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "BackupServerIPAddress" -ErrorAction Ignore
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "RMMProviderMode" -ErrorAction IgnoreRemove-ItemProperty -Path "HKLM:\SOFTWARE\Veeam\Veeam EndPoint Backup" -name "ReadonlyMode" -ErrorAction Ignore
+Restart-Service "Veeam Agent for Microsoft Windows"
+```
+
+For **Veeam Agent *for Linux*** and **Veeam Agent *for Mac***:
+
+`sudo veeamconfig mode reset --force`
