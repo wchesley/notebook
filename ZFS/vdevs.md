@@ -228,3 +228,73 @@ The above was done in ZFS (minus creating the logical volume, which will get to 
 Conclusion
 
 This should act as a good starting point for getting the basic understanding of zpools and VDEVs. The rest of it is all downhill from here. You've made it over the "big hurdle" of understanding how ZFS handles pooled storage. We still need to cover RAIDZ levels, and we still need to go into more depth about log and cache devices, as well as pool settings, such as deduplication and compression, but all of these will be handled in separate posts. Then we can get into ZFS filesystem datasets, their settings, and advantages and disagvantages. But, you now have a head start on the core part of ZFS pools.
+
+---
+
+<sub>The above text was originally written by Aaron Toponce, and is preserved here because his original site no longer exists. The text that follows has been added by me.</sub>
+
+# vDEVs - Extended Notes
+
+## Replacing drive in vDEV
+
+If a drive appears as `UNAVAILABLE` or `FAULTED` and has already been confirmed to be bad, replacement of a new blank disk is fairly simple and has a few minor prerequisites. Hot and cold spares will not be covered here.
+
+### Drive replacement requirements
+
+- The new disk you wish to insert into your existing pool must be of equal or greater size than the existing drives. 
+   - While not explicitly stated or required, the drive hardware should match as best as possible. ie. Replace a SSD with an SSD, 10k RPM HDD with 10k RPM HDD, 6Gps SATA should replace 6Gps SATA, and so on...While I've not personally tested a pool with a mixed drive set, the theory goes that the pool will perform as well as the slowest drive in the pool. If replacing **all drives** within a pool these limitation can be *ignored*.  
+ - The new disk should be empty of all partition tables and existing data. 
+   - If not starting with a brand new drive, you can wipe the existing partitions and data with `wipefs`
+     - ex. `wipefs -af /dev/sdi`
+     - This command will wipe all available signatures (`-a`) with force (`-f`) for the drive `/dev/sdi`
+     - **Double check the drive you are wiping as you will not bve able to undo this!**
+   - Some drives have been apart of another RAID, and weren't properly ejected or removed from their original controller will need a different method of formatting, using `wipefs` will not be required in this case. Or, have write protection bits set on them that will prevent a new filesystem being written to the device. (long story of tracing down a new zpool creation error). 
+     - Check if your drive is write protected with `sg_readcap`
+       - Write-Protected Disk:
+	   ```bash
+	   [root@livecd ~]# sg_readcap -l /dev/sda
+		Read Capacity results:
+   		Protection: prot_en=1, p_type=1, p_i_exponent=0
+	   ```
+	   - Non-Write Protected disk
+	   ```bash
+	   [root@livecd ~]# sg_readcap -l /dev/sda
+		Read Capacity results:
+   		Protection: prot_en=0, p_type=0, p_i_exponent=0
+	   ```
+      - If your disk is write protected `sg_format` can fix this for you like so: 
+	  ```bash
+	   [root@livecd ~]# sg_format --format --fmtpinfo=0 /dev/sda
+		SEAGATE   ST9600104SS    MS05   peripheral_type: disk [0x0]
+		<< supports protection information>>
+		Mode Sense (block descriptor) data, prior to changes:
+		Number of blocks=1172123568 [0x45dd2fb0]
+		Block size=512 [0x200]
+
+		A FORMAT will commence in 10 seconds
+		ALL data on /dev/sda will be DESTROYED
+			Press control-C to abort
+		A FORMAT will commence in 5 seconds
+		ALL data on /dev/sda will be DESTROYED
+			Press control-C to abort
+
+		Format has started
+		Format in progress, 0% done
+		....
+		Format in progress, 99% done
+		FORMAT Complete
+		```
+
+		- The process will vary depending on the size of your disk, for my 8Tb drives it took around 8hrs, but they are 12GBps 7.2K rpm SAS drives. YMMV.
+
+### Replacing the drive
+
+Get both drive ID's the one to replace from `zpool status`, the other from `ls -l /dev/disk/by-id`
+
+As root, run `zpool replace zData /dev/disk/by-id/scsi-SATA_HGST_HUS726060AL_NAHRWSRE /dev/disk/by-id/scsi-SHGST_HUH721008AL4200_7SGZ2ABC`
+
+replacing the disks given with the `/disk/by-id` of the disks needing replacement. First disk argument is the existing `zpool` disk, second is the disk to replace it. 
+
+If your vDEV has the feature: `feature@resilver_defer` set to enabled, you may chain up all the disk you need to replace and ZFS will resliver them one at a time, after the initial resliver has completed. This is quite useful when replacing an entire pool. 
+
+If replacing an entire pool with bigger hard drives ensure that the `zpool` feature `autoextend` is set to `on` so the vDEV will automatically grow to it's new size once the smallest drive is replaced in the pool. 
