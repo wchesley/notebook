@@ -30,6 +30,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Hard Drive (Disk) Information](#get-hard-drive-disk-information)
   - [Create System Link (symlink)](#create-system-link-symlink)
   - [Rejoin computer to domain](#rejoin-computer-to-domain)
+  - [Get file size(s) in directory](#get-file-sizes-in-directory)
 
 
 # Snippits and small scripts
@@ -386,3 +387,11 @@ Test-ComputerSecureChannel -Repair -Credential (Get-Credential)
 ```
 
 Will require that you input domain admin credentials in a window pop-up before it will repair the relationship.
+
+## Get file size(s) in directory
+
+```ps1
+Get-ChildItem -Path 'E:\Backups' -Recurse -Force -File |                                     >>     Select-Object -Property FullName `                                                                               >>         ,@{Name='SizeGB';Expression={$_.Length / 1GB}} `                                                             >>         ,@{Name='SizeMB';Expression={$_.Length / 1MB}} `                                                             >>         ,@{Name='SizeKB';Expression={$_.Length / 1KB}} |                                                             >>     Sort-Object { $_.SizeKB } -Descending |                                                                          >>     Export-Csv -Path C:\Temp\SYNOLOGYLUN_file_sizes.csv  
+```
+
+Alternate: Replace `Export-Csv` with `Output-Grid` to not create a file and have a new window popup with your results.
