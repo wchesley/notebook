@@ -26,3 +26,7 @@ After approving an application that was run from a terminal, you will have to re
 
 - For bash terminals refresh via `source ~/.bash_rc`
 - For Powershell/Windows Terminal, refresh via `. $profile`
+  
+Rules and Polices are read in order of smallest to largest, so a polciy set at place `-19` will take precedene over a policy at place `0`. 
+
+When ringfencing a new application, place the ringfence into monitor only mode for at least a week, then review any blocks and allow accordingly. 
