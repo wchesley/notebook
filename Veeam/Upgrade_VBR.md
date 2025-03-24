@@ -2,7 +2,8 @@
 
 # Upgrade Veeam Backup & Replication
 
-ref: [Upgrade VBR to 12.2](https://helpcenter.veeam.com/docs/backup/hyperv/upgrade_vbr.html?ver=120)
+ref: [Upgrade VBR to 12.2](https://helpcenter.veeam.com/docs/backup/hyperv/upgrade_vbr.html?ver=120)  
+ref: 12.3.1 Update [KB4696](https://www.veeam.com/kb4696)
 
 - In essence, download the new versions ISO from Veeam. 
 - open the ISO once download is complete
@@ -25,3 +26,21 @@ Before you upgrade Veeam Backup & Replication, [check prerequisites](https://
 8. [Specify the database engine and instance](https://helpcenter.veeam.com/docs/backup/hyperv/upgrade_vbr_database.html).
 9. [Perform the configuration check](https://helpcenter.veeam.com/docs/backup/hyperv/upgrade_vbr_configuration_check.html).
 10. [Begin upgrade](https://helpcenter.veeam.com/docs/backup/hyperv/upgrade_vbr_ready_to_upgrade.html).
+
+## Check VBR Version (Powershell)
+
+To get the current VBR version via powershell; it can be easily found in the Local Machine (HKLM) registry hive. From an admin powershell console: 
+
+```ps1
+$CoreDllPath = (Get-ItemProperty -Path "HKLM:\Software\Veeam\Veeam Backup and Replication\" | Select-Object -ExpandProperty CorePath) + "Veeam.Backup.Core.dll"
+$CoreDll = Get-Item -Path $CoreDllPath
+$CoreDll.VersionInfo.ProductVersion + " - " + $CoreDll.VersionInfo.Comments
+```
+
+On a typicaly VBR installation, comments may or may not be present and the output (without comments): 
+
+```ps1
+PS C:\> $CoreDll.VersionInfo.ProductVersion + " - " + $CoreDll.VersionInfo.Comments 
+12.3.0.310 -   
+PS C:\>  
+```
