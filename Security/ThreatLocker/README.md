@@ -2,6 +2,12 @@
 
 # ThreatLocker
 
+## Links
+
+- [Policy Order of Operations](./Policy_Order_Of_Operation.md)
+
+## Notes
+
 Bootcamp 08.19 -> 08.23 10am-11:30am
 
 EDR (Threatlocker detect) only runs after application has passed through the base threatlocker zero-trust application. 
