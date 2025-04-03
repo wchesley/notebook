@@ -272,13 +272,13 @@ $results | Format-Table -AutoSize
 Write-Host "Results have been exported to C:\ADGroupsAndUsers.csv"
 ```
 
-# Set Event Log Size limits (increase or decrease)
+## Set Event Log Size limits (increase or decrease)
 
 Sets the event log properties that limit the size of the event log and the age of its entries.
 
 [](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/limit-eventlog?view=powershell-5.1#syntax)
 
-## Syntax
+### Syntax
 
 ```ps1
 Limit-EventLog
@@ -294,13 +294,13 @@ Limit-EventLog
 
 [ref](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/limit-eventlog?view=powershell-5.1#description)
 
-## Description
+### Description
 
 The `Limit-EventLog` cmdlet sets the maximum size of a classic event log, how long each event must be retained, and what happens when the log reaches its maximum size. You can use it to limit the event logs on local or remote computers.
 
 The cmdlets that contain the EventLog noun (the EventLog cmdlets) work only on classic event logs. To get events from logs that use the Windows Event Log technology in Windows Vista and later versions of Windows, use `Get-WinEvent`.
 
-## Examples
+### Examples
 
 ### Example 1: Increase the size of an event log
 
@@ -312,7 +312,7 @@ This command increases the maximum size of the Windows PowerShell event log on t
 
 [](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/limit-eventlog?view=powershell-5.1#example-2-retain-an-event-log-for-a-specified-duration)
 
-### Example 2: Retain an event log for a specified duration
+#### Example 2: Retain an event log for a specified duration
 
 ```ps1
 Limit-EventLog -LogName Security -ComputerName "Server01", "Server02" -RetentionDays 7
