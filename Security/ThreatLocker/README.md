@@ -36,3 +36,23 @@ After approving an application that was run from a terminal, you will have to re
 Rules and Polices are read in order of smallest to largest, so a polciy set at place `-19` will take precedene over a policy at place `0`. 
 
 When ringfencing a new application, place the ringfence into monitor only mode for at least a week, then review any blocks and allow accordingly. 
+
+### Migrate ThreatLocker to new machine - Cloned machine
+
+When cloning an old machine to a new machine with ThreatLocker installed there are a few things to do before cloning the machine. 
+
+> Ensure "Tamper Protection" is disabled before starting this process.
+
+Before cloning, perform the following actions on the original machine: 
+
+- Stop all ThreatLocker services. 
+- Delete `C:\Program Files\ThreatLocker\pk.dat`
+- Delete the following registry keys from `HKLM\SOFTWARE\ThreatLocker`
+  - `ComputerAuthKey`
+  - `ComputerId`
+
+Do not re-enable any threatlocker services on the original machine. Only enable them on the new machine once cloning is complete. If you reboot the old machine, you will need to reperform the steps above, including disabling Tamper Protection mode. 
+
+### Copying Application Policies between Organizations
+
+When copying application policies or definitions between organizations, save them to the new organization first, else the policies don't copy in properly. This issue was given to me second hand and I haven't had a chance to confirm it yet. 
