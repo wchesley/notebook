@@ -21,16 +21,17 @@ PowerShell is a task automation and configuration management program from Micros
   - [Uninstall any app by name:](#uninstall-any-app-by-name)
   - [Get Office 365 Update Channel:](#get-office-365-update-channel)
   - [Get Active Directory Users \& Groups - Output to CSV](#get-active-directory-users--groups---output-to-csv)
-- [Set Event Log Size limits (increase or decrease)](#set-event-log-size-limits-increase-or-decrease)
-  - [Syntax](#syntax)
-  - [Description](#description)
-  - [Examples](#examples)
-    - [Example 1: Increase the size of an event log](#example-1-increase-the-size-of-an-event-log)
-    - [Example 2: Retain an event log for a specified duration](#example-2-retain-an-event-log-for-a-specified-duration)
+  - [Set Event Log Size limits (increase or decrease)](#set-event-log-size-limits-increase-or-decrease)
+    - [Syntax](#syntax)
+    - [Description](#description)
+    - [Examples](#examples)
+      - [Example 1: Increase the size of an event log](#example-1-increase-the-size-of-an-event-log)
+      - [Example 2: Retain an event log for a specified duration](#example-2-retain-an-event-log-for-a-specified-duration)
   - [Get Hard Drive (Disk) Information](#get-hard-drive-disk-information)
   - [Create System Link (symlink)](#create-system-link-symlink)
   - [Rejoin computer to domain](#rejoin-computer-to-domain)
   - [Get file size(s) in directory](#get-file-sizes-in-directory)
+  - [Get File last access time and last write time](#get-file-last-access-time-and-last-write-time)
 
 
 # Snippits and small scripts
@@ -302,7 +303,7 @@ The cmdlets that contain the EventLog noun (the EventLog cmdlets) work only on c
 
 ### Examples
 
-### Example 1: Increase the size of an event log
+#### Example 1: Increase the size of an event log
 
 ```ps1
 Limit-EventLog -LogName "Windows PowerShell" -MaximumSize 20KB
@@ -395,3 +396,24 @@ Get-ChildItem -Path 'E:\Backups' -Recurse -Force -File |                        
 ```
 
 Alternate: Replace `Export-Csv` with `Output-Grid` to not create a file and have a new window popup with your results.
+
+## Get File last access time and last write time
+
+This just involves appending a filter to your `ls`, `gci` or `Get-ChildItem` command: 
+
+```ps1
+get-childitem -Path C:\Path\To\Dir -Recurse  | Select FullName,LastAccessTime,LastWriteTime
+```
+
+Since Windows 10 "Redstone 4" (April 2018) update, `LastAccessTime` should be enabled by default. To confirm that `LastAccessTime` is enabled (Windows 10, post April 2019), the value is located in the following registry key: `HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\FileSystem`.
+
+The `NtfsDisableLastAccessUpdate` value may contain one of the following integers:
+
+    0x80000000: User Managed, the “Last Access” updates are enabled,
+    0x80000001: User Managed, the “Last Access” updates are disabled,
+    0x80000002: System Managed, the “Last Access” updates are enabled,
+    0x80000003: System Managed, the “Last Access” updates are disabled.
+
+For Windows 10 prior to April 2019 the following registry key should be set to `1`: 
+
+`HKLM\SYSTEM\CurrentControlSet\Control\FileSystem > NtfsDisableLastAccessUpdate`
