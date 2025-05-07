@@ -32,6 +32,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Rejoin computer to domain](#rejoin-computer-to-domain)
   - [Get file size(s) in directory](#get-file-sizes-in-directory)
   - [Get File last access time and last write time](#get-file-last-access-time-and-last-write-time)
+  - [Get Printers \& Printer Queue Status](#get-printers--printer-queue-status)
 
 
 # Snippits and small scripts
@@ -422,3 +423,49 @@ The `NtfsDisableLastAccessUpdate` value may contain one of the following integer
 For Windows 10 prior to April 2019 the following registry key should be set to `1`: 
 
 `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem > NtfsDisableLastAccessUpdate`
+
+## Get Printers & Printer Queue Status
+
+Get all printers: 
+
+```ps1
+Get-Printer
+```
+
+Get all printers job queue status: 
+
+```ps1
+$AllPrinters = Get-Printer
+foreach ($printer in $AllPrinters) {
+    Get-PrintJob -PrinterObject $printer
+}
+```
+
+Example output: 
+
+```ps1
+PS C:\> $Printers = Get-Printer
+PS C:\> foreach($printer in $Printers) {
+>> Get-PrintJob -PrinterObject $printer
+>> }
+
+Id    ComputerName    PrinterName     DocumentName         SubmittedTime        JobStatus      
+--    ------------    -----------     ------------         -------------        ---------
+2                     EPSON25D7F7 ... 0229-02-Oil.dwg      5/7/2025 3:10:57 PM  Error, Printing
+3                     EPSON25D7F7 ... 0229-02-Oil.dwg      5/7/2025 3:13:17 PM  Normal
+
+
+PS C:\> get-printer
+
+Name                           ComputerName    Type         DriverName                PortName        Shared   Published  DeviceType     
+----                           ------------    ----         ----------                --------        ------   ---------  ----------
+SEC84251932C63E                                Local        Samsung M337x 387x 407... WSD-82d55bd4... False    False      Print
+progeCAD PDF Virtual Printe...                 Local        Amyuni Document Conver... NUL:            False    False      Print
+progeCAD Image Virtual Prin...                 Local        Amyuni Document Conver... NUL:            False    False      Print
+OneNote (Desktop)                              Local        Send to Microsoft OneN... NUL:            False    False      Print
+Microsoft XPS Document Writer                  Local        Microsoft XPS Document... PORTPROMPT:     False    False      Print
+Microsoft Print to PDF                         Local        Microsoft Print To PDF    PORTPROMPT:     False    False      Print
+HP Color LaserJet 3600                         Local        HP Color LaserJet 3600    HPDIU_192.16... False    False      Print
+Fax                                            Local        Microsoft Shared Fax D... SHRFAX:         False    False      Print
+EPSON25D7F7 (WF-6590 Series)                   Local        Microsoft IPP Class Dr... WSD-5e72957b... False    False      Print
+```
