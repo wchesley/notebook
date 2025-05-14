@@ -33,6 +33,8 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get file size(s) in directory](#get-file-sizes-in-directory)
   - [Get File last access time and last write time](#get-file-last-access-time-and-last-write-time)
   - [Get Printers \& Printer Queue Status](#get-printers--printer-queue-status)
+  - [Ping all hosts in subnet](#ping-all-hosts-in-subnet)
+  - [Create Shortcut (.lnk file)](#create-shortcut-lnk-file)
 
 
 # Snippits and small scripts
@@ -276,6 +278,8 @@ Write-Host "Results have been exported to C:\ADGroupsAndUsers.csv"
 
 ## Set Event Log Size limits (increase or decrease)
 
+<sub>Also see <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-eventlog?view=powershell-5.1">Get-EventLog</a> for reading the event log.</sub>
+
 Sets the event log properties that limit the size of the event log and the age of its entries.
 
 [](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/limit-eventlog?view=powershell-5.1#syntax)
@@ -469,3 +473,73 @@ HP Color LaserJet 3600                         Local        HP Color LaserJet 36
 Fax                                            Local        Microsoft Shared Fax D... SHRFAX:         False    False      Print
 EPSON25D7F7 (WF-6590 Series)                   Local        Microsoft IPP Class Dr... WSD-5e72957b... False    False      Print
 ```
+
+## Ping all hosts in subnet
+
+So you can’t install Advanced IP Scanner or Angry IP Scanner etc…
+
+Use this PS Script instead: 
+
+```ps1
+for ($i = 1; $i -lt 255; $i++) {
+Test-Connection “192.168.1.$i” -Count 1 -ErrorAction SilentlyContinue
+}
+```
+
+Adjust IP range as needed, currently set for a `/24` subnet. Takes about a minute or so to run through all hosts. 
+
+## Create Shortcut (.lnk file)
+
+I want to create a shortcut with PowerShell for this executable:
+
+```ps1
+C:\Program Files (x86)\ColorPix\ColorPix.exe
+```
+
+While there's no native commandlet in PowerShell, you can use a COM object instead: 
+
+```ps1
+$WshShell = New-Object -COMObject WScript.Shell
+$Shortcut = $WshShell.CreateShortcut("$Home\Desktop\ColorPix.lnk")
+$Shortcut.TargetPath = "%SystemDrive%\Program Files (x86)\ColorPix\ColorPix.exe"
+$Shortcut.Save()
+```
+
+If so desired, you could create a PowerShell script save as `Set-Shortcut.ps1` in your `$PWD` (or save to your user/system `$PATH`):
+
+```ps1
+param ( [string]$SourceExe, [string]$DestinationPath )
+
+$WshShell = New-Object -COMObject WScript.Shell
+$Shortcut = $WshShell.CreateShortcut($DestinationPath)
+$Shortcut.TargetPath = $SourceExe
+$Shortcut.Save()
+```
+
+Usage: 
+
+```ps1
+Set-Shortcut "%SystemDrive%\Program Files (x86)\ColorPix\ColorPix.exe" "$Home\Desktop\ColorPix.lnk"
+```
+
+If you want to pass arguments to the target exe, it can be done by:
+
+```ps1
+#Set the additional parameters for the shortcut
+$Shortcut.Arguments = "/argument=value"
+```
+
+_...before_ _$Shortcut.Save()_.
+
+For convenience, here is a modified version of Set-Shortcut.PS1:
+
+```ps1
+param ( [string]$SourceExe, [string]$ArgumentsToSourceExe, [string]$DestinationPath )
+$WshShell = New-Object -COMObject WScript.Shell
+$Shortcut = $WshShell.CreateShortcut($DestinationPath)
+$Shortcut.TargetPath = $SourceExe
+$Shortcut.Arguments = $ArgumentsToSourceExe
+$Shortcut.Save()
+```
+
+It accepts arguments as its second parameter to set the Destination path of the new shortcut. 
