@@ -205,3 +205,8 @@ What is the likely cause of this problem?
 4. A hard drive containing the entire filesystem of an offline machine was removed and attached to a working machine as a secondary drive. Assuming its mount point is `/mnt/hd`, how would `journalctl` be used to inspect the contents of the journal files located at `/mnt/hd/var/log/journal/`?
    1. the command `journalctl -D /mnt/hd/var/log/journal` will read the log files from the second disk.
 
+
+
+---
+[back](./README.md)
+

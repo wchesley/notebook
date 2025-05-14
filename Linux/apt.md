@@ -13,3 +13,8 @@ apt list -a <package_name>
 ```bash
 apt install <package_name>=<major>.<minor>.<version>
 ```
+
+
+---
+[back](./README.md)
+

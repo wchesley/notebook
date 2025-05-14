@@ -39,3 +39,8 @@ tar: Error is not recoverable: exiting now
 ```
 Pulled from: https://linuxize.com/post/how-to-extract-unzip-tar-gz-file/ 5/26/2022
 
+
+
+---
+[back](./README.md)
+

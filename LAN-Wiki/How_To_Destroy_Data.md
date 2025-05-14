@@ -40,3 +40,7 @@ When old data comes into Westgate's possession and is destined for the recycle p
 5. Once drives are finsihed being wiped. Fill out the `Data Destruction Certificate` located in Westgate's OneDrive -> Documents -> Documentation -> Data Destruction Certificates. 
 
 6. Once the form is completed and digitally signed. Pass the drive to another tech for them to confirm data destruction and get the second signature on the form. Place the completed form in the Data Destruction Certificates directory in OneDrive. 
+
+---
+[back](./README.md)
+

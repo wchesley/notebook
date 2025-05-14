@@ -1,4 +1,4 @@
-# Wireguard VPN
+[back](../README.md)
 
 ## Info
 

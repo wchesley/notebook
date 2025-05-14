@@ -9,3 +9,7 @@ Nextcloud is configured to use Redis for a distributed cache. Configured per Nex
 ```jsx
 redis-cli -h acmecorp.cache.amazonaws.com
 ```
+
+---
+[back](./README.md)
+

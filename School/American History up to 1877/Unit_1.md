@@ -36,3 +36,7 @@ Archaeologists have labeled the earlisest humans in North America the *Clovis* p
 - The Great Plains
   - Mostly nomadic hunters in central part of US
   - Arapaho, Blackfeet, Cheyenne, Comanche, Crow, Apache and Sioux. 
+
+---
+[back](./README.md)
+

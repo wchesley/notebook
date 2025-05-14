@@ -96,3 +96,7 @@
   - 10.0.1.69 (eth) & 10.0.100.69 (wifi)
   - portainer
   - heimdall
+
+---
+[back](./README.md)
+

@@ -4,3 +4,7 @@
 * wiki: https://github.com/seaweedfs/seaweedfs/wiki/Getting-Started
 * repo: https://github.com/seaweedfs/seaweedfs
 * 
+
+---
+[back](./README.md)
+

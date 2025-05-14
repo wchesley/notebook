@@ -370,3 +370,7 @@ note that the protocol itself is not encrypted. In cases where you’re
 sharing over a private network, this may not be a problem. In other 
 cases, a VPN or some other type of encrypted tunnel will be necessary to
  protect your data.
+
+---
+[back](./README.md)
+

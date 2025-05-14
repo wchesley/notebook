@@ -1,4 +1,4 @@
-# Scripts
+[back](../README.md)
 Mostly notes about bash & powershell scripts, any other script I write would probably be in Python. 
 
 ## Template Script: 

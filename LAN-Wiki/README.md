@@ -1,4 +1,4 @@
-# LAN Homepage
+[back](../README.md)
 Landing page for LAN wiki. Holds links to other pages regarding the LAN and general LAN info
 
 ## Naming Scheme

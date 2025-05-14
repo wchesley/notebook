@@ -20,3 +20,7 @@ then `service hddtemp restart/start`
 it works on my ubuntu 16.04 laptop
 
 pulled from: [https://github.com/brndnmtthws/conky/issues/57](https://github.com/brndnmtthws/conky/issues/57)
+
+---
+[back](./README.md)
+

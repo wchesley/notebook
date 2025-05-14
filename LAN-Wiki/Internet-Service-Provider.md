@@ -9,3 +9,8 @@ Ubuntu Edgerouter X
 
 SN: 
 MAC:
+
+
+---
+[back](./README.md)
+

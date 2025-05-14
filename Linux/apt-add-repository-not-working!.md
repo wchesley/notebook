@@ -33,3 +33,7 @@ Then install the app from ppa, if that is our intention
 ```
 sudo apt install <appname>
 ```
+
+---
+[back](./README.md)
+

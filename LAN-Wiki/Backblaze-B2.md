@@ -114,3 +114,7 @@ files to make it easier to restore. Once your configuration is correct,
 run the following command:
 
 `rclone sync secret: /path/to/folder`
+
+---
+[back](./README.md)
+

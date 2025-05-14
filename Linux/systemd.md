@@ -72,3 +72,7 @@ The simple fix that always works is to set `StartLimitIntervalSec=0`. This way, 
 It’s a good idea to set `RestartSec` to at least 1 second though, to avoid putting too much stress on your server when things start going wrong.
 
 As an alternative, you can leave the default settings, and ask systemd to restart your server if the start limit is reached, using `StartLimitAction=reboot`.
+
+---
+[back](./README.md)
+

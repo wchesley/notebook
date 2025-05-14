@@ -19,3 +19,7 @@ cd $wingetdir
 # Provided you've run the above code and powershell is in the $wingetdir directory. 
 .\winget.exe upgrade --all --silent --accept-package-agreements --accept-source-agreements
 ```
+
+---
+[back](./README.md)
+

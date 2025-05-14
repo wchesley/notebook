@@ -62,3 +62,7 @@ From: you@example.com
 Subject: Test mail
 This is a test email
 ```
+
+---
+[back](./README.md)
+

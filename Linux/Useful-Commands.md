@@ -159,3 +159,7 @@ DESCRIPTION
 ```
 Can symlink mountpoints, it's how I replaced `Nextpool` on storage server. Stopped all services running off of `zfs Nextpool`, using `lsof | grep Nextpool` (plot twist, it was all docker...)  
 I was then able to removed the pool, remove the folder it was at. Then create a symbolic it to new `zData` pool. `ln -s /zData /Nextpool`. Most NFS clients complained about this at first. All but the r620 needed a reboot to see updated mount point. On all servers (physical and VM) I restarted all `nfs` related services, nfs server included in that. Only the r620 picked up the change, could be because `thor` was rebooted and had updated mount point and `corosync` took over? Still had to restart nfs services to see upate. 
+
+---
+[back](./README.md)
+

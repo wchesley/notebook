@@ -66,3 +66,7 @@ Biggest payoff for colonist was the offering of land and promise of a better lif
 <blockquote>
 Glory, God and Gold and the Virginia Company<br> <sub>~ Jamestown settlers. . .probably</sub>
 </blockquote>
+
+---
+[back](./README.md)
+

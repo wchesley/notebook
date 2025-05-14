@@ -10,3 +10,7 @@ add that line into `/etc/fstab`, run `system daemon-reload` and `mount -a` to mo
 - [The Glorious Stackexchange](https://unix.stackexchange.com/questions/654952/consistent-auto-mount-of-external-hard-drive)
 - [NFS Client and Server](./NFS-Client-and-Server.md)
 - [Digital Ocean guide for NFS client & Server](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-20-04)        
+
+---
+[back](./README.md)
+

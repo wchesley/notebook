@@ -22,3 +22,7 @@ In some cases (ubuntu) apt will show both as already installed, for Debian (prox
 `sudo mount -t ntfs-3g /dev/sdz1 /mnt/ntfs`
 
 You can confirm the partition is mounted with `df -hT`
+
+---
+[back](./README.md)
+

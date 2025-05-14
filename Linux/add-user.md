@@ -165,3 +165,7 @@ For example, to view details for the [root directory](https://phoenixnap.com/glo
 ![sudo ls /root terminal output Debian](https://phoenixnap.com/kb/wp-content/uploads/2024/04/sudo-ls-root-terminal-output-1.png)
 
 Enter the password, and the terminal shows the root directory contents.
+
+---
+[back](./README.md)
+
