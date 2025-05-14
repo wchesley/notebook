@@ -63,6 +63,22 @@ This guide is for Windows Server 2012 and R2, but the same basic steps will work
 14.  Check the Event log periodically as it will alert you if the quota is underprovisioned. (Applications and Services Log → DFS Replication)
     
 15.  If you're done with replication, e.g., you were using it for data migration, you need to disable the connection. If you simply empty the shares on one server, DFS will sync the delete to the partner servers. Under the replication group, go to Connections, choose the servers you wish to disable, and choose Disable from the action bar.
+    
+## Namespaces
+
+DFS (Distributed File System) Namespaces is a role service in Windows Server that enables you to group shared folders located on different servers into one or more logically structured namespaces. This makes it possible to give users a virtual view of shared folders, where a single path leads to files located on multiple servers.
+
+1. Launch DFS management console
+2. Right click on `Namespaces` and select `New Namespace` to launch the creation wizard
+   1. Select the PC that is the master host of the files.  
+   2. Name your namespace: The name is arbitrary, however should be named after the function or purpose of the namespace.
+   3. If your files/folders already exist and just need to be added to the namespace, select `Edit Settings` on the `Namespace Name and Settings` step of the wizard. Change the `Local path of shared folder` to your file share directory. You do **not** have to set `Shared folder permissions` in this case as DFS will detect the existing permissions and use them instead. 
+   4. Proceed to select the Namespace type, typically left at default value. 
+3. Once `Namespace` has been created, right click on it and select `New Folder`. This folder serve as the place holder for shares in the Namespace. 
+4. Add your remote and local share directories to the Namespace folder. 
+   1. You can optionally setup replicaiton here, if it's not already set up then you should set it up now. If replication was setup before the Namespace was created, the namespace will complain that it is not being replicated however, when you try to set up replication for the Namespace it will fail because the directory is already apart of a replication group. 
+5. Note the new path for the Namespace share. In the format of `\\domain.co\Namespace\Folder`.
+6. Update GPO's, scripts and documentation to use this new share address. When using this share, DFS will automatically select the file share with the best connection to the user. 
 
 ## Commands
 
