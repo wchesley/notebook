@@ -56,5 +56,3 @@ Before you {insert a brief description of the task}, ensure:
 
 
 ---
-[back](./README.md)
-
