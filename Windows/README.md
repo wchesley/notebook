@@ -6,6 +6,7 @@ The OS everyone (seems to) love™ from Microsoft.
 
 - [Windows](#windows)
   - [Links](#links)
+    - [See Also](#see-also)
 - [Notes](#notes)
   - [.msix files and how to open them](#msix-files-and-how-to-open-them)
   - [Brute-force get cli args of exe? (untested)](#brute-force-get-cli-args-of-exe-untested)
@@ -21,6 +22,12 @@ List of Windows Documents:
 - [Using Telegraf on Windows](./Using-Telegraf-on-Windows-Blog-InfluxData.md)
 - [View Domain name](./View-Domain-Name.md)
 - [NFS](./windows-nfs.md)
+
+### See Also
+
+Other Docs related to windows: 
+
+- [Powershell](../Development/Scripts/powershell.md)
 
 # Notes
 
