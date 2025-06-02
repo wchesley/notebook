@@ -6,5 +6,6 @@ Notes regarding games I'm playing or have played. These will mostly relate to te
 
 ## Links
 
+- [Oblivion](./Oblivion.md)
 - [Valheim](./Valheim.md)
 - [Space Engineers](./Space_Engineers.md)
