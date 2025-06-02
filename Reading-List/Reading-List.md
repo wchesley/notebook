@@ -1,7 +1,14 @@
 # Reading List
-###### Links to books are for my LAN only, sorry! Avoiding piracy claims here. 
-1. [1984](https://192.168.0.118/index.php/apps/files/?dir=/Nextpool/Books&openfile=207)
-2. [Neuromancer (audiobook + pdf)](http://192.168.0.118/index.php/f/64188)
-3. [Count Zero](http://192.168.0.118/index.php/f/64188)
-4. [Mona Lisa Overdrive](http://192.168.0.118/index.php/f/64188)
-5. 
+
+List of Books I am intending to read
+
+- [ ] Dungeon Crawler Carl
+  - [ ] Book 1 (In Progress)
+  - [ ] Book 2
+  - [ ] Book 3
+  - [ ] Book 4
+  - [ ] Book 5
+  - [ ] Book 6
+  - [ ] Book 7
+- [ ] Kingpin - How One Hacker Took Over the Billion-Dollar Cybercrime Underground
+- [ ] Primal Hunter Book 1
