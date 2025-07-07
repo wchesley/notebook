@@ -1,13 +1,19 @@
+[back](../README.md)
 # Docker
 Docker: an open-source project that automates the deployment of software applications inside containers by providing an additional layer of abstraction and automation of OS-level virtualization on Linux.
 
 - [Docker](#docker)
+  - [Links](#links)
   - [List of running apps:](#list-of-running-apps)
   - [Docker Reference:](#docker-reference)
       - [Remove unused images:](#remove-unused-images)
       - [List Containers:](#list-containers)
   - [Move Docker to new drive/location](#move-docker-to-new-drivelocation)
     - [Issues](#issues)
+
+## Links
+- [Portainer](./Portainer.md)
+- [Docker Compose](./Docker-Compose.md)
 
 
 ## List of running apps: 
@@ -30,7 +36,7 @@ Docker: an open-source project that automates the deployment of software applica
 
 #### Remove unused images: 
 `docker image prune`
-- append `-a` to remove all images not referenced by a container. `docker image prune -a`
+- append `-a` to remove all images not referenced by a container. `docker image prune -a` or `docker system prune`.
 
 #### List Containers: 
 `docker container ls`
