@@ -8,6 +8,15 @@ If having issues you can chose to keep console output from docker by removing th
 
 You can increase the verbosity of dockers output by adding `-V`  as an arguement. 
 
+### Update Docker Compose container
+
+Under the directory where your docker compose file is stored, run the following: 
+
+```bash
+docker compose pull && docker compose up -d
+```
+
+This will only update the images with updates available without bringing down the whole stack. 
 
 ### Chosing where a volume is stored on disk
 ##### See [this Stackoverflow post](https://stackoverflow.com/questions/34513938/replicate-docker-volume-create-name-data-command-on-docker-compose-yml/35675553#35675553)
