@@ -9,6 +9,8 @@
 ## External Links
 
 - [Windows Built-In Apps](https://threatlocker.kb.help/windows-built-ins/)
+- [Linux Built-In Apps](https://threatlocker.kb.help/linux-built-ins/)
+- [Mac OSx Built-In Apps](https://threatlocker.kb.help/mac-built-ins/)
 
 ## Notes
 
