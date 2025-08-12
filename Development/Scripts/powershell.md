@@ -35,6 +35,8 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Printers \& Printer Queue Status](#get-printers--printer-queue-status)
   - [Ping all hosts in subnet](#ping-all-hosts-in-subnet)
   - [Create Shortcut (.lnk file)](#create-shortcut-lnk-file)
+  - [Get Service Startup Type](#get-service-startup-type)
+  - [Get Available Image/Document Scanners](#get-available-imagedocument-scanners)
 
 
 # Snippits and small scripts
@@ -569,3 +571,15 @@ Get-Service | Where-Object {$_.StartupType -eq "Automatic"}
 ```
 
 This example filters for services with an "Automatic" startup type. Other common StartupType values include "Manual," "Disabled," and "AutomaticDelayedStart."
+
+## Get Available Image/Document Scanners
+
+To get a list of available Image/Document scanners via powershell: 
+
+```ps1
+Get-PNPDevice -Class "Image"
+Status     Class      FriendlyName   InstanceId 
+------     -----      ------------   ---------- 
+OK         Image      fi-7160        USB\VID_...
+```
+
