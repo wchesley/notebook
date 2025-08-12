@@ -6,9 +6,11 @@
 
 - [Policy Order of Operations](./Policy_Order_Of_Operation.md)
 
-## Notes
+## External Links
 
-Bootcamp 08.19 -> 08.23 10am-11:30am
+- [Windows Built-In Apps](https://threatlocker.kb.help/windows-built-ins/)
+
+## Notes
 
 EDR (Threatlocker detect) only runs after application has passed through the base threatlocker zero-trust application. 
 
