@@ -43,6 +43,7 @@ PowerShell is a task automation and configuration management program from Micros
 - [Github](https://github.com/PowerShell/PowerShell)
 - [Powershell Profile](./powershell_profile.md)
 - [Powershell Script Template](./Powershell_template.md)
+- [about_Alias_Provider](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_alias_provider?view=powershell-7.5)
 
 ## Check if Port is in use: 
 
