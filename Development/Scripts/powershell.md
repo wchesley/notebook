@@ -543,3 +543,28 @@ $Shortcut.Save()
 ```
 
 It accepts arguments as its second parameter to set the Destination path of the new shortcut. 
+
+## Get Service Startup Type
+
+To determine the startup type of a Windows service using PowerShell, the Get-Service cmdlet can be employed. This cmdlet retrieves information about installed services, and the StartupType property of the returned service objects contains the desired information.
+To get the startup type of a specific service:
+
+```ps1
+(Get-Service -Name "ServiceName").StartupType
+```
+
+Replace "ServiceName" with the actual name of the service (e.g., "BITS" or "Spooler").
+To get the startup type for all services:
+
+```ps1
+Get-Service | Select-Object Name, DisplayName, StartupType
+```
+
+This command lists the name, display name, and startup type for every service on the system.
+To filter services based on their startup type:
+
+```ps1
+Get-Service | Where-Object {$_.StartupType -eq "Automatic"}
+```
+
+This example filters for services with an "Automatic" startup type. Other common StartupType values include "Manual," "Disabled," and "AutomaticDelayedStart."
