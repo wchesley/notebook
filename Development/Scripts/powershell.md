@@ -37,6 +37,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Create Shortcut (.lnk file)](#create-shortcut-lnk-file)
   - [Get Service Startup Type](#get-service-startup-type)
   - [Get Available Image/Document Scanners](#get-available-imagedocument-scanners)
+  - [netsh](#netsh)
 
 
 # Snippits and small scripts
@@ -583,3 +584,43 @@ Status     Class      FriendlyName   InstanceId
 OK         Image      fi-7160        USB\VID_...
 ```
 
+## netsh
+
+View wireless profiles: 
+
+```ps1
+netsh wlan show profiles
+Profiles on interface Wi-Fi:
+
+Group policy profiles (read only)
+---------------------------------
+    <None>
+
+User profiles
+-------------
+    All User Profile     : WTN-Wireless
+```
+
+Show available interfaces: 
+
+```ps1
+netsh interface show interface
+Admin State    State          Type             Interface Name
+-------------------------------------------------------------------------
+Enabled        Connected      Dedicated        Ethernet
+Enabled        Disconnected   Dedicated        Wi-Fi
+```
+
+Export wireless profile (use `key=clear` for plaintext password of wifi network):
+
+```ps1
+netsh wlan export profile name="KOAMA-Wireless" folder=C:\Support interface="Wi-Fi"
+```
+
+- This command exports the wirless profile information to a XML file at the given directory (`folder=`)
+
+Import wireless profile: 
+
+```ps1
+netsh wlan add profile filename="C:\Support\Wi-Fi-WTN-Wireless.xml"
+```
