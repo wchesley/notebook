@@ -401,11 +401,7 @@ Will require that you input domain admin credentials in a window pop-up before i
 ## Get file size(s) in directory
 
 ```ps1
-Get-ChildItem -Path 'E:\Backups' -Recurse -Force -File | Select-Object -Property FullName ` 
-,@{Name='SizeGB';Expression={$_.Length / 1GB}} `
-,@{Name='SizeMB';Expression={$_.Length / 1MB}` 
-,@{Name='SizeKB';Expression={$_.Length / 1KB}} |
-Sort-Object { $_.SizeKB } -Descending | 
+Get-ChildItem -Path 'E:\Backups' -Recurse -Force -File | Select-Object -Property FullName `,@{Name='SizeGB';Expression={$_.Length / 1GB}} `  ,@{Name='SizeMB';Expression={$_.Length / 1MB}}` ,@{Name='SizeKB';Expression={$_.Length / 1KB}} | Sort-Object { $_.SizeKB } -Descending | 
 Export-Csv -Path C:\Temp\SYNOLOGYLUN_file_sizes.csv  
 ```
 
