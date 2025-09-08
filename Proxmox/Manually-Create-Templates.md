@@ -33,7 +33,8 @@ root@gold:~# pct console 105`
 
 You can do pretty much anything, but keep it simple:
 
-`# Install packages
+```
+# Install packages
 [root@CT105 ~]# yum -y update && yum -y install openssh-server vim sudo
 # Add user
 [root@CT105 ~]# adduser -G wheel nc
@@ -46,7 +47,8 @@ You can do pretty much anything, but keep it simple:
 # clean cache and tmp
 [root@CT105 ~]# yum clean all
 [root@CT105 ~]# rm -rf /var/cache/yum
-[root@CT105 ~]# rm -rf /tmp/*`
+[root@CT105 ~]# rm -rf /tmp/*
+```
 
 When you’re done, power it down;
 
