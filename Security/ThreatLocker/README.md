@@ -43,6 +43,8 @@ When ringfencing a new application, place the ringfence into monitor only mode f
 
 Realtime unified audit (Ran from threatlocker agent on users machine), while it provides a great place to view actively blocked files, in real-time vs the 5min delay for web portal's unified audit, has one major drawback. You can only view blocked files as they apply to your current user context. If two users are logged into a machine, user A and user B, if user A views their 'Real Time Unified Audit' they will not see any threatlocker actions taken against User B. Per Say user A is a tech assisting User B, any action performed by User B will not appear in real time unified audit as viewed by user A. 
 
+Threatlocker config policies are organization specific. There is no way to copy these policy definitions between organizations. Config policies do not inherit between orgs either, the config policy must be defined at each organizational level. 
+
 ### Migrate ThreatLocker to new machine - Cloned machine
 
 When cloning an old machine to a new machine with ThreatLocker installed there are a few things to do before cloning the machine. 
