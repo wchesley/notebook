@@ -11,3 +11,5 @@ Leveraging Microsoft Graph with .NET and PowerShell enables efficient, programma
 ## Links
 
 - [Graph Quick Reference](./Graph.md)
+- [Defender](./Defender.md)
+- [Deploy](./Deploy.md)
