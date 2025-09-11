@@ -68,6 +68,8 @@ There is no built in way to do so, but from [this github issue](https://github.c
 /var/ossec/bin/agent_upgrade -l | awk '$1 ~ /^[0-9]+$/ {print "Starting upgrade on agent " $1; system("/var/ossec/bin/agent_upgrade -a " $1)}'
 ```
 
+Alternatively, Wazuh has several ansible playbooks that cover wazuh deployments [on their github](https://github.com/wazuh/wazuh-ansible)
+
 ## Removing agents (manager)
 
 From management server, `/var/ossec/bin` there is a script called `manage_agents`
