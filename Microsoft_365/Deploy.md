@@ -56,7 +56,7 @@ After you run the command, the Microsoft 365 Apps installation should start imme
 
 ## Example `Autounattend.xml`
 
-For more examples and a list of all available options see [Configuration options for office deployment tool](https://learn.microsoft.com/en-us/microsoft-365-apps/deploy/office-deployment-tool-configuration-options).  
+For more examples and a list of all available options see [Configuration options for office deployment tool](https://learn.microsoft.com/en-us/microsoft-365-apps/deploy/office-deployment-tool-configuration-options). To generate a new `AutoUnattend.xml` file, [use microsofts online tool](https://config.office.com/deploymentsettings)  
 
 ```xml
 <Configuration ID="3f0b4606-54f7-4e0b-b293-6eb88396a51e">
