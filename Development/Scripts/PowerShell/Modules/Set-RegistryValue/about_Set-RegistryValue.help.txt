@@ -1,0 +1,31 @@
+TOPIC
+    about_Set-RegistryValue
+
+SHORT DESCRIPTION
+    Set a registry value idempotently.
+
+LONG DESCRIPTION
+    Sets a registry value only if it does not already exist or is different from the desired value.
+
+PARAMETER Path
+    The registry path where the value should be set.
+
+PARAMETER Name
+    The name of the registry value to set.
+
+PARAMETER Value
+    The desired value for the registry key.
+
+PARAMETER PropertyType
+    The type of the registry value (e.g., DWORD, String).
+
+EXAMPLE
+    Set-RegistryValueIdempotent -Path 'HKLM:\Software\MyApp' -Name 'Setting' -Value 1 -PropertyType 'DWORD'
+
+NOTES
+    Version: 1.0
+    Author: Walker Chesley
+    Created: 2025-09-10
+    Modified: 2025-09-10
+    Change Log: 
+    - Initial release
