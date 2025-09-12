@@ -34,6 +34,8 @@ This module can be used to manage windows udpates from the command line, such as
 
 ## View Update History
 
+> `Get-WUHistory` is apart of the `PSWindowsUpdate` module. 
+
 To view windows update history from powershell run the following command: 
 
 `Get-WUHistory -Last 250`
@@ -41,6 +43,19 @@ To view windows update history from powershell run the following command:
 This will return the 250 most recent updates installed to the computer. Remove the `Last <number>` arguement to view the complete history. More often than not, it's more convinent to view updates without security patches as they are frequent and generate noise if they're not what we're after. To filter in/out Security Updates: 
 
 `Get-WUHistory -last 1000 | Where-Object { $_.Title -notlike "*Security*" }`
+
+There are native windows functions to get update history such as `Get-HotFix`. The Get-HotFix cmdlet uses the Win32_QuickFixEngineering WMI class to list hotfixes that are installed on the local computer or specified remote computers. Another alternative is to use `wmic` to query update history, this will still use the `Win32_QuickFixEngineering` WMI class, and provides the same output as `Get-HotFix`. 
+
+```ps1
+PS> Get-HotFix
+Source         Description      HotFixID      InstalledBy          InstalledOn
+------         -----------      --------      -----------          -----------
+Server01       Update           KB4495590     NT AUTHORITY\SYSTEM  5/16/2019 00:00:00
+Server01       Security Update  KB4470788     NT AUTHORITY\SYSTEM  1/22/2019 00:00:00
+Server01       Update           KB4480056     NT AUTHORITY\SYSTEM  1/24/2019 00:00:00
+```
+
+
 
 ## How To Uninstall Windows Updates Using Dism
 
