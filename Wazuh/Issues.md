@@ -29,6 +29,8 @@ Wazuh logs, alot, and some seems to be duplicated, or at least it's already kept
 
 I then removed the old `alerts.log` files located at `/var/ossec/log/alerts/<Year>/<Month>`  
 
+Look into Wazuh Index Management policies. Create 'rollup' policies that delete log data after a given time frame. Currently I have 1 management policy where the data is in 1 of 3 different states. First is 'Hot Data', data that is less than 90 days old, once past the 90 day mark, the index is moved into 'Cold Data' where it is compressed and condensed into a single index. Cold data exists for 180 days then it is moved to the 3rd and final resting point, deletion. 
+
 ## Wazuh API failed to connect
 
 Happens occasionally after a reboot or change to wazuh config. Just restart wazuh-manager service via `systemctl restart wazuh-manager`. Give it a few minutes to restart, then check `systemctl status wazuh-manager`. 
