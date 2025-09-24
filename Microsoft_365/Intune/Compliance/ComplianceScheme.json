@@ -1,0 +1,30 @@
+{
+    "Rules": [
+        {
+            "SettingName": "VSAX_Service",
+            "Operator": "IsEquals",
+            "DataType": "String",
+            "Operand": "Running",
+            "RemediationStrings": [
+                {
+                    "Language": "en-US",
+                    "Title": "The VSA X service must be started. The service was not found or is not started.",
+                    "Description": "The VSA X service must be started."
+                }
+            ]
+        },
+        {
+            "SettingName": "ArcticWolfAgent_Service",
+            "Operator": "IsEquals",
+            "DataType": "String",
+            "Operand": "Running",
+            "RemediationStrings": [
+                {
+                    "Language": "en-US",
+                    "Title": "The Arctic Wolf Agent (OssSec) service must be started. The service was not found or is not started.",
+                    "Description": "The Arctic Wolf Agent (OssSec) service must be started."
+                }
+            ]
+        }
+    ]
+}
