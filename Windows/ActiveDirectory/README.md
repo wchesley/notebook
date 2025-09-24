@@ -8,10 +8,7 @@ Active Directory is designed to simplify network administration by providing a h
 ## Links
 - [DFS](./DFS-R.md)
 - [Group Policy](./group_policy.md)
-
-- [Active Directory](#active-directory)
-  - [Links](#links)
-  - [Overview](#overview)
+- [Scripts](./Scripts/README.md)
 
 
 ## Overview
