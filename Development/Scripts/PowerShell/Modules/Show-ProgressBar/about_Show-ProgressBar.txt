@@ -1,0 +1,30 @@
+TOPIC
+    about_Show-ProgressBar
+
+SHORT DESCRIPTION
+    Display a progress bar to show script activity during long operations.
+
+LONG DESCRIPTION
+    Display a progress bar showing script activity during long operations such as downloads or installations. This attempts to mirror Docker's TUI progress bar.
+
+PARAMETER Progress
+    (double) Value between 0.0 and 1.0 that denotes current progress in an operation.
+
+PARAMETER Width
+    The width of the progress bar in characters. Defaults to 40. Do not exceed 72 characters. 
+
+EXAMPLE
+    Show-ProgressBar -Progress 0.75
+    Display progress bar at default width with 75% progress completed.
+
+EXAMPLE 
+    Show-ProgressBar -Progress  0.5 -Width 10
+    Display progress bar with a width of 10 characters and 50% progress completed.
+
+NOTES
+    Version: 1.0.0
+    Author: Walker Chesley
+    Created: 2025-09-25
+    Modified: 2025-09-25
+    Change Log: 
+    - Initial release
