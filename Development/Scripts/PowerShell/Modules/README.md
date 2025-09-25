@@ -1,6 +1,14 @@
 [Back](README.md)
 # Powershell Modules
 
+A brief overview of powershell modules, their use and how to create one. The links below are for custom powershell modules that I have developed. 
+
+## Links
+
+- [LogMsg](./LogMsg/about_LogMsg.help.txt)
+- [Set-RegistryValue](./Set-RegistryValue/about_Set-RegistryValue.help.txt)
+- [Show-ProgressBar](./Show-ProgressBar/about_Show-ProgressBar.txt)
+
 ## Short description
 
 Explains how to install, import, and use PowerShell modules.
