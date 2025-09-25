@@ -64,6 +64,8 @@ $ErrorActionPreference = 'Stop'
 # Import Modules:
 Import-Module ActiveDirectory -ErrorAction Stop
 
+# this path will need to be updated to the modules path on your machine. by default it's using the module folder relative to this script as it exists within this repository: 
+Import-Module "$PSScriptRoot\..\..\Development\Scripts\PowerShell\Modules\Show-ProgressBar\Show-ProgressBar.psm1" -ErrorAction Stop
 #--------------------------- [Declarations] ---------------------------
 
 # Global Variables: 
@@ -120,10 +122,20 @@ try {
     }
 
     $adUsers = New-Object System.Collections.Generic.List[PSObject]
+    $catalogCount = $ForestGC.Count
     foreach ($gc in $ForestGC) {
         try {
+            $progressPercentage = [double]($ForestGC.IndexOf($gc) / $catalogCount)
+            $progressBar = Show-ProgressBar -Progress $progressPercentage -Width 10
             $gcString = $gc.ToString()
-            Write-Host "Querying global catalog server: $gcString" -ForegroundColor DarkGray
+            if($gcString.EndsWith("autoinc.local")) {
+                $gcPrintName = $gcString.Split(".")[1]
+            }
+            $progressStatus = "{0} {1}/{2} Searching: {3}`n" -f $progressBar, ($ForestGC.IndexOf($gc) + 1), $catalogCount, $gcPrintName
+            # Clear console for cleaner progress bar display: 
+            Write-Output "$([char]27)[H$([char]27)[2J"
+            Write-Host "`r$progressStatus" -NoNewline
+            
             $users = Get-ADUser -Filter "DisplayName -like '*$DisplayName*'" -Server $gcString -Properties DisplayName, SamAccountName, UserPrincipalName, DistinguishedName, Enabled, Description, MemberOf, Manager, mobile
             if ($users) {
                 
@@ -299,8 +311,8 @@ catch {
 # SIG # Begin signature block
 # MIIdwAYJKoZIhvcNAQcCoIIdsTCCHa0CAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAyajw7RviKBFEu
-# BCuV3/q2rTtCdNzmzPVNsYUU0n9Iy6CCF94wggSgMIIDiKADAgECAhNCAAAAR1OX
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCqX81goxh7XSB9
+# QlQw8m+sEGPl7PvH8VlCsLnbc69UnqCCF94wggSgMIIDiKADAgECAhNCAAAAR1OX
 # TCWdlVi/AAAAAABHMA0GCSqGSIb3DQEBCwUAMEUxFTATBgoJkiaJk/IsZAEZFgVs
 # b2NhbDEXMBUGCgmSJomT8ixkARkWB2F1dG9pbmMxEzARBgNVBAMTCkFJLUNFUlQt
 # Q0EwHhcNMjUwODE1MTUxNzU5WhcNMjYwODE1MTUxNzU5WjAeMRwwGgYDVQQDDBMk
@@ -432,28 +444,28 @@ catch {
 # YXV0b2luYzETMBEGA1UEAxMKQUktQ0VSVC1DQQITQgAAAEdTl0wlnZVYvwAAAAAA
 # RzANBglghkgBZQMEAgEFAKCBhDAYBgorBgEEAYI3AgEMMQowCKACgAChAoAAMBkG
 # CSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwGCisGAQQBgjcCAQsxDjAMBgorBgEE
-# AYI3AgEVMC8GCSqGSIb3DQEJBDEiBCDZZSODfC2lTcxaHenoLyj0Igu5A7EvX+rn
-# unsnpPPP7zANBgkqhkiG9w0BAQEFAASCAQBXAV1SsKE4K3Ax4aQ7iMHsO5yCfiW7
-# pKUIHxFKt+OJeNGkctL0W822HSMMLJMRmuBOpjvABEqXbJZMUuA+lE/uAfykxMkj
-# D+qYMDwq72vanTnl+q3vAQcTeawkubqf4WfzxOzT2VODmO6yhPMLuC3EiTM1iFIa
-# I3EMualif1KGFva3GGUXfvRo0LoYeIlfV1dHSNfMp3EDhiAhX3wiXTTwnnCDzpV0
-# fJCLt7VsJdH1bryMgy9cI1Od5xAVf5h+zHCIa/VFouA7tK8BsWn1migbSjQidz+8
-# 0g/u0nkVt6vydw8iQQdx2UZoLfocttjh6tx8lPFC2vyAUcdmce6VGhGGoYIDJjCC
+# AYI3AgEVMC8GCSqGSIb3DQEJBDEiBCDA/PJPOo1WkMkSxQtJruFZcq3fn18gGQQ3
+# jVxQapUaPzANBgkqhkiG9w0BAQEFAASCAQChGXiDhR+7t9GdJ4OJxYvu0nE+nJ5L
+# TTa2QGbBeHAx5XJJzGADsdYmEc2exKarCZPymsdYXXh85rs/zQdYTWhjC+2k2TBb
+# cWNGsR+mgOt3cfcplaOMrLec082kU308LWpwgn8669q7qHH+Esxq4FdbyNp1RcYE
+# osHnobAqY1/JNQdZUQt382YElTr3qYsY2D6kUaZ7LgH0WqFQFUGxfnvjE1d9dKs5
+# kdDjeaw9CmMOaGenWG7dwwIhPJOE/+JNy4G5/LFYKxsnfrFcmT7PlRUm2+lAmXnd
+# 5W5WHGrwmaufz30g4gywJcpJa/IB/An2FLeRP/alvek4gqx6CJadFOfPoYIDJjCC
 # AyIGCSqGSIb3DQEJBjGCAxMwggMPAgEBMH0waTELMAkGA1UEBhMCVVMxFzAVBgNV
 # BAoTDkRpZ2lDZXJ0LCBJbmMuMUEwPwYDVQQDEzhEaWdpQ2VydCBUcnVzdGVkIEc0
 # IFRpbWVTdGFtcGluZyBSU0E0MDk2IFNIQTI1NiAyMDI1IENBMQIQCoDvGEuN8QWC
 # 0cR2p5V0aDANBglghkgBZQMEAgEFAKBpMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
-# BwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDkyNDE3MTAwMlowLwYJKoZIhvcNAQkEMSIE
-# IPnJJMOTtVTA5UDKTlxp3CBphP/uTyDuwyaSWI2OhVxNMA0GCSqGSIb3DQEBAQUA
-# BIICAHAci5TjFinUQRvDejYunmJADyKTDVKPH6kK/59/j/FeJ8QrnAsoz6tOyD9F
-# It+b1hrpLcs+YwJpmcjJGFK0tCQ130e0dkAxaJUAtBvvTTquDPCXwsXGqkf1sjs2
-# 4/3CtzScps6hePta6bxx8I6VGS0xSfIogs1esUxCiMu8EWNIT99QW7r1fQZ0Mlu0
-# W+UNHJfL0FD/Nk27IAFiPY/PlvRVZPdV8Mx+1tLT54ILUa9FQ6OryANWxDhdkxRn
-# F3h/IfAE4seHgcSJiDNzsPrEqHI/3WzbRSrbUAiUmFcEL8DBdFcYt128MbHYj7Tz
-# CEANxV0LX/cq0q9tG1FSGBsIfE9DDYHt503NscitO3qIhvGvczIMo4nEkRD1ktFf
-# UvsEU0VTi4E57UvoeegBFv6xS3lhfo56YJmxONdqu2QiLAUCkI6hY1vrqGYFpMgO
-# Z6+ADf/j+ei6zBBfZ8/bGTIIrBIZnywVRtuAZHYklMHEVsbS9wiVK8FTXVRgYCLX
-# kHXiamFQQPRnp2BJDz1YrykaPkazNgYLvgNORJ5/w2i0yGZaATS8QFXmvWHjsVWm
-# gwVnDrPM6VzM4uC5+aY6YAflYTAUaMmbZoKwkmYun1zDgT65okKlkagCP2mmBksc
-# khu4Gg3vELrkT+EA3GBBsaUz4dxoYwXX2kHwXPQanYewfJPF
+# BwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDkyNTEzMzUwN1owLwYJKoZIhvcNAQkEMSIE
+# ILrvkFpZE+UPfHQT/vCEPMdRF/3L4pNzjMhPWdvUnncfMA0GCSqGSIb3DQEBAQUA
+# BIICALz+mKOOq5PlFwKg7+YBoaEUTxlAelnwUlGAnsKcilt3GSStNxPqdf69OYrz
+# qAYDUkXJCrj2Pb4KEOB4VkHkki8ZLO/I2VRSXJ5Pbag32Hno9Zs0hqmygeQ/+MGJ
+# AQQglYtCagecNg7Payg6peMxF2sKRf1/jOuvEVeV0y3E0QoBpTO32S8RB2Scg2Gp
+# vSiqmqdz8ChOVvzSGZ0VsGE1RUcS04j/E9yLETVdgTODnnzqfD+iWrymnDUtqRQS
+# 4saV6yuBsawxeR3pXGeb0yB+8+VwF1MdZ92wvtuunea2wcFIer+U1rhL1z5NxO+m
+# 1bFHDt5oM0uJ5WL1VCbdQnxBd7zHothcpLJPvhtWJUXEMXzVANtBdqJVh56kOVtZ
+# 3uA88vM12K78culH9UlxieCDkhLn2zx9K7i5AvoOie9SvfpHC0kBfwZKFjbLHWfx
+# UyPpU3Dk9/+NdP+s2OoGWdhoxSUylnhz1w5xBSjANwr81i43DJSXJ560zaig8Tsn
+# RTDYfA+cFbo4n2qc9BMBHqtKMWFMqnfcwlMCKaXruNqpRms3F16fHCAMWWy+Qygy
+# Q/XxM3e0DuW+jamJTxPqgi0uxbmKuD7HL1UtMXnad/Yz8f7Iq1Ht5J5CS8b/Dybm
+# h6RmoZyGg21T5eG0ELhozJB5RxI+mmVDmuK+1ZKJ98OsEZ2n
 # SIG # End signature block
