@@ -675,3 +675,8 @@ Specifies the new value, in minutes.
 Examples:
 
 `powercfg /change monitor-timeout-ac 5`
+
+```ps1
+# Disable sleep on DC power: 
+powercfg /x standby-timeout-dc 0
+```
