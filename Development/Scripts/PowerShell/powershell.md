@@ -38,6 +38,12 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Service Startup Type](#get-service-startup-type)
   - [Get Available Image/Document Scanners](#get-available-imagedocument-scanners)
   - [netsh](#netsh)
+  - [PowerCfg](#powercfg)
+    - [Syntax](#syntax-1)
+    - [/change or /X](#change-or-x)
+      - [Syntax:](#syntax-2)
+      - [Arguments:](#arguments)
+      - [value](#value)
 
 
 # Snippits and small scripts
@@ -620,3 +626,52 @@ Import wireless profile:
 ```ps1
 netsh wlan add profile filename="C:\Support\Wi-Fi-WTN-Wireless.xml"
 ```
+
+## PowerCfg
+
+Use powercfg.exe to control power plans - also called power schemes - to use the available sleep states, to control the power states of individual devices, and to analyze the system for common energy-efficiency and battery-life problems.
+
+### Syntax
+
+Powercfg command lines use the following syntax:
+
+`powercfg /option [arguments] [/?]`
+
+where option is one of the options listed in the following table, and arguments is one or more arguments that apply to the selected option. Including `/?` in a command line displays help for the specified option. For a full list of CLI options see [powercfg cli options](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/powercfg-command-line-options#command-line-options)
+
+---
+
+A `powercfg` option I've been using quite a bit is `/change`
+
+### /change or /X
+
+Modifies a setting value in the current power scheme.
+
+#### Syntax:
+
+` /change setting value`
+
+#### Arguments:
+
+ setting
+
+  Specifies one of the following options:
+
+- monitor-timeout-ac
+- monitor-timeout-dc
+- disk-timeout-ac
+- disk-timeout-dc
+- standby-timeout-ac
+- standby-timeout-dc
+- hibernate-timeout-ac
+- hibernate-timeout-dc
+
+> Where AC is battery power and DC is plugged in. PC's without a battery will choose to ignore the AC power settings, who would have thought? 
+
+#### value
+
+Specifies the new value, in minutes.
+
+Examples:
+
+`powercfg /change monitor-timeout-ac 5`
