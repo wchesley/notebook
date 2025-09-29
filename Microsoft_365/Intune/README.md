@@ -2,6 +2,12 @@
 
 Microsoft Intune is a cloud-based service that focuses on mobile device management (MDM) and mobile application management (MAM). It enables organizations to manage the devices and applications employees use to access corporate data, ensuring security and compliance while supporting productivity.
 
+## Links
+
+- [Filters](./Filters.md)
+- [Remediations](./Remediations/README.md)
+- [Compliance](./Compliance/README.md)
+
 ## Key Features
 
 - **Device Management**: Enroll and manage Windows, macOS, iOS, and Android devices. Apply security policies, configure settings, and monitor compliance.
