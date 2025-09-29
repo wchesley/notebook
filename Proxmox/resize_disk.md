@@ -43,7 +43,7 @@ Offline for all guests
 - Use gparted or similar tool (recommended)
 In gparted and possibly most other tools, LVM and Windows dynamic disc is not supported
 
-Boot the virtual machine with gparted or similar tool, enlarge the partion and optionally the file system. With som linux clients you often need to enlarge the extended partion, move the swappartion, shrink the extended partion and enlarge the root partion. (or simple delete the swap and partion andre create it again - but remember to activwate the swap agin (last step).
+Boot the virtual machine with gparted or similar tool, enlarge the partion and optionally the file system. With som linux clients you often need to enlarge the extended partion, move the swappartion, shrink the extended partion and enlarge	 the root partion. (or simple delete the swap and partion andre create it again - but remember to activwate the swap agin (last step).
 Gparted have some warnings about some specific operations not well supported with windows guest - outside the scope of this document but read the warnings in gparted.
 
 
