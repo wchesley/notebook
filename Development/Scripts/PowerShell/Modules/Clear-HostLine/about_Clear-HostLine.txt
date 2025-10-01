@@ -1,0 +1,28 @@
+TOPIC
+    about_Clear-HostLine
+
+SHORT DESCRIPTION
+    Clear a number of lines from the console/terminal window.
+
+LONG DESCRIPTION
+    Clear any number of lines from the console/terminal window without explicitly clearing the whole window. 
+
+PARAMETER Count
+    (int) Number of lines to clear from console/terminal. Defaults to 1. Must be a positive integer in the range of 0-256.
+
+EXAMPLE
+    Clear-HostLine -Count 5
+    Clear the 5 lines above current console location
+
+EXAMPLE
+    Clear-HostLine
+    Clear the line above current console location.
+
+NOTES
+    Version: 1.0.1
+    Author: Walker Chesley
+    Created: 2025-09-26
+    Modified: 2025-09-26
+    Change Log: 
+    - Initial release (v1.0.0)
+    - Created module, parameter validation (v1.0.1)

@@ -1,13 +1,13 @@
 TOPIC
-	about_LogMsg
+	about_WriteLog
 
 SHORT DESCRIPTION
 	Provides a function for logging messages with standardized formatting and severity levels in PowerShell scripts and modules.
 
 LONG DESCRIPTION
-	The LogMsg module offers a single function, LogMsg, which enables users to log messages with a consistent format, including a timestamp and severity level. It supports Information, Warning, and Error levels, as well as standard output (stdout) when no severity is specified. This module is useful for adding structured logging to scripts, making it easier to track execution and troubleshoot issues.
+	The Write-Log module offers a single function, Write-Log, which enables users to log messages with a consistent format, including a timestamp and severity level. It supports Information, Warning, and Error levels, as well as standard output (stdout) when no severity is specified. This module is useful for adding structured logging to scripts, making it easier to track execution and troubleshoot issues.
 
-	The LogMsg function accepts the following parameters:
+	The Write-Log function accepts the following parameters:
 	-Message (required): The message to log. Aliases: msg, m.
 	-Level (optional): The severity level (Information, Warning, Error). Aliases: lvl, l. If omitted, the message is written to standard output.
 
@@ -15,16 +15,16 @@ LONG DESCRIPTION
 
 EXAMPLES
 	# Log an informational message
-	LogMsg -Message "This is an informational message." -Level Information
+	Write-Log -Message "This is an informational message." -Level Information
 
 	# Log a warning message
-	LogMsg -Message "This is a warning." -Level Warning
+	Write-Log -Message "This is a warning." -Level Warning
 
 	# Log an error message
-	LogMsg -Message "This is an error." -Level Error
+	Write-Log -Message "This is an error." -Level Error
 
 	# Log a message to standard output (no severity)
-	LogMsg -Message "This is a normal message."
+	Write-Log -Message "This is a normal message."
 
 NOTES
 	Author: Walker Chesley

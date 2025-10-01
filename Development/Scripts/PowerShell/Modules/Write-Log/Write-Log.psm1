@@ -20,55 +20,66 @@
 .PARAMETER Path
     Optional file path to log messages to a file.
     If provided, the log message will be appended to the specified file.
+    Must be full path to a file, not just a directory.
+    If the file does not exist, it will be created.
+    Alias: p
 
 .EXAMPLE
-    LogMsg -Message "This is an informational message." -Level "Information"
+    Write-Log -Message "This is an informational message." -Level "Information"
 
     Logs an informational message.
 
 .EXAMPLE
-    LogMsg -Message "This is a normal message" 
+    Write-Log -Message "This is a normal message" 
 
     Logs a normal message to console's stdout.
+
+.EXAMPLE
+    Write-Log -Message "This is a warning message." -Level "Warning" -Path "C:\Logs\app.log"
+
+    Logs a warning message to both the console and appends it to the specified log file.
 
 .OUTPUTS
     User provided message ($Message) preceeded by timestamp and tailored to given severity level ($Level) 
 
 #>
-function LogMsg {
-    [CmdletBinding()]
+function Write-Log {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Low')]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [Alias("msg", "m")]
         [string]$Message,
 
-        [Parameter(Mandatory = $false)]
-        [ValidateSet("Information","Warning","Error","Verbose")]
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
+        [ValidateSet("Information", "Warning", "Error", "Verbose")]
         [Alias("lvl", "l")]
         [string]$Level = "Verbose",
 
         [Parameter(Mandatory = $false)]
+        [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
+        [Alias("p")]
         [string]$Path
     )
 
     begin {
         $dateStamp = "[{0}]" -f (Get-Date -Format s)
+        $logLine = "$dateStamp - [$Level] - $Message"
     }
     process {
-        $logLine = "$dateStamp - [$Level] - $Message"
-        if($PSBoundParameters.ContainsKey('Path')) {
+        switch ($Level) {
+            "Information" { Write-Information $logLine }
+            "Warning" { Write-Warning $logLine }
+            "Error" { Write-Error $logLine }
+            default { Write-Host $logLine }
+        }
+
+        if ($PSBoundParameters.ContainsKey('Path')) {
             try {
                 Add-Content -Path $Path -Value $logLine
             }
             catch {
                 Write-Error "Failed to write log to file at $Path Error $($_.Exception.Message)"
             }
-        }
-        switch ($Level) {
-            "Information" { Write-Information $logLine }
-            "Warning" { Write-Warning $logLine }
-            "Error" { Write-Error $logLine }
-            default { Write-Host $logLine }
         }
     }
 }
