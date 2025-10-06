@@ -44,6 +44,7 @@ PowerShell is a task automation and configuration management program from Micros
       - [Syntax:](#syntax-2)
       - [Arguments:](#arguments)
       - [value](#value)
+  - [Get Chrome Version](#get-chrome-version)
 
 
 # Snippits and small scripts
@@ -55,6 +56,7 @@ PowerShell is a task automation and configuration management program from Micros
 - [about_Alias_Provider](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_alias_provider?view=powershell-7.5)
 
 ## Check if Port is in use: 
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 Get-NetTCPConnection | where Localport -eq 5000 | select Localport,OwningProcess
@@ -64,6 +66,7 @@ Localport OwningProcess
 ```
 
 ## Install msi from powershell script: 
+<sub>[back to top](#powershell)</sub>
 
 Use [`Start-Process`](https://ss64.com/ps/start-process.html) to installs the msi package from PowerShell using `msiexec` with the `/i` and`/qn` parameters. You can optionally test using the `-wait` parameter of `Start-Process` in case it helps in your particular case. There is also a `/norestart` parameter to use with `msiexec`.
 
@@ -76,12 +79,14 @@ Start-Process msiexec "/i $pkg /qn";
 ```
 
 ## Get password from Environment Variable: 
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 $passwd = ConvertTo-SecureString $env:password -AsPlainText -Force
 ```
 
 ## Get Password from User Input: 
+<sub>[back to top](#powershell)</sub>
 
 This will prompt the user to enter their password twice, no output is echo'd to shell for passwords: 
 ```ps1
@@ -89,6 +94,7 @@ $passwd = Read-Host 'What is your password?' -AsSecureString
 ```
 
 ## Set password for user: 
+<sub>[back to top](#powershell)</sub>
 
 Option 1. - This prompts you to input password into console twice: 
 
@@ -103,30 +109,35 @@ net user svcNessus $passwd
 ```
 
 ## Create new Local User: 
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 New-LocalUser -Name "svcNessus" -Description "Nessus service account" -Password $passwd
 ```
 
 ## Add Local User to Administrators group: 
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 Add-LocalGroupMember -Group Administrators -Member svcNessus -Verbose
 ```
 
 ## Set Local User password to never expire: 
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 Set-LocalUser -Name "svcNessus" -PasswordNeverExpires 1
 ```
 
 ## List folder size: 
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 [math]::Round((Get-ChildItem -Path C:\Temp -Recurse | Measure-Object -Property Length -Sum).Sum / 1GB,2)
 ```
 
 ## Set ACL to directory recusively 
+<sub>[back to top](#powershell)</sub>
 
 Pulled from [Stackoverflow](https://stackoverflow.com/questions/50481541/grant-domain-user-group-privilege-to-folders-recursively)
 
@@ -147,6 +158,7 @@ For more details take a look at http://www.tomsitpro.com/articles/powershell-man
 
 
 ## Get users currently logged into system: 
+<sub>[back to top](#powershell)</sub>
 
 ```ps
 PS C:\Users\wchesley> query user
@@ -161,6 +173,7 @@ $count = Get-LocalUser | where-Object Name -eq "svcNessus" | Measure
 ```
 
 ## Uninstall any app by name: 
+<sub>[back to top](#powershell)</sub>
 
 - Get app name
 ```powershell
@@ -176,6 +189,7 @@ Get-WmiObject Win32_product | Where {$_.name -eq $AppName} | ForEach { $_.Uninst
 ```
 
 ## Get Office 365 Update Channel: 
+<sub>[back to top](#powershell)</sub>
 
 ref: https://www.devhut.net/determine-the-office-update-channel/
 
@@ -234,6 +248,7 @@ Write-Host "O365 update channel: $OfficeUpdateChannel
 ```
 
 ## Get Active Directory Users & Groups - Output to CSV
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 # Import the Active Directory module
@@ -287,6 +302,7 @@ Write-Host "Results have been exported to C:\ADGroupsAndUsers.csv"
 ```
 
 ## Set Event Log Size limits (increase or decrease)
+<sub>[back to top](#powershell)</sub>
 
 <sub>Also see <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-eventlog?view=powershell-5.1">Get-EventLog</a> for reading the event log.</sub>
 
@@ -337,6 +353,7 @@ Limit-EventLog -LogName Security -ComputerName "Server01", "Server02" -Retention
 This command ensures that events in the Security log on the Server01 and Server02 computers are retained for at least 7 days.
 
 ## Get Hard Drive (Disk) Information
+<sub>[back to top](#powershell)</sub>
 
 apart from the classic tools like the Disk Management Utility or Diskpart.
 
@@ -377,6 +394,7 @@ Get-Volume
 ![Get-Volume](https://danielschwensen.github.io/assets/2020/Get-Volume.png)
 
 ## Create System Link (symlink)
+<sub>[back to top](#powershell)</sub>
 
 **Windows 10 (and Powershell 5.0 in general) allows you to [create symbolic links via the New-Item cmdlet](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-item).**
 
@@ -395,6 +413,7 @@ function make-link ($target, $link) {
 ```
 
 ## Rejoin computer to domain
+<sub>[back to top](#powershell)</sub>
 
 As of server 2008 R2, `Test-ComputerSecureChannel` was added as a cmdlet in powershell, making this an easy process. 
 
@@ -405,6 +424,7 @@ Test-ComputerSecureChannel -Repair -Credential (Get-Credential)
 Will require that you input domain admin credentials in a window pop-up before it will repair the relationship.
 
 ## Get file size(s) in directory
+<sub>[back to top](#powershell)</sub>
 
 ```ps1
 Get-ChildItem -Path 'E:\Backups' -Recurse -Force -File | Select-Object -Property FullName `,@{Name='SizeGB';Expression={$_.Length / 1GB}} `  ,@{Name='SizeMB';Expression={$_.Length / 1MB}}` ,@{Name='SizeKB';Expression={$_.Length / 1KB}} | Sort-Object { $_.SizeKB } -Descending | 
@@ -414,6 +434,7 @@ Export-Csv -Path C:\Temp\SYNOLOGYLUN_file_sizes.csv
 Alternate: Replace `Export-Csv` with `Output-Grid` to not create a file and have a new window popup with your results.
 
 ## Get File last access time and last write time
+<sub>[back to top](#powershell)</sub>
 
 This just involves appending a filter to your `ls`, `gci` or `Get-ChildItem` command: 
 
@@ -435,6 +456,7 @@ For Windows 10 prior to April 2019 the following registry key should be set to `
 `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem > NtfsDisableLastAccessUpdate`
 
 ## Get Printers & Printer Queue Status
+<sub>[back to top](#powershell)</sub>
 
 Get all printers: 
 
@@ -481,6 +503,7 @@ EPSON25D7F7 (WF-6590 Series)                   Local        Microsoft IPP Class 
 ```
 
 ## Ping all hosts in subnet
+<sub>[back to top](#powershell)</sub>
 
 So you can’t install Advanced IP Scanner or Angry IP Scanner etc…
 
@@ -495,6 +518,7 @@ Test-Connection “192.168.1.$i” -Count 1 -ErrorAction SilentlyContinue
 Adjust IP range as needed, currently set for a `/24` subnet. Takes about a minute or so to run through all hosts. 
 
 ## Create Shortcut (.lnk file)
+<sub>[back to top](#powershell)</sub>
 
 I want to create a shortcut with PowerShell for this executable:
 
@@ -551,6 +575,7 @@ $Shortcut.Save()
 It accepts arguments as its second parameter to set the Destination path of the new shortcut. 
 
 ## Get Service Startup Type
+<sub>[back to top](#powershell)</sub>
 
 To determine the startup type of a Windows service using PowerShell, the Get-Service cmdlet can be employed. This cmdlet retrieves information about installed services, and the StartupType property of the returned service objects contains the desired information.
 To get the startup type of a specific service:
@@ -576,6 +601,7 @@ Get-Service | Where-Object {$_.StartupType -eq "Automatic"}
 This example filters for services with an "Automatic" startup type. Other common StartupType values include "Manual," "Disabled," and "AutomaticDelayedStart."
 
 ## Get Available Image/Document Scanners
+<sub>[back to top](#powershell)</sub>
 
 To get a list of available Image/Document scanners via powershell: 
 
@@ -587,6 +613,7 @@ OK         Image      fi-7160        USB\VID_...
 ```
 
 ## netsh
+<sub>[back to top](#powershell)</sub>
 
 View wireless profiles: 
 
@@ -628,6 +655,7 @@ netsh wlan add profile filename="C:\Support\Wi-Fi-WTN-Wireless.xml"
 ```
 
 ## PowerCfg
+<sub>[back to top](#powershell)</sub>
 
 Use powercfg.exe to control power plans - also called power schemes - to use the available sleep states, to control the power states of individual devices, and to analyze the system for common energy-efficiency and battery-life problems.
 
@@ -679,4 +707,13 @@ Examples:
 ```ps1
 # Disable sleep on DC power: 
 powercfg /x standby-timeout-dc 0
+```
+
+## Get Chrome Version
+<sub>[back to top](#powershell)</sub>
+
+Get the current installed version of Google Chrome: 
+
+```ps1
+(Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe').'(Default)' | Get-Item | Select-Object -ExpandProperty VersionInfo
 ```
