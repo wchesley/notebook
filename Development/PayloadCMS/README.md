@@ -19,6 +19,8 @@ Out of the box, Payload gives you a lot of the things that you often need when d
 - if you've scaffolded your website (seeded from admin dashboard) there's some white-labling that needs to be done in `/src/app/_heros/PostHero` and `ProjectHero` to remove a link to the admin page. 
 - If you can't edit something in the web panel, head to the code. it's fairly logical, if a bit separated, by default. 
 - Admin custom components [here](https://payloadcms.com/docs/admin/components) Docs actually aren't half bad...used seeded code for reference and was basically plug n' play from there. 
+- Can generate customized CSS themes for admin panel from [10xmedia](https://10xmedia.de/theme)
+  - Place generated `.css` file within `/app/(payload)/custom.scss` file. Refresh admin page to view results.
 
 ## Installation:
 
