@@ -33,6 +33,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get file size(s) in directory](#get-file-sizes-in-directory)
   - [Get File last access time and last write time](#get-file-last-access-time-and-last-write-time)
   - [Get Printers \& Printer Queue Status](#get-printers--printer-queue-status)
+    - [Get/Set Printer Driver](#getset-printer-driver)
   - [Ping all hosts in subnet](#ping-all-hosts-in-subnet)
   - [Create Shortcut (.lnk file)](#create-shortcut-lnk-file)
   - [Get Service Startup Type](#get-service-startup-type)
@@ -501,6 +502,20 @@ HP Color LaserJet 3600                         Local        HP Color LaserJet 36
 Fax                                            Local        Microsoft Shared Fax D... SHRFAX:         False    False      Print
 EPSON25D7F7 (WF-6590 Series)                   Local        Microsoft IPP Class Dr... WSD-5e72957b... False    False      Print
 ```
+
+### Get/Set Printer Driver
+
+Changed printer driver for user via powershell: 
+```ps1
+Get-Printer -Name '<printer name>' 
+Get-PrinterDriver -Name '<Driver Name>'
+Get-PrinterDriver # <- View all installed drivers
+# Both just to confirm we're working with the correct device^^ 
+Set-Printer -Name "<PrinterName>" -DriverName "<DriverName>"
+```
+> Where:
+> - `<PrinterName>` is the string name of the printer
+> - `<DriverName>` is the string name of the desired driver
 
 ## Ping all hosts in subnet
 <sub>[back to top](#powershell)</sub>
