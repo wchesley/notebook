@@ -32,7 +32,14 @@ In the lab phase, you'll perform a full installation of Configuration Manager on
   - In ADSI Edit, connect to the Domain naming context, and under the **System** container, create a new **Container** object named "System Management". Then right-click this container, go to **Security**, and give the site server’s computer account **Full Control** on "This object and all descendant objects". This lets ConfigMgr publish site information in AD, so clients can find it.Publishing and the Active Directory schema - Configuration Manager ...
 
 **2. Install and Configure SQL Server:**
-On the designated SQL Server (which can be the same as the site server for a simpler lab setup), install SQL Server using the required collation. **Important:** ensure the SQL instance **collation is `SQL_Latin1_General_CP1_CI_AS`** (the default for English US installs) because ConfigMgr setup will check for this prerequisite. If the collation is wrong, ConfigMgr will not install. If the SQL is local on the site server, it’s generally recommended for lab and even production for better performance (SCCM and SQL communicate frequently, and local installation can yield better throughput). During SQL setup, enable the **SQL Server Reporting Services** feature if planning to use reporting. After SQL install, configure the following: enable the SQL Server Browser (if using named instance), and ensure the service accounts are set properly (using the domain account if you created one for SQL service). Also, verify the firewall on the SQL server allows incoming on TCP 1433 (and 1434/UDP for browser if needed).Complete SCCM Installation Guide and Configuration
+- On the designated SQL Server (which can be the same as the site server for a simpler lab setup), install SQL Server using the required collation. 
+  - **Important:** ensure the SQL instance **collation is `SQL_Latin1_General_CP1_CI_AS`** (the default for English US installs) because ConfigMgr setup will check for this prerequisite. If the collation is wrong, ConfigMgr will not install. 
+  - If the SQL is local on the site server, it’s generally recommended for lab and even production for better performance (SCCM and SQL communicate frequently, and local installation can yield better throughput). 
+- During SQL setup, enable the **SQL Server Reporting Services** feature if planning to use reporting. 
+- After SQL install, configure the following: 
+  - Enable the SQL Server Browser (if using named instance), and 
+  - Ensure the service accounts are set properly (using the domain account if you created one for SQL service). Also, 
+  - Verify the firewall on the SQL server allows incoming on TCP 1433 (and 1434/UDP for browser if needed). 
 
 **3. Install the ConfigMgr Primary Site (Lab):**
 With AD and SQL ready, run **Configuration Manager Setup** (launch `Splash.hta` or `Setup.exe` from the ConfigMgr media) on the site server. During the installation wizard:
@@ -103,7 +110,7 @@ Key considerations and steps for the Pilot phase:
 
 If the pilot phase is successful (clients are healthy, receiving policies, and no major issues are encountered), you can proceed to plan the production rollout. Typically, a pilot might run for a few weeks to ensure monthly patching cycles, etc., work correctly.
 
-**Tip:** It’s advisable to keep the pilot **collection** even as you move to production – future updates or new features can first be deployed to the pilot collection (a subset of users) before broad deployment, as a continuous safety mechanism.
+> **Tip:** It’s advisable to keep the pilot **collection** even as you move to production – future updates or new features can first be deployed to the pilot collection (a subset of users) before broad deployment, as a continuous safety mechanism.
 
 ## Full Production Deployment (Phase 3)
 
