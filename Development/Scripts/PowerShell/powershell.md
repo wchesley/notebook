@@ -46,6 +46,7 @@ PowerShell is a task automation and configuration management program from Micros
       - [Arguments:](#arguments)
       - [value](#value)
   - [Get Chrome Version](#get-chrome-version)
+  - [Enable Legacy Print Preview](#enable-legacy-print-preview)
 
 
 # Snippits and small scripts
@@ -732,3 +733,10 @@ Get the current installed version of Google Chrome:
 ```ps1
 (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe').'(Default)' | Get-Item | Select-Object -ExpandProperty VersionInfo
 ```
+
+## Enable Legacy Print Preview
+<sub>[back to top](#powershell)</sub>
+
+Print preview not working in windows 11? Enable legacy print preview. Via Powershell or CMD run:  
+`reg add "HKCU\Software\Microsoft\Print\UnifiedPrintDialog" /v "PreferLegacyPrintDialog" /d 1 /t REG_DWORD /f`  
+This registry key will enable legacy print preview for windows 11. 
