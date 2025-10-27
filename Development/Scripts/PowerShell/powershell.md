@@ -47,6 +47,7 @@ PowerShell is a task automation and configuration management program from Micros
       - [value](#value)
   - [Get Chrome Version](#get-chrome-version)
   - [Enable Legacy Print Preview](#enable-legacy-print-preview)
+  - [Disable Internet Explorer](#disable-internet-explorer)
 
 
 # Snippits and small scripts
@@ -740,3 +741,17 @@ Get the current installed version of Google Chrome:
 Print preview not working in windows 11? Enable legacy print preview. Via Powershell or CMD run:  
 `reg add "HKCU\Software\Microsoft\Print\UnifiedPrintDialog" /v "PreferLegacyPrintDialog" /d 1 /t REG_DWORD /f`  
 This registry key will enable legacy print preview for windows 11. 
+
+## Disable Internet Explorer
+
+use DISM: 
+
+```ps1
+dism /online /Remove-Capability /CapabilityName:Browser.InternetExplorer~~~~0.0.11.0 /NoRestart
+```
+
+Optionally (required to satisfy vulnerability scanners ie. Nessus), set registry killbit: 
+
+```ps1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Main" /v "NotifyDisableIEOptions" /t REG_DWORD /d 1 /f
+```
