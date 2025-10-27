@@ -91,9 +91,10 @@ Once installation finishes, verify in the ConfigMgr **Console** that all site ro
 
 After installation, perform basic configurations:
 
-- In the ConfigMgr Console, configure **Discovery Methods** (enable Active Directory discovery for users and devices as needed, so your domain clients can be discovered). Also enable the Active Directory Forest Discovery to populate boundaries from AD sites/subnets if your lab is domain-joined.
+- In the ConfigMgr Console, configure **Discovery Methods** (Administration > Hierarchy Configuration > Discovery Methods) to enable Active Directory discovery for users, groups and devices as needed, so your domain clients can be discovered. Also enable the Active Directory Forest Discovery to populate boundaries from AD sites/subnets if your lab is domain-joined.
 - Set up **Boundary Groups** for your network so that clients are associated with the correct site and DP. In a simple lab, you might define the AD site or IP subnet as a boundary and add it to a boundary group with the site server as a content source.
 - If you plan to deploy the ConfigMgr **client to lab machines**, configure the **Client Push** account (Administration > Site Configuration > Sites > Client Installation Settings > Client Push Installation). Add the domain account that has local admin rights on client machines.
+- To install clients manually launch powershell or CMD then navigate to  `\\<ConfigMgr_FQDN>\SMS_<SITE_CODE>\Client`  and execute `ccmsetup.exe`. A full list of manual install options can be found [here](https://learn.microsoft.com/en-us/intune/configmgr/core/clients/deploy/deploy-clients-to-windows-computers#BKMK_Manual). In most cases, the default options are all that is needed. 
 - Optionally, **integrate WSUS** with ConfigMgr: install the WSUS role on the site server (or another server) and configure Software Update Point in ConfigMgr to handle patch management.
   - Configure **Software update point** (if WSUS installed), **Distribution point** (ensure it has the packages like client installation files, boot images distributed), etc., as needed.
 
