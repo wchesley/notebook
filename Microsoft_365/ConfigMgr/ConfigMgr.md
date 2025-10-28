@@ -107,7 +107,7 @@ At this stage, you should have a functional ConfigMgr primary site in the lab. T
 > This section is highly dependant on your Intune setup. This section assumes that you have a new and clean Intune tenant with no devices joined yet. 
 
 > [!WARNING]
-> This feature still uses internet explorer for the login process. Even with IE disabled and Edge put in it's place. 
+> This feature still uses internet explorer for the login process. Even with IE disabled and Edge put in it's place. To get sign-in flow working, I had to disable IE 'enhanced security mode' for the MECM server, and add `https://*microsoft.com`, `https://*microsoftonline.us` to trusted sites for IE via local GPO. Then revert these changes once sign-in flow was completed and ConfigMgr connection to Intune has been verified from both sides. 
 
 With ConfigMgr running in the lab, the next step is to integrate it with cloud services to support the hybrid environment (Entra ID cloud sync and Intune). **Co-management** allows devices to be managed by both ConfigMgr and Intune concurrently, enabling a gradual move of workloads to Intune while keeping ConfigMgr for other tasks. To set up co-management, you need to ensure devices are **Hybrid Azure AD (Entra ID) joined** and then enable co-management in the ConfigMgr console. [ref:NinjaOne:configure-co-management-between-sccm-and-intune](https://www.ninjaone.com/blog/configure-co-management-between-sccm-and-intune/)
 
