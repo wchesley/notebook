@@ -106,11 +106,15 @@ At this stage, you should have a functional ConfigMgr primary site in the lab. T
 
 > This section is highly dependant on your Intune setup. This section assumes that you have a new and clean Intune tenant with no devices joined yet. 
 
+> [!WARNING]
+> This feature still uses internet explorer for the login process. Even with IE disabled and Edge put in it's place. 
+
 With ConfigMgr running in the lab, the next step is to integrate it with cloud services to support the hybrid environment (Entra ID cloud sync and Intune). **Co-management** allows devices to be managed by both ConfigMgr and Intune concurrently, enabling a gradual move of workloads to Intune while keeping ConfigMgr for other tasks. To set up co-management, you need to ensure devices are **Hybrid Azure AD (Entra ID) joined** and then enable co-management in the ConfigMgr console. [ref:NinjaOne:configure-co-management-between-sccm-and-intune](https://www.ninjaone.com/blog/configure-co-management-between-sccm-and-intune/)
 
 **1. Configure Hybrid Entra Join for Devices:**  
 If not already configured by your Azure AD Connect sync, run the **Microsoft Entra Connect** tool and go through **Configure Device Options** to enable **Hybrid Azure AD Join** for your on-prem domain devices. You will need to provide Entra ID global admin credentials during this process. In the Entra Connect wizard, opt to **configure hybrid join** for Windows devices (Windows 10 or later). This process sets the necessary **Service Connection Point (SCP)** in AD for device registration. After enabling, your domain-joined Windows 10/11 clients will *automatically register in Entra ID* (showing as Hybrid Azure AD joined) whenever they connect (this requires the device be able to contact Azure AD). 
-> *Note:* If your lab clients are already domain-joined and Entra Connect is syncing, they should start appearing in the Entra ID tenant (you can verify a test client by running `dsregcmd /status` on it and checking **AzureAdJoined** status). [ref:NinjaOne:configure-co-management-between-sccm-and-intune](https://www.ninjaone.com/blog/configure-co-management-between-sccm-and-intune/)
+> [!NOTE] 
+> If your lab clients are already domain-joined and Entra Connect is syncing, they should start appearing in the Entra ID tenant (you can verify a test client by running `dsregcmd /status` on it and checking **AzureAdJoined** status). [ref:NinjaOne:configure-co-management-between-sccm-and-intune](https://www.ninjaone.com/blog/configure-co-management-between-sccm-and-intune/)
 
 **2. Set Up Intune Auto-Enroll and ConfigMgr Client Registration:**  
 In the Azure portal, navigate to **Microsoft Entra ID > Mobility (MDM and MAM) > Microsoft Intune**. Configure **MDM user scope** to include the groups of users that will be auto-enrolled to Intune (for a pilot, you might set this to a specific AAD group; ultimately likely to All users for full deployment). This setting ensures that when a device is Hybrid Entra joined and has ConfigMgr client, it will auto-enroll into Intune MDM.
@@ -152,7 +156,8 @@ Key considerations and steps for the Pilot phase:
 
 If the pilot phase is successful (clients are healthy, receiving policies, and no major issues are encountered), you can proceed to plan the production rollout. Typically, a pilot might run for a few weeks to ensure monthly patching cycles, etc., work correctly.
 
-> **Tip:** It’s advisable to keep the pilot/beta **collection** even as you move to production – future updates or new features can first be deployed to the pilot collection (a subset of users) before broad deployment, as a continuous safety mechanism.
+> [!TIP] 
+> It’s advisable to keep the pilot/beta **collection** even as you move to production – future updates or new features can first be deployed to the pilot collection (a subset of users) before broad deployment, as a continuous safety mechanism.
 
 ## Full Production Deployment (Phase 3)  
 <sub>[Back to top](#deploying-and-configuring-microsoft-configuration-manager-current-branch-in-a-hybrid-cloud-environment)</sub>
