@@ -8,6 +8,65 @@ install these updates from within the Configuration Manager console.
 
 To view and manage the updates, make sure that you have the [required permissions](https://learn.microsoft.com/en-us/mem/configmgr/core/servers/manage/install-in-console-updates#assign-permissions-to-view-and-manage-updates-and-features). Then navigate to **Administration** > **Cloud Services** > **Updates and Servicing** in the Configuration Manager console. For more information, see [Install in-console updates for Configuration Manager](https://learn.microsoft.com/en-us/mem/configmgr/core/servers/manage/install-in-console-updates).
 
+- [Understand and troubleshoot Updates and Servicing in Configuration Manager](#understand-and-troubleshoot-updates-and-servicing-in-configuration-manager)
+  - [**Downloading updates**](#downloading-updates)
+    - [**Step 1: Service connection point checks every 24 hours for available updates - DMPDownloader is used to download manifest cab**](#step-1-service-connection-point-checks-every-24-hours-for-available-updates---dmpdownloader-is-used-to-download-manifest-cab)
+    - [**Step 2: Hierarchy Manager (Hman) checks for the download signature, extracts the manifest, and then processes the manifest and checks applicability of the packages**](#step-2-hierarchy-manager-hman-checks-for-the-download-signature-extracts-the-manifest-and-then-processes-the-manifest-and-checks-applicability-of-the-packages)
+    - [**Step 3: DMPdownloader downloads the payload and redistributable files**](#step-3-dmpdownloader-downloads-the-payload-and-redistributable-files)
+    - [**Step 4: DMPDownloader puts a CMU file into the service connection point outbox**](#step-4-dmpdownloader-puts-a-cmu-file-into-the-service-connection-point-outbox)
+    - [**Step 5: Admin console is updated with applicable updates for your environment**](#step-5-admin-console-is-updated-with-applicable-updates-for-your-environment)
+  - [**Troubleshoot downloading issues**](#troubleshoot-downloading-issues)
+    - [**Issue 1: Failed to download easy setup payload with exception: The remote server returned an error: (400) Bad Request**](#issue-1-failed-to-download-easy-setup-payload-with-exception-the-remote-server-returned-an-error-400-bad-request)
+    - [**Issue 2: Failed to download Admin UI content payload with exception: The underlying connection was closed**](#issue-2-failed-to-download-admin-ui-content-payload-with-exception-the-underlying-connection-was-closed)
+    - [**Issue 3: Failed to call AdminUIContentDownload. error = \[error code: -2147467261, error message: Invalid pointer\]**](#issue-3-failed-to-call-adminuicontentdownload-error--error-code--2147467261-error-message-invalid-pointer)
+    - [**Issue 4: Failed to call Initialize. error = \[error code: -2147467261, error message: Invalid pointer\]**](#issue-4-failed-to-call-initialize-error--error-code--2147467261-error-message-invalid-pointer)
+  - [**Before you install an update**](#before-you-install-an-update)
+    - [**Step 1: Review the update checklist**](#step-1-review-the-update-checklist)
+    - [**Step 2: Test the database upgrade**](#step-2-test-the-database-upgrade)
+    - [**Step 3: Run the prerequisite checker before you install an update**](#step-3-run-the-prerequisite-checker-before-you-install-an-update)
+  - [**Update replication**](#update-replication)
+    - [**Step 1: The process starts at the central administration site or standalone primary site**](#step-1-the-process-starts-at-the-central-administration-site-or-standalone-primary-site)
+    - [**Step 2: Hierarchy manager (Hman) creates or updates the package by using the shared folder \\\[servername\]\\EasySetupPayload as the source**](#step-2-hierarchy-manager-hman-creates-or-updates-the-package-by-using-the-shared-folder-servernameeasysetuppayload-as-the-source)
+    - [**Step 3: Within the site database, the EasySetupSettings table is updated to have the PackageID of the update**](#step-3-within-the-site-database-the-easysetupsettings-table-is-updated-to-have-the-packageid-of-the-update)
+    - [**Step 4: Distribution manager (Distmgr) copies the update files from `\\[servername]\EasySetupPayLoad` to the content library folder ContentLib on the central administration site or standalone primary site server computer**](#step-4-distribution-manager-distmgr-copies-the-update-files-from-servernameeasysetuppayload-to-the-content-library-folder-contentlib-on-the-central-administration-site-or-standalone-primary-site-server-computer)
+    - [**Step 5: Distribution manager creates a mini job to replicate content to child primary sites (if applicable)**](#step-5-distribution-manager-creates-a-mini-job-to-replicate-content-to-child-primary-sites-if-applicable)
+    - [**Step 6: Scheduler schedules a file replication job to transfer the content to child primary sites**](#step-6-scheduler-schedules-a-file-replication-job-to-transfer-the-content-to-child-primary-sites)
+    - [**Step 7: Sender manages the transfer of the update to all child primary sites (if applicable)**](#step-7-sender-manages-the-transfer-of-the-update-to-all-child-primary-sites-if-applicable)
+    - [**Step 8: The replication process continues at the primary site. After the sender completes the transfer of the update to the child primary site, the site server wakes up to begin processing the update**](#step-8-the-replication-process-continues-at-the-primary-site-after-the-sender-completes-the-transfer-of-the-update-to-the-child-primary-site-the-site-server-wakes-up-to-begin-processing-the-update)
+    - [**Step 9: Despooler moves the content file into the ContentLib content library folder on the primary site server computer**](#step-9-despooler-moves-the-content-file-into-the-contentlib-content-library-folder-on-the-primary-site-server-computer)
+    - [**Step 10: Distribution Manager marks the process for the package as successful**](#step-10-distribution-manager-marks-the-process-for-the-package-as-successful)
+  - [**Troubleshoot replication issues**](#troubleshoot-replication-issues)
+    - [**Step 1: Check the history and current status of the package in question**](#step-1-check-the-history-and-current-status-of-the-package-in-question)
+    - [**Step 2: Review relevant logs for central administration site and relevant primary sites**](#step-2-review-relevant-logs-for-central-administration-site-and-relevant-primary-sites)
+    - [**Step 3: Determine whether the package was successfully copied into the SCCMContentLib folder on central administration site and relevant primary sites**](#step-3-determine-whether-the-package-was-successfully-copied-into-the-sccmcontentlib-folder-on-central-administration-site-and-relevant-primary-sites)
+    - [**Step 4: Retry content replication for EasySetup package**](#step-4-retry-content-replication-for-easysetup-package)
+    - [**Issue 1: Error "Failed to calculate hash SMS\_HIERARCHY\_MANAGER"**](#issue-1-error-failed-to-calculate-hash-sms_hierarchy_manager)
+  - [**Prerequisite check**](#prerequisite-check)
+    - [**Step 1: Notification**](#step-1-notification)
+    - [**Step 2: Preparation**](#step-2-preparation)
+    - [**Step 3: Replication**](#step-3-replication)
+    - [**Step 4: Replication and prerequisites check on child primary sites**](#step-4-replication-and-prerequisites-check-on-child-primary-sites)
+    - [**Step 5: Prerequisite check finishes**](#step-5-prerequisite-check-finishes)
+  - [**Troubleshoot prerequisite check issues**](#troubleshoot-prerequisite-check-issues)
+  - [**Installing updates**](#installing-updates)
+    - [**Step 1: Check site server readiness to make sure that site server is ready to apply update**](#step-1-check-site-server-readiness-to-make-sure-that-site-server-is-ready-to-apply-update)
+    - [**Step 2: The Configuration Manager Update service is stopped and then updated to the newer version. Then, the service is restarted to begin upgrade**](#step-2-the-configuration-manager-update-service-is-stopped-and-then-updated-to-the-newer-version-then-the-service-is-restarted-to-begin-upgrade)
+    - [**Step 3: Extract the update package and verify redistributable packages**](#step-3-extract-the-update-package-and-verify-redistributable-packages)
+    - [**Step 4: Configuration Manager services are stopped and installation begins**](#step-4-configuration-manager-services-are-stopped-and-installation-begins)
+    - [**Step 5: Post installation task runs and update installation is marked as successful**](#step-5-post-installation-task-runs-and-update-installation-is-marked-as-successful)
+  - [**Troubleshoot installation issues**](#troubleshoot-installation-issues)
+    - [**Issue 1: Failed to open file `\\?\C:\Program Files\Microsoft ConfigurationManager\CMUStaging\ApplicabilityChecks\CM1606-KB3184153_AppCheck.sql` for reading. Code `0x80070003`**](#issue-1-failed-to-open-file-cprogram-filesmicrosoft-configurationmanagercmustagingapplicabilitycheckscm1606-kb3184153_appchecksql-for-reading-code-0x80070003)
+    - [**Issue 2: Error in verifying the trust of file `\\?\C:\Program Files\Microsoft Configuration Manager\CMUStaging\79FB5420-BB10-44FF-81BA-7BB53D4EE22F\SMSSetup\update.map.cab`**](#issue-2-error-in-verifying-the-trust-of-file-cprogram-filesmicrosoft-configuration-managercmustaging79fb5420-bb10-44ff-81ba-7bb53d4ee22fsmssetupupdatemapcab)
+    - [**Issue 3: Console gets stuck displaying Downloading**](#issue-3-console-gets-stuck-displaying-downloading)
+    - [**Issue 4: Content replication fails**](#issue-4-content-replication-fails)
+  - [**Useful SQL queries**](#useful-sql-queries)
+- [**Tips**](#tips)
+  - [**Enable verbose trace logging**](#enable-verbose-trace-logging)
+  - [**Capture a Process Monitor trace**](#capture-a-process-monitor-trace)
+  - [**Capture WinHTTP logs**](#capture-winhttp-logs)
+- [**References**](#references)
+
+
 **List of primary components used for Updates and Servicing**
 
 | Name | Component name | Friendly name | Binary | Description |
@@ -22,7 +81,7 @@ To view and manage the updates, make sure that you have the [required permission
 | DMP Download | SMS_DMP_DOWNLOADER | DmpDownloader | Dmpdownloader.dll | Responsible for downloading new servicing updates to top-level site server |
 | SMS Provider | SMS Provider | SMSProv | Smsprov.dll | Windows Management Instrumentation (WMI) Provider that assigns Read and Write access to the Configuration Manager database at a site |
 
-**Downloading updates**
+## **Downloading updates**
 
 The [service connection point](https://learn.microsoft.com/en-us/mem/configmgr/core/servers/deploy/configure/about-the-service-connection-point)
  is responsible for downloading updates that apply to your Configuration
@@ -34,7 +93,7 @@ current infrastructure and product version to make them available in the
 
 The following steps explain the [flow](https://learn.microsoft.com/en-us/mem/configmgr/core/servers/manage/download-updates-flowchart) in which an online service connection point downloads in-console updates:
 
-**Step 1: Service connection point checks every 24 hours for available updates - DMPDownloader is used to download manifest cab**
+### **Step 1: Service connection point checks every 24 hours for available updates - DMPDownloader is used to download manifest cab**
 
 Every 24 hours, the service connection point (SCP) downloads ConfigMgr.Update.Manifest.cab, and copies it to the `inboxes\hman.box\CFD`
  folder. The manifest identifies whether there's a new update or hotfix 
@@ -57,10 +116,7 @@ DMPDownloader.log:
 > Manifest.cab was successfully moved to the connector outbox
 > 
 
-**Step
- 2: Hierarchy Manager (Hman) checks for the download signature, extracts
- the manifest, and then processes the manifest and checks applicability 
-of the packages**
+### **Step 2: Hierarchy Manager (Hman) checks for the download signature, extracts the manifest, and then processes the manifest and checks applicability of the packages**
 
 1. SMSDBMon drops a blank file (<SiteCode>.SCU) to `C:\Program Files\Microsoft Configuration Manager\inboxes\hman.box`. It triggers `Hman` to start processing, as follows:
     
@@ -129,7 +185,7 @@ the packages. The following entries are logged in Hman.log:
         
     6. After each query runs, it updates **State** and **Flag** in the `CM_UpdatePackages` table. The value of **State** shows the current state of the package.
 
-**Step 3: DMPdownloader downloads the payload and redistributable files**
+### **Step 3: DMPdownloader downloads the payload and redistributable files**
 
 If the update is applicable, DMPdownloader downloads the payload and 
 redistributable files by using Setupdl.exe. The following entries are 
@@ -178,10 +234,9 @@ You can manually download redistributable files by using the following command:
 
 ```ps1
 setupdl.exe /RedistUrl http://go.microsoft.com/fwlink/?LinkID=841450 /LnManifestUrl http://go.microsoft.com/fwlink/?LinkID=841442 /RedistVersion 201702 /NoUI "C:\temp\redist"
-
 ```
 
-**Step 4: DMPDownloader puts a CMU file into the service connection point outbox**
+### **Step 4: DMPDownloader puts a CMU file into the service connection point outbox**
 
 - If the outbox has a remote role, it's located at `MP\OUTBOXES\MCM.box`.
 - If the outbox is on the site server, it's located at `inboxes\hman.box\ForwardingMsg`.
@@ -197,7 +252,7 @@ with no Intune subscription.
 
 If you've configured a subscription, the package is processed and no log entry is created.
 
-**Step 5: Admin console is updated with applicable updates for your environment**
+### **Step 5: Admin console is updated with applicable updates for your environment**
 
 The Configuration Manager Admin console shows applicable updates as available. It can be verified by checking the **State** column in the `CM_UpdatePackages` table. The following state types show an update as available within the console:
 
@@ -263,9 +318,7 @@ Download failures may occur during the following phases:
 
 You can replace the package GUID in the sample URLs by using the GUID that is returned by the following SQL query:
 
-SQL
-
-```
+```sql
 select * from CM_Updatepackages
 
 ```
@@ -282,20 +335,11 @@ To fix the issue, follow these steps:
 1. Check the `ProxyName` value of the `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\AIUS` registry subkey.
 2. Verify the current proxy configuration by running the following commands:
     
-    Console
-    
-
-```
+```ps1
 netsh winhttp show proxy
-
 ```
-
-Console
-
 - `netsh winhttp show proxy source=ie`
 - Check the bypass list, and make sure that **.microsoft.com** and **.windowsupdate.com** are added to the bypass list. Otherwise, run the following command:
-    
-    Console
     
 1. `netsh winhttp set proxy proxy-server="ProxyServerName" bypass-list="*.microsoft.com", "*.windowsupdate.com"`
 2. Restart the SMS Executive Service (SMSExec).
