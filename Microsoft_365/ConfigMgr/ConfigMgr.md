@@ -104,6 +104,7 @@ At this stage, you should have a functional ConfigMgr primary site in the lab. T
 ## Integrating Entra ID and Intune for Co-Management  
 <sub>[Back to top](#deploying-and-configuring-microsoft-configuration-manager-current-branch-in-a-hybrid-cloud-environment)</sub>
 
+> [!NOTE]
 > This section is highly dependant on your Intune setup. This section assumes that you have a new and clean Intune tenant with no devices joined yet. 
 
 > [!WARNING]
