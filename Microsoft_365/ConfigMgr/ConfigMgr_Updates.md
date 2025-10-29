@@ -129,61 +129,60 @@ DMPDownloader.log:
 2. `Hman` checks for the download signature, extracts the manifest, and then processes the manifest and checks applicability of
 the packages. The following entries are logged in Hman.log:
     
-    > File 'C:\Program Files\Microsoft Configuration 
-    Manager\inboxes\hman.box\CFD\ConfigMgr.Update.Manifest.CAB' is signed 
-    and trusted.
-    > 
-    > 
-    > Signing root cert's thumbprint: cdd4eeae6000ac7f40c3802c171e30148030c072
-    > 
-    > Extracting file C:\Program Files\Microsoft Configuration 
-    > Manager\inboxes\hman.box\CFD\ConfigMgr.Update.Manifest.CAB to C:\Program
-    >  Files\Microsoft Configuration Manager\CMUStaging\
-    > 
-    > Extracted C:\Program Files\Microsoft Configuration Manager\CMUStaging\Manifest.xml
-    > 
-    > Processing Configuration Manager Update manifest file C:\Program Files\Microsoft Configuration Manager\CMUStaging\manifest.xml
-    > 
-    > C:\Program Files\Microsoft Configuration 
-    > Manager\CMUStaging\ApplicabilityChecks\CM1610-KB3209501_AppCheck_10AA8BA0.sql
-    >  has hash value 
-    > SHA256:EB2C2D2E27EA0ACE8D4B6E4806FD2698BDE472427F28E60FB969A11BC5D811AB
-    > 
-    > Configuration Manager Update (PackageGuid=10AA8BA0-04D4-4FE3-BC21-F1874BC8C88C) is applicable
-    > 
+> File 'C:\Program Files\Microsoft Configuration 
+Manager\inboxes\hman.box\CFD\ConfigMgr.Update.Manifest.CAB' is signed 
+and trusted.
+> 
+> 
+> Signing root cert's thumbprint: cdd4eeae6000ac7f40c3802c171e30148030c072
+> 
+> Extracting file C:\Program Files\Microsoft Configuration 
+> Manager\inboxes\hman.box\CFD\ConfigMgr.Update.Manifest.CAB to C:\Program
+>  Files\Microsoft Configuration Manager\CMUStaging\
+> 
+> Extracted C:\Program Files\Microsoft Configuration Manager\CMUStaging\Manifest.xml
+> 
+> Processing Configuration Manager Update manifest file C:\Program Files\Microsoft Configuration Manager\CMUStaging\manifest.xml
+> 
+> C:\Program Files\Microsoft Configuration 
+> Manager\CMUStaging\ApplicabilityChecks\CM1610-KB3209501_AppCheck_10AA8BA0.sql
+>  has hash value 
+> SHA256:EB2C2D2E27EA0ACE8D4B6E4806FD2698BDE472427F28E60FB969A11BC5D811AB
+> 
+> Configuration Manager Update (PackageGuid=10AA8BA0-04D4-4FE3-BC21-F1874BC8C88C) is applicable
+> 
+
+If a package isn't applicable, the following entries are logged in Hman.log:
+
+> C:\Program Files\Microsoft Configuration 
+Manager\CMUStaging\ApplicabilityChecks\CM1610-KB3211925_AppCheck_9390F966.sql
+  has hash value 
+SHA256:048DA8137C249AAD11340A855FF7E0E8568F5325FED5F503C4D9C329E73AD464
+> 
+> 
+> SQL MESSAGE:  - Not a 1610 FR2 build, skip this hotfix
+> 
+> Configuration Manager Update (PackageGuid=9390F966-F1D0-42B8-BDC1-8853883E704A) is not applicable and should be filtered.
+> 
+
+`Hman` runs `ApplicabilityCheck` SQL queries 
+from the database. When you enable SQL logging, you can see each query 
+run against the database. To run this process manually, follow these 
+steps:
     
-    If a package isn't applicable, the following entries are logged in Hman.log:
-    
-    > C:\Program Files\Microsoft Configuration 
-    Manager\CMUStaging\ApplicabilityChecks\CM1610-KB3211925_AppCheck_9390F966.sql
-     has hash value 
-    SHA256:048DA8137C249AAD11340A855FF7E0E8568F5325FED5F503C4D9C329E73AD464
-    > 
-    > 
-    > SQL MESSAGE:  - Not a 1610 FR2 build, skip this hotfix
-    > 
-    > Configuration Manager Update (PackageGuid=9390F966-F1D0-42B8-BDC1-8853883E704A) is not applicable and should be filtered.
-    > 
-    
-    `Hman` runs `ApplicabilityCheck` SQL queries 
-    from the database. When you enable SQL logging, you can see each query 
-    run against the database. To run this process manually, follow these 
-    steps:
-    
-    1. Download the cab file, and extract it to your local computer.
-    2. To manually download the cab file, go to https://download.microsoft.com/download/5/2/C/52C5F0D5-2095-4227-BBA4-D3205D9B9714/ConfigMgr.Update.Manifest.cab.
-    3. Use 7-zip or a similar tool to extract the cab file.
-    4. After the file is extracted, you can see all the update GUIDs of
-    every update that has been released so far. Each GUID is unique.
-    5. Go to the `ApplicabilityChecks` folder.
+1. Download the cab file, and extract it to your local computer.
+2. To manually download the cab file, go to https://download.microsoft.com/download/5/2/C/52C5F0D5-2095-4227-BBA4-D3205D9B9714/ConfigMgr.Update.Manifest.cab.
+3. Use 7-zip or a similar tool to extract the cab file.
+4. After the file is extracted, you can see all the update GUIDs of
+every update that has been released so far. Each GUID is unique.
+1. Go to the `ApplicabilityChecks` folder.
         
-        Note
+> [!Note]
+> This folder contains SQL queries to run against the site server 
+database to determine which update is applicable and which one is 
+installed. For example, the Applicability_1602Release_public.sql file.
         
-        This folder contains SQL queries to run against the site server 
-        database to determine which update is applicable and which one is 
-        installed. For example, the Applicability_1602Release_public.sql file.
-        
-    6. After each query runs, it updates **State** and **Flag** in the `CM_UpdatePackages` table. The value of **State** shows the current state of the package.
+6. After each query runs, it updates **State** and **Flag** in the `CM_UpdatePackages` table. The value of **State** shows the current state of the package.
 
 ### **Step 3: DMPdownloader downloads the payload and redistributable files**
 
