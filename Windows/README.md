@@ -4,6 +4,8 @@
 
 The OS everyone (seems to) love™ from Microsoft.
 
+"Discovered by user @witherornot1337 on X, typing "start ms-cxh:localonly" into the command prompt during the Windows 11 setup experience will allow you to create a local account directly without needing to skip connecting to the internet first."
+
 - [Windows](#windows)
   - [Links](#links)
     - [See Also](#see-also)
