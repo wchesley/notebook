@@ -110,6 +110,7 @@ client as an app in Intune for internet-based devices. If you don't save this co
     ![Screenshot of the Staging page of the Co-management Configuration Wizard, with options for specifying pilot collections.](https://learn.microsoft.com/en-us/intune/configmgr/comanage/media/3555750-co-management-onboarding-staging.png)
     
 8. To enable co-management, complete the wizard.
+   1. To Sync Users, go to the [Enable SCCM AAD User Discovery Doc.](./AAD_User_Discovery.md)
 
 # Troubleshooting tenant attach and device actions
 
