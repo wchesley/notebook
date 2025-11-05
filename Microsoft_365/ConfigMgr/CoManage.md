@@ -1,5 +1,9 @@
 # Intune & ConfigMgr CoManaged
 
+Overview of Intune Service Family with co-managed setup: 
+
+![Intune Family of Services](../../Images/Intune_Services_Family.webp)
+
 ## Prerequisites
 
 **Azure services and environment**
@@ -31,6 +35,10 @@ Throughout this tutorial, use the following permissions to complete tasks:
     message *An unanticipated error occurred*.
 
 ## Setup
+
+By the end of this tutorial, you will have your Intune & SCCM in a co-managed configuration, mirroring the following diagram: 
+
+![Intune and SCCM CoManaged Diagram](../../Images/CoManagedSetup.webp)
 
 When you're enabling co-management, you can use the Azure public 
 cloud, Azure Government cloud, or Azure China 21Vianet cloud (added in 
