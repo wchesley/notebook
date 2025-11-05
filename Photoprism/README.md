@@ -4,6 +4,11 @@
 - [Docker-compose Install Docs](https://docs.photoprism.app/getting-started/docker-compose/)
 - [Photoprism Homepage](https://www.photoprism.app/)
 
+## Links
+
+- [Add Users](./Add_Users.md)
+- [External App & User Authentication](./External_User_App_Auth.md)
+
 ## What I did for install
 
 Created a folder named photoprism in the directory I keep the rest of my docker-compose folders and files. Changed into the newly created photoprism directory then downloaded the provided docker-compose file from photoprism:  
