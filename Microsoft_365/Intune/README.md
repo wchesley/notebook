@@ -37,6 +37,10 @@ Microsoft Intune is a cloud-based service that focuses on mobile device manageme
 4. Deploy applications and monitor device health.
 5. Use provided scripts and documentation for custom compliance and remediation tasks.
 
+## Intune Family of Services
+
+![Intune Family of Services Diagram](../../Images/Intune_Services_Family.webp)
+
 ## References
 - [Microsoft Intune Documentation](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/what-is-intune)
 - [Microsoft Endpoint Manager](https://learn.microsoft.com/en-us/intune/endpoint-manager-overview)
