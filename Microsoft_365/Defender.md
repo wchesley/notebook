@@ -19,15 +19,15 @@ You can perform various functions in Microsoft Defender Antivirus using the dedi
 | `-RemoveDefinitions [-All]` | Restores the installed security intelligence to a previous backup copy or to the original default set. |
 | `-RemoveDefinitions [-DynamicSignatures]` | Removes only the dynamically downloaded security intelligence. |
 | `-RemoveDefinitions [-Engine]` | Restores the previous installed engine. |
-| `-SignatureUpdate [-UNC |-MMPC]` | Checks for new security intelligence updates. |
-| `-Restore  [-ListAll |[[-Name <name>] [-All] |[-FilePath <filePath>]] [-Path <path>]]` | Restores or lists quarantined items. |
+| `-SignatureUpdate [-UNC \|-MMPC]` | Checks for new security intelligence updates. |
+| `-Restore  [-ListAll \|[[-Name <name>] [-All] \|[-FilePath <filePath>]] [-Path <path>]]` | Restores or lists quarantined items. |
 | `-AddDynamicSignature [-Path]` | Loads dynamic security intelligence. |
 | `-ListAllDynamicSignatures` | Lists the loaded dynamic security intelligence. |
 | `-RemoveDynamicSignature [-SignatureSetID]` | Removes dynamic security intelligence. |
 | `-CheckExclusion -path <path>` | Checks whether a path is excluded. |
-| `-TDT [-on|-off|-default]` | Disable or Enable TDT feature or sets it to default. If no option is specified, it retrieves the current status. |
+| `-TDT [-on\|-off\|-default]` | Disable or Enable TDT feature or sets it to default. If no option is specified, it retrieves the current status. |
 | `-OSCA` | Prints OS Copy Acceleration feature status. |
-| `-DeviceControl -TestPolicyXml  <FilePath> [-Rules | -Groups]` | Validate xml policy groups and rules. |
+| `-DeviceControl -TestPolicyXml  <FilePath> [-Rules \| -Groups]` | Validate xml policy groups and rules. |
 | `-TrustCheck -File <FilePath>` | Checks trust status of a file. |
 | `-ValidateMapsConnection` | Verifies that your network can communicate with the Microsoft Defender Antivirus cloud service. This command will only work on Windows 10, version 1703 or higher. |
 | `-ListCustomASR` | List the custom Azure Site Recovery rules present on this device. |
