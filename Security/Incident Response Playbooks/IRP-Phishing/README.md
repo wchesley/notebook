@@ -55,7 +55,7 @@ output: pdf_document
 
 
 ## Scope
-This Playbook covers
+This Playbook covers the full incident response lifecycle for phishing incidents. From initial preperation to detection, response and post-incident. 
 
 ## 1. Preparation
 
