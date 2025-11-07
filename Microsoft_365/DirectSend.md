@@ -74,6 +74,12 @@ That’s why context is key — don’t assume, validate.
 ## Prevention: What you can do to protect your org
 
 - Enable “[Reject Direct Send](https://techcommunity.microsoft.com/blog/exchange/introducing-more-control-over-direct-send-in-exchange-online/4408790)” in the Exchange Admin Center.
+  - Or disable via Exchange online powershell:   
+  `Set-OrganizationConfig -RejectDirectSend $true`.  
+   If disabled RejectDirectSend is set to `$false`, once enabled RejectDirectSend is set to `$true`. Confirm it's state with:  
+ `Get-OrganizationConfig | Select Identity, RejectDirectSend`
+  - The change should propagate out microsoft cloud servers within 30 minutes. With the feature enabled, any received Direct Send messages will see the following message:  
+  `550 5.7.68 TenantInboundAttribution; Direct Send not allowed for this organization from unauthorized sources`
 - Implement a strict DMARC policy (e.g., p=reject).
 - Flag unauthenticated internal emails for review or quarantine.
 - Enforcing “SPF hardfail” within Exchange Online Protection (EOP).
