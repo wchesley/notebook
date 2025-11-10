@@ -2,6 +2,20 @@
 
 # DirectSend in O365
 
+- [DirectSend in O365](#directsend-in-o365)
+  - [What is Direct Send?](#what-is-direct-send)
+  - [How attackers exploit Direct Send](#how-attackers-exploit-direct-send)
+    - [Why this method works:](#why-this-method-works)
+  - [Detection: What to look for](#detection-what-to-look-for)
+    - [How can I separate legitimate use from abuse?](#how-can-i-separate-legitimate-use-from-abuse)
+  - [Prevention: What you can do to protect your org](#prevention-what-you-can-do-to-protect-your-org)
+- [Tracking DirectSend](#tracking-directsend)
+  - [Why is Monitoring Direct Send Email Activities Important?](#why-is-monitoring-direct-send-email-activities-important)
+  - [How to Detect Emails Sent Through Direct Send in Exchange Online?](#how-to-detect-emails-sent-through-direct-send-in-exchange-online)
+  - [**Find Emails Sent via Direct Send Using Exchange Online Message Trace**](#find-emails-sent-via-direct-send-using-exchange-online-message-trace)
+  - [**Final Thoughts**](#final-thoughts)
+
+
 ## What is Direct Send?
 
 Direct Send is a feature in Exchange Online that allows devices and applications to send emails within a Microsoft 365 tenant **without authentication**. It uses a smart host with a format like: **tenantname.mail.protection.outlook.com**
