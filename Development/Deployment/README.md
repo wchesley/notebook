@@ -12,3 +12,7 @@ Typically this boils down to getting the working code from your machine to the c
 
 - [Signtool](./Signtool.md)
   - [Signtool Syntax](./Signtool_Syntax.md)
+
+## See Also
+
+- [Dotnet Deployment](../dotnet/Deployment.md)

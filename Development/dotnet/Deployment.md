@@ -114,3 +114,7 @@ This is a minimal example, and Kestrel does not have to be configued from any `.
 You should have some predefined criteria as to what a successful deployment looks like, but at the most basic; ensure the app runs as expected. Start by running the app directly from powershell as both your user account and the service account. This ensures that permissions are correctly set for the service account and it can run the app. Read, and then re-read the terminal output if the application fails to start, this will tell you exactly what, where and why things went wrong, if they go wrong at all. 
 
 Once you've confirmed you can run the application under its service account, launch `services.msc` and start the service you created for this. Then double check the application runs and functions as expected before notifying users that the app is live or has been updated. 
+
+## See Also 
+
+- [Deployment (general)](../Deployment/README.md)
