@@ -2,9 +2,22 @@
 
 # ConfigMgr Content Clean-up Tool
 
+- [ConfigMgr Content Clean-up Tool](#configmgr-content-clean-up-tool)
+  - [**Requirements**](#requirements)
+  - [**Modes of operation**](#modes-of-operation)
+    - [**What-if mode**](#what-if-mode)
+    - [**Delete mode**](#delete-mode)
+    - [**Log file**](#log-file)
+  - [**Run the tool**](#run-the-tool)
+    - [**Command-line parameters**](#command-line-parameters)
+      - [**Required parameters**](#required-parameters)
+      - [**Optional parameters**](#optional-parameters)
+  - [**Known issue**](#known-issue)
+- [Reference](#reference)
+
 Use the content library cleanup command-line tool to remove content 
 that's no longer associated with an object on a distribution point. This
- type of content is called *orphaned content*. This tool replaces older versions of similar tools released for past Configuration Manager products.
+ type of content is called *orphaned content*. This tool replaces older versions of similar tools released for past Configuration Manager products. This tool can be used in the case where SCCM has consumed all of it's disk space and old or orphaned packages need to be removed. 
 
 The tool only affects the content on the distribution point that you 
 specify when you run the tool. The tool can't remove content from the 
