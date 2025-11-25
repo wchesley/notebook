@@ -10,6 +10,7 @@
   - [Install & Config Checklist](./ConfigMgr_Checklist.md)
 - [ConfigMgr Updates](./ConfigMgr_Updates.md)
   - [ConfigMgr Update Reset Tool](./ConfigMgr_UpdateResetTool.md)
+- [Logs](./Logs.md)
 
 **Introduction**
 
