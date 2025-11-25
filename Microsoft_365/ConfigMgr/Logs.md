@@ -16,6 +16,7 @@
     - [**Software update point**](#software-update-point)
     - [**Log files by functionality**](#log-files-by-functionality)
     - [**Application management**](#application-management)
+    - [**Packages and programs**](#packages-and-programs)
     - [**Asset Intelligence**](#asset-intelligence)
     - [**Backup and recovery**](#backup-and-recovery)
     - [**Certificate enrollment**](#certificate-enrollment)
@@ -51,30 +52,20 @@ The following table lists the log files located on the Configuration Manager cli
 
 | Log name | Description |
 | --- | --- |
-| ADALOperationProvider.log | Information about client authentication token requests with Azure 
-Active Directory (Azure AD) Authentication Library (ADAL). (Replaced by 
-CcmAad.log starting in version 2107) |
+| ADALOperationProvider.log | Information about client authentication token requests with Azure Active Directory (Azure AD) Authentication Library (ADAL). (Replaced by CcmAad.log starting in version 2107) |
 | ATPHandler.log | Records details about handling ATP Onboarding and policies. |
 | BitLockerManagementHandler.log | Records information about BitLocker management policies. |
 | CAS.log | The Content Access service. Maintains the local package cache on the client. |
 | Ccm32BitLauncher.log | Records actions for starting applications on the client marked *run as 32 bit*. |
-| CcmEval.log | Records Configuration Manager client status evaluation activities 
-and details for components that are required by the Configuration 
-Manager client. |
+| CcmEval.log | Records Configuration Manager client status evaluation activities and details for components that are required by the Configuration Manager client. |
 | CcmEvalTask.log | Records the Configuration Manager client status evaluation activities that are initiated by the evaluation scheduled task. |
-| CcmExec.log | Records activities of the client and the SMS Agent Host service. 
-This log file also includes information about enabling and disabling 
-wake-up proxy. |
+| CcmExec.log | Records activities of the client and the SMS Agent Host service. This log file also includes information about enabling and disabling wake-up proxy. |
 | CcmMessaging.log | Records activities related to communication between the client and management points. |
 | CCMNotificationAgent.log | Records activities related to client notification operations. |
 | Ccmperf.log | Records activities related to the maintenance and capture of data related to client performance counters. |
 | CcmRestart.log | Records client service restart activity. |
 | CCMSDKProvider.log | Records activities for the client SDK interfaces. |
-| ccmsqlce.log | Records activities for the built-in version of SQL Server Compact 
-Edition (CE) that the client uses. This log is typically only used when 
-you enable debug logging, or there's a problem with the component. The 
-client health task (ccmeval) usually self-corrects problems with this 
-component. |
+| ccmsqlce.log | Records activities for the built-in version of SQL Server Compact Edition (CE) that the client uses. This log is typically only used when you enable debug logging, or there's a problem with the component. The client health task (ccmeval) usually self-corrects problems with this component. |
 | CcmUsrCse.log | Records details during user sign on for folder redirection policies. |
 | CCMVDIProvider.log | Records information for clients in a virtual desktop infrastructure (VDI). |
 | CertEnrollAgent.log | Records information for Windows Hello for Business. Specifically 
@@ -82,10 +73,9 @@ communication with the Network Device Enrollment Service (NDES) for
 certificate requests using the Simple Certificate Enrollment Protocol 
 (SCEP). |
 | CertificateMaintenance.log | Maintains certificates for Active Directory Domain Services and management points. |
-| CIAgent.log | Records details about the process of remediation and compliance for 
-compliance settings, software updates, and application management. |
+| CIAgent.log | Records details about the process of remediation and compliance for compliance settings, software updates, and application management. |
 | CIDownloader.log | Records details about configuration item definition downloads. |
-| CIStateStore.log | Records changes in state for configuration items, such as compliance settings, software updates, and applications. |
+| CIStateStore.log | Records changes in state for configuration items, such ascompliance settings, software updates, and applications. |
 | CIStore.log | Records information about configuration items, such as compliance settings, software updates, and applications. |
 | CITaskMgr.log | Records tasks for each application and deployment type, such as content download and install or uninstall actions. |
 | ClientAuth.log | Records signing and authentication activity for the client. |
@@ -93,24 +83,18 @@ compliance settings, software updates, and application management. |
 | ClientLocation.log | Records tasks that are related to client site assignment. |
 | ClientServicing.log | Records information for client deployment state messages during auto-upgrade and client piloting. |
 | CMBITSManager.log | Records information for Background Intelligent Transfer Service (BITS) jobs on the device. |
-| CMHttpsReadiness.log | Records the results of running the Configuration Manager HTTPS 
-Readiness Assessment Tool. This tool checks whether computers have a 
-public key infrastructure (PKI) client authentication certificate that 
-can be used with Configuration Manager. |
+| CMHttpsReadiness.log | Records the results of running the Configuration Manager HTTPS Readiness Assessment Tool. This tool checks whether computers have a public key infrastructure (PKI) client authentication certificate that can be used with Configuration Manager. |
 | CmRcService.log | Records information for the remote control service. |
 | CoManagementHandler.log | Use to troubleshoot co-management on the client. |
 | ComplRelayAgent.log | Records information for the co-management workload for compliance policies. |
 | ContentTransferManager.log | Schedules the Background Intelligent Transfer Service (BITS) or Server Message Block (SMB) to download or access packages. |
 | DataTransferService.log | Records all BITS communication for policy or package access. |
-| DCMAgent.log | Records high-level information about the evaluation, conflict 
-reporting, and remediation of configuration items and applications. |
+| DCMAgent.log | Records high-level information about the evaluation, conflict reporting, and remediation of configuration items and applications. |
 | DCMReporting.log | Records information about reporting policy platform results into state messages for configuration items. |
 | DcmWmiProvider.log | Records information about reading configuration item synclets from WMI. |
 | DeltaDownload.log | Records information about the download of express updates and updates downloaded using Delivery Optimization. |
 | Diagnostics.log | Records the status of client diagnostic actions. |
-| EndpointProtectionAgent | Records information about the installation of the System Center 
-Endpoint Protection client and the application of antimalware policy to 
-that client. |
+| EndpointProtectionAgent | Records information about the installation of the System Center Endpoint Protection client and the application of antimalware policy to that client. |
 | execmgr.log | Records details about packages and task sequences that run on the client. |
 | ExpressionSolver.log | Records details about enhanced detection methods that are used when verbose or debug logging is turned on. |
 | ExternalEventAgent.log | Records the history of Endpoint Protection malware detection and events related to client status. |
@@ -128,15 +112,10 @@ that client. |
 | PolicyAgent.log | Records requests for policies made by using the Data Transfer Service. |
 | PolicyAgentProvider.log | Records policy changes. |
 | PolicyEvaluator.log | Records details about the evaluation of policies on client computers, including policies from software updates. |
-| PolicyPlatformClient.log | Records the process of remediation and compliance for all providers 
-located in \Program Files\Microsoft Policy Platform, except the file 
-provider. |
+| PolicyPlatformClient.log | Records the process of remediation and compliance for all providers located in \Program Files\Microsoft Policy Platform, except the file provider. |
 | PolicySdk.log | Records activities for policy system SDK interfaces. |
 | Pwrmgmt.log | Records information about enabling or disabling and configuring the wake-up proxy client settings. |
-| PwrProvider.log | Records the activities of the power management provider 
-(PWRInvProvider) hosted in the WMI service. On all supported versions of
- Windows, the provider enumerates the current settings on computers 
-during hardware inventory and applies power plan settings. |
+| PwrProvider.log | Records the activities of the power management provider (PWRInvProvider) hosted in the WMI service. On all supported versions of Windows, the provider enumerates the current settings on computers during hardware inventory and applies power plan settings. |
 | SCClient_<*domain*>@<*username*>_1.log | Records the activity in Software Center for the specified user on the client computer. |
 | SCClient_<*domain*>@<*username*>_2.log | Records the historical activity in Software Center for the specified user on the client computer. |
 | Scheduler.log | Records activities of scheduled tasks for all client operations. |
@@ -159,9 +138,7 @@ during hardware inventory and applies power plan settings. |
 | VirtualApp.log | Records information specific to the evaluation of Application Virtualization (App-V) deployment types. |
 | Wedmtrace.log | Records operations related to write filters on Windows Embedded clients. |
 | wakeprxy-install.log | Records installation information when clients receive the client setting option to turn on wake-up proxy. |
-| wakeprxy-uninstall.log | Records information about uninstalling wake-up proxy when clients 
-receive the client setting option to turn off wake-up proxy, if wake-up 
-proxy was previously turned on. |
+| wakeprxy-uninstall.log | Records information about uninstalling wake-up proxy when clients receive the client setting option to turn off wake-up proxy, if wake-up proxy was previously turned on. |
 
 ### **Client installation**
 
@@ -170,9 +147,7 @@ related to the installation of the Configuration Manager client.
 
 | Log name | Description |
 | --- | --- |
-| ccmsetup.log | Records ccmsetup.exe tasks for client setup, client upgrade, and 
-client removal. Can be used to troubleshoot client installation 
-problems. |
+| ccmsetup.log | Records ccmsetup.exe tasks for client setup, client upgrade, and client removal. Can be used to troubleshoot client installation problems. |
 | ccmsetup-ccmeval.log | Records ccmsetup.exe tasks for client status and remediation. |
 | CcmRepair.log | Records the repair activities of the client agent. |
 | client.msi.log | Records setup tasks done by client.msi. Can be used to troubleshoot client installation or removal problems. |
@@ -184,14 +159,10 @@ The Configuration Manager client for Mac computers records information in the fo
 
 | Log name | Details | Location |
 | --- | --- | --- |
-| CCMClient-<*date_time*>.log | Records activities that are related to the Mac client operations, 
-including application management, inventory, and error logging. | `/Library/Application Support/Microsoft/CCM/Logs` |
-| CCMAgent-<*date_time*>.log | Records information that is related to client operations, including 
-user sign in and sign out operations, and Mac computer activity. | `~/Library/Logs` |
+| CCMClient-<*date_time*>.log | Records activities that are related to the Mac client operations, including application management, inventory, and error logging. | `/Library/Application Support/Microsoft/CCM/Logs` |
+| CCMAgent-<*date_time*>.log | Records information that is related to client operations, including user sign in and sign out operations, and Mac computer activity. | `~/Library/Logs` |
 | CCMNotifications-<*date_time*>.log | Records activities that are related to Configuration Manager notifications displayed on the Mac computer. | `~/Library/Logs` |
-| CCMPrefPane-<*date_time*>.log | Records activities related to the Configuration Manager preferences 
-dialog box on the Mac computer, which includes general status and error 
-logging. | `~/Library/Logs` |
+| CCMPrefPane-<*date_time*>.log | Records activities related to the Configuration Manager preferences dialog box on the Mac computer, which includes general status and error logging. | `~/Library/Logs` |
 
 The log file **SMS_DM.log** on the site system server 
 also records communication between Mac computers and the management 
@@ -226,34 +197,23 @@ The following table lists the log files that are on the Configuration Manager si
 | dataldr.log | Records information about the processing of MIF files and hardware inventory in the Configuration Manager database. | Site server |
 | ddm.log | Records activities of the discovery data manager. | Site server |
 | despool.log | Records incoming site-to-site communication transfers. | Site server |
-| distmgr.log | Records details about package creation, compression, delta 
-replication, and information updates. It can also include other 
-activities from the distribution manager component. For example, 
-installing a distribution point, connection attempts, and installing 
-components. For more information on other functionality that uses this 
-log, see [Service connection point](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#BKMK_WITLog) and [OS deployment](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#BKMK_OSDLog). | Site server |
-| EPCtrlMgr.log | Records information about the syncing of malware threat information 
-from the Endpoint Protection site system role server with the 
-Configuration Manager database. | Site server |
+| distmgr.log | Records details about package creation, compression, delta replication, and information updates. It can also include other activities from the distribution manager component. For example, installing a distribution point, connection attempts, and installing components. For more information on other functionality that uses this log, see [Service connection point](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#BKMK_WITLog) and [OS deployment](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#BKMK_OSDLog). | Site server |
+| EPCtrlMgr.log | Records information about the syncing of malware threat information from the Endpoint Protection site system role server with the Configuration Manager database. | Site server |
 | EPMgr.log | Records the status of the Endpoint Protection site system role. | Site system server |
 | EPSetup.log | Provides information about the installation of the Endpoint Protection site system role. | Site system server |
 | EnrollSrv.log | Records activities of the enrollment service process. | Site system server |
 | EnrollWeb.log | Records activities of the enrollment website process. | Site system server |
 | ExternalNotificationsWorker.log | Records the queue and activities for notifications to external systems like Azure Logic Apps. | Site server |
 | fspmgr.log | Records activities of the fallback status point site system role. | Site system server |
-| hman.log | Records information about site configuration changes, and about the 
-publishing of site information in Active Directory Domain Services. | Site server |
+| hman.log | Records information about site configuration changes, and about the publishing of site information in Active Directory Domain Services. | Site server |
 | Inboxast.log | Records the files that are moved from the management point to the corresponding INBOXES folder on the site server. | Site server |
 | inboxmgr.log | Records file transfer activities between inbox folders. | Site server |
 | inboxmon.log | Records the processing of inbox files and performance counter updates. | Site server |
 | invproc.log | Records the forwarding of MIF files from a secondary site to its parent site. | Site server |
 | migmctrl.log | Records information for Migration actions that involve migration 
-jobs, shared distribution points, and distribution point upgrades. | Top-level site in the Configuration Manager hierarchy, and each 
-child primary site. In a multi-primary site hierarchy, use the log file 
-that is created at the central administration site. |
+jobs, shared distribution points, and distribution point upgrades. | Top-level site in the Configuration Manager hierarchy, and each child primary site. In a multi-primary site hierarchy, use the log file that is created at the central administration site. |
 | mpcontrol.log | Records the registration of the management point. Records the availability of the management point every 10 minutes. | Site system server |
-| mpfdm.log | Records the actions of the management point component that moves 
-client files to the corresponding INBOXES folder on the site server. | Site system server |
+| mpfdm.log | Records the actions of the management point component that moves client files to the corresponding INBOXES folder on the site server. | Site system server |
 | mpMSI.log | Records details about the management point installation. | Site server |
 | MPSetup.log | Records the management point installation wrapper process. | Site server |
 | netdisc.log | Records Network Discovery actions. | Site server |
@@ -265,17 +225,13 @@ client files to the corresponding INBOXES folder on the site server. | Site syst
 | OfflineServicingMgr.log | Records the activities of applying updates to operating system image files. | Site server |
 | outboxmon.log | Records the processing of outbox files and performance counter updates. | Site server |
 | PerfSetup.log | Records the results of the installation of performance counters. | Site system server |
-| PkgXferMgr.log | Records the actions of the SMS_Executive component that is 
-responsible for sending content from a primary site to a remote 
-distribution point. | Site server |
+| PkgXferMgr.log | Records the actions of the SMS_Executive component that is responsible for sending content from a primary site to a remote distribution point. | Site server |
 | policypv.log | Records updates to the client policies to reflect changes to client settings or deployments. | Primary site server |
 | rcmctrl.log | Records the activities of database replication between sites in the hierarchy. | Site server |
 | replmgr.log | Records the replication of files between the site server components and the Scheduler component. | Site server |
 | ResourceExplorer.log | Records errors, warnings, and information about running Resource Explorer. | Computer that runs the Configuration Manager console |
 | RESTPROVIDERSetup.log | Installation of the SMS Provider administration service REST API | Computer with the SMS Provider |
-| ruleengine.log | Records details about automatic deployment rules for the 
-identification, content download, and software update group and 
-deployment creation. | Site server |
+| ruleengine.log | Records details about automatic deployment rules for the identification, content download, and software update group and deployment creation. | Site server |
 | SCCMReporting.log | Records details about RBAC checks and resource loads when reports are run. | Site system server |
 | schedule.log | Records details about site-to-site job and file replication. | Site server |
 | sender.log | Records the files that transfer by file-based replication between sites. | Site server |
@@ -316,13 +272,8 @@ The following table lists the log files that contain information related to site
 | ConfigMgrPrereq.log | Records prerequisite component evaluation and installation activities. | Site server |
 | ConfigMgrSetup.log | Records detailed output from the site server setup. | Site Server |
 | ConfigMgrSetupWizard.log | Records information related to activity in the Setup Wizard. | Site Server |
-| SMS_BOOTSTRAP.log | Records information about the progress of launching the secondary 
-site installation process. Details of the actual setup process are 
-contained in ConfigMgrSetup.log. | Site Server |
-| smstsvc.log | Records information about the installation, use, and removal of a 
-Windows service. Windows uses this service to test network connectivity 
-and permissions between servers. It uses the computer account of the 
-server that creates the connection. | Site server and site system server |
+| SMS_BOOTSTRAP.log | Records information about the progress of launching the secondary site installation process. Details of the actual setup process are contained in ConfigMgrSetup.log. | Site Server |
+| smstsvc.log | Records information about the installation, use, and removal of a Windows service. Windows uses this service to test network connectivity and permissions between servers. It uses the computer account of the server that creates the connection. | Site server and site system server |
 
 ### **Data warehouse service point**
 
@@ -418,18 +369,11 @@ The following table lists the log files that contain information related to the 
 | --- | --- | --- |
 | objreplmgr.log | Records details about the replication of software updates notification files from a parent site to child sites. | Site server |
 | PatchDownloader.log | Records details about the process of downloading software updates 
-from the update source to the download destination on the site server. | When you manually download updates, this file is in your `%temp%`
- directory on the computer where you use the console. For automatic 
-deployment rules, if the Configuration Manager client is installed on 
-the site server, this file is on the site server in `%windir%\CCM\Logs`. |
-| ruleengine.log | Records details about automatic deployment rules for the 
-identification, content download, and software update group and 
-deployment creation. | Site server |
+from the update source to the download destination on the site server. | When you manually download updates, this file is in your `%temp%` directory on the computer where you use the console. For automatic deployment rules, if the Configuration Manager client is installed on the site server, this file is on the site server in `%windir%\CCM\Logs`. |
+| ruleengine.log | Records details about automatic deployment rules for the identification, content download, and software update group and deployment creation. | Site server |
 | SMS_ISVUPDATES_SYNCAGENT.log | Log file for synchronization of third-party software updates. | Top-level software update point in the Configuration Manager hierarchy. |
 | SUPSetup.log | Records details about the software update point installation. When the software update point installation completes, **Installation was successful** is written to this log file. | Site system server |
-| WCM.log | Records details about the software update point configuration and 
-connections to the WSUS server for subscribed update categories, 
-classifications, and languages. | Site server that connects to the WSUS server |
+| WCM.log | Records details about the software update point configuration and connections to the WSUS server for subscribed update categories, classifications, and languages. | Site server that connects to the WSUS server |
 | WSUSCtrl.log | Records details about the configuration, database connectivity, and health of the WSUS server for the site. | Site system server |
 | wsyncmgr.log | Records details about the software updates sync process. | Site system server |
 | WUSSyncXML.log | Records details about the Inventory Tool for the Microsoft Updates sync process. | Client computer configured as the sync host for the Inventory Tool for Microsoft Updates |
@@ -455,9 +399,7 @@ deployment types, and dependencies. | Client |
 | colleval.log | Records details about when collections are created, changed, and deleted by the Collection Evaluator. | Site system server |
 | WsfbSyncWorker.log | Records information about the communication with the Microsoft Store for Business. | Computer with the service connection point |
 | NotiCtrl.log | Application request notifications. | Site server |
-| PrestageContent.log | Records details about the use of the ExtractContent.exe tool on a 
-remote, prestaged distribution point. This tool extracts content that 
-has been exported to a file. | Site system server |
+| PrestageContent.log | Records details about the use of the ExtractContent.exe tool on a remote, prestaged distribution point. This tool extracts content that has been exported to a file. | Site system server |
 | SettingsAgent.log | Enforcement of specific applications, records orchestration of 
 application group evaluation, and details of co-management policies. | Client |
 | SMS_BUSINESS_APP_PROCESS_MANAGER.log | Log file for component that synchronizes apps from the Microsoft Store for Business. | Site server |
@@ -465,11 +407,9 @@ application group evaluation, and details of co-management policies. | Client |
 | SMS_ImplicitUninstall.log | Records events from the implicit uninstall background worker process. | Site server |
 | SMSdpmon.log | Records details about the distribution point health monitoring scheduled task that is configured on a distribution point. | Site server |
 | SoftwareCenterSystemTasks.log | Records activities related to Software Center prerequisite component validation. | Client |
-| TSDTHandler.log | For the task sequence deployment type. It logs the process from app 
-enforcement (install or uninstall) to the launch of the task sequence. 
-Use it with AppEnforce.log and smsts.log. | Client |
+| TSDTHandler.log | For the task sequence deployment type. It logs the process from app enforcement (install or uninstall) to the launch of the task sequence. Use it with AppEnforce.log and smsts.log. | Client |
 
-**Packages and programs**
+### **Packages and programs**
 
 The following table lists the log files that contain information related to deploying packages and programs.
 
@@ -549,17 +489,12 @@ The following table lists the log files that contain information related to clie
 | Log name | Description | Computer with log file |
 | --- | --- | --- |
 | bgbmgr.log | Records details about site server activities related to client notification tasks and processing online and task status files. | Site server |
-| BGBServer.log | Records the activities of the notification server, such as 
-client-server communication and pushing tasks to clients. Also records 
-information about the generation of online and task status files to be 
-sent to the site server. | Management point |
+| BGBServer.log | Records the activities of the notification server, such as client-server communication and pushing tasks to clients. Also records information about the generation of online and task status files to be sent to the site server. | Management point |
 | BgbSetup.log | Records the activities of the notification server installation wrapper process during installation and uninstallation. | Management point |
 | bgbisapiMSI.log | Records details about the notification server installation and uninstallation. | Management point |
 | BgbHttpProxy.log | Records the activities of the notification HTTP proxy as it relays 
 the messages of clients using HTTP to and from the notification server. | Client |
-| CcmNotificationAgent.log | Records the activities of the notification agent, such as 
-client-server communication and information about tasks received and 
-dispatched to other client agents. | Client |
+| CcmNotificationAgent.log | Records the activities of the notification agent, such as client-server communication and information about tasks received and dispatched to other client agents. | Client |
 
 **Cloud management gateway**
 
@@ -567,17 +502,11 @@ The following table lists the log files that contain information related to the 
 
 | Log name | Description | Computer with log file |
 | --- | --- | --- |
-| CloudMgr.log | Records details about deploying the cloud management gateway 
-service, ongoing service status, and use data associated with the 
-service. To configure the logging level, edit the **Logging level** value in the following registry key: `HKLM\SOFTWARE\ Microsoft\SMS\COMPONENTS\ SMS_CLOUD_ SERVICES_MANAGER` | The *installdir* folder on the primary site server or CAS. |
-| CMGSetup.log [Note 1](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#bkmk_note1) | Records details about the second phase of the cloud management 
-gateway deployment (local deployment in Azure). To configure the logging
- level, use the setting **Trace level** (**Information** (Default), **Verbose**, **Error**) on the **Azure portal\Cloud services configuration** tab. | The **%approot%\logs** on your Azure server, or the SMS/Logs folder on the site system server |
+| CloudMgr.log | Records details about deploying the cloud management gateway service, ongoing service status, and use data associated with the service. To configure the logging level, edit the **Logging level** value in the following registry key: `HKLM\SOFTWARE\ Microsoft\SMS\COMPONENTS\ SMS_CLOUD_ SERVICES_MANAGER` | The *installdir* folder on the primary site server or CAS. |
+| CMGSetup.log [Note 1](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#bkmk_note1) | Records details about the second phase of the cloud management gateway deployment (local deployment in Azure). To configure the logging level, use the setting **Trace level** (**Information** (Default), **Verbose**, **Error**) on the **Azure portal\Cloud services configuration** tab. | The **%approot%\logs** on your Azure server, or the SMS/Logs folder on the site system server |
 | CMGService.log [Note 1](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#bkmk_note1) | Records details about the cloud management gateway service core 
 component in Azure. To configure the logging level, use the setting **Trace level** (**Information** (Default), **Verbose**, **Error**) on the **Azure portal\Cloud services configuration** tab. | The **%approot%\logs** on your Azure server, or the SMS/Logs folder on the site system server |
-| SMS_Cloud_ProxyConnector.log | Records details about setting up connections between the cloud 
-management gateway service and the cloud management gateway connection 
-point. | Site system server |
+| SMS_Cloud_ProxyConnector.log | Records details about setting up connections between the cloud management gateway service and the cloud management gateway connection point. | Site system server |
 | CMGContentService.log [Note 1](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#bkmk_note1) | When you enable a CMG to also serve content from Azure storage, this log records the details of that service. | The **%approot%\logs** on your Azure server, or the SMS/Logs folder on the site system server |
 - For troubleshooting deployments, use **CloudMgr.log** and **CMGSetup.log**
 - For troubleshooting service health, use **CMGService.log** and **SMS_Cloud_ProxyConnector.log**.
