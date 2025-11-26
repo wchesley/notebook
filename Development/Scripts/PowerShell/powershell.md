@@ -7,6 +7,7 @@ PowerShell is a task automation and configuration management program from Micros
 - [Powershell](#powershell)
 - [Snippits and small scripts](#snippits-and-small-scripts)
   - [Check if Port is in use:](#check-if-port-is-in-use)
+  - [Test if port is open/closed](#test-if-port-is-openclosed)
   - [Install msi from powershell script:](#install-msi-from-powershell-script)
   - [Get password from Environment Variable:](#get-password-from-environment-variable)
   - [Get Password from User Input:](#get-password-from-user-input)
@@ -66,6 +67,19 @@ Get-NetTCPConnection | where Localport -eq 5000 | select Localport,OwningProcess
 Localport OwningProcess
 --------- -------------
     5000          1684
+```
+
+## Test if port is open/closed
+
+```ps1
+Test-NetConnection [FQDN/IP Address] -Port [port number]
+```
+Where:  
+- `[FQDN/IP Address]` is the domain name or IP address of the server to which you are trying to connect;
+- `[-Port]` is the port number where the server is listening.
+
+```ps1
+Test-NetConnection rpc.acronis.com -Port 443
 ```
 
 ## Install msi from powershell script: 
