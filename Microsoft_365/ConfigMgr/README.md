@@ -12,7 +12,7 @@
   - [ConfigMgr Update Reset Tool](./ConfigMgr_UpdateResetTool.md)
 - [Logs](./Logs.md)
 
-**Introduction**
+## **Introduction**
 
 Use Configuration Manager to help you with the following systems management activities:
 
@@ -62,9 +62,9 @@ potential to affect every computer in your organization. When you deploy
 consideration of your business requirements, Configuration Manager can 
 reduce your administrative overhead and total cost of ownership.
 
-**User interfaces**
+## **User interfaces**
 
- **The Configuration Manager console**
+### **The Configuration Manager console**
 
 After you install Configuration Manager, use the Configuration 
 Manager console to configure sites and clients, and to run and monitor 
@@ -78,9 +78,9 @@ administration.
 
 For more information, see [Use the Configuration Manager console](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/manage/admin-console).
 
- **Software Center**
+## **Software Center**
 
-**Software Center** is an application that's installed 
+### **Software Center** is an application that's installed 
 when you install the Configuration Manager client on a Windows device. 
 Users use Software Center to request and install software that you 
 deploy. Software Center lets users do the following actions:

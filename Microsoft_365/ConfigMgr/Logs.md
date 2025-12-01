@@ -21,6 +21,7 @@
     - [**Backup and recovery**](#backup-and-recovery)
     - [**Certificate enrollment**](#certificate-enrollment)
     - [**Client notification**](#client-notification)
+    - [**Cloud management gateway**](#cloud-management-gateway)
 
 
 # SCCM Log File Reference
@@ -388,9 +389,7 @@ The following table lists the log files that contain information related to appl
 
 | Log name | Description | Computer with log file |
 | --- | --- | --- |
-| AppIntentEval.log | Records details about the current and intended state of 
-applications, their applicability, whether requirements were met, 
-deployment types, and dependencies. | Client |
+| AppIntentEval.log | Records details about the current and intended state of applications, their applicability, whether requirements were met, deployment types, and dependencies. | Client |
 | AppDiscovery.log | Records details about the discovery or detection of applications on client computers. | Client |
 | AppEnforce.log | Records details about enforcement actions (install and uninstall) taken for applications on the client. | Client |
 | AppGroupHandler.log | Records detection and enforcement information for application groups | Client |
@@ -496,7 +495,7 @@ The following table lists the log files that contain information related to clie
 the messages of clients using HTTP to and from the notification server. | Client |
 | CcmNotificationAgent.log | Records the activities of the notification agent, such as client-server communication and information about tasks received and dispatched to other client agents. | Client |
 
-**Cloud management gateway**
+### **Cloud management gateway**
 
 The following table lists the log files that contain information related to the cloud management gateway.
 
@@ -508,6 +507,7 @@ The following table lists the log files that contain information related to the 
 component in Azure. To configure the logging level, use the setting **Trace level** (**Information** (Default), **Verbose**, **Error**) on the **Azure portal\Cloud services configuration** tab. | The **%approot%\logs** on your Azure server, or the SMS/Logs folder on the site system server |
 | SMS_Cloud_ProxyConnector.log | Records details about setting up connections between the cloud management gateway service and the cloud management gateway connection point. | Site system server |
 | CMGContentService.log [Note 1](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/log-files#bkmk_note1) | When you enable a CMG to also serve content from Azure storage, this log records the details of that service. | The **%approot%\logs** on your Azure server, or the SMS/Logs folder on the site system server |
+
 - For troubleshooting deployments, use **CloudMgr.log** and **CMGSetup.log**
 - For troubleshooting service health, use **CMGService.log** and **SMS_Cloud_ProxyConnector.log**.
 - For troubleshooting client traffic, use **CMGService.log** and **SMS_Cloud_ProxyConnector.log**.
