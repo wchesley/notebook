@@ -20,6 +20,7 @@ To view and manage the updates, make sure that you have the [required permission
     - [**Issue 2: Failed to download Admin UI content payload with exception: The underlying connection was closed**](#issue-2-failed-to-download-admin-ui-content-payload-with-exception-the-underlying-connection-was-closed)
     - [**Issue 3: Failed to call AdminUIContentDownload. error = \[error code: -2147467261, error message: Invalid pointer\]**](#issue-3-failed-to-call-adminuicontentdownload-error--error-code--2147467261-error-message-invalid-pointer)
     - [**Issue 4: Failed to call Initialize. error = \[error code: -2147467261, error message: Invalid pointer\]**](#issue-4-failed-to-call-initialize-error--error-code--2147467261-error-message-invalid-pointer)
+    - [**Issue 5: Scan failures related to HTTP time-out or authentication**](#issue-5-scan-failures-related-to-http-time-out-or-authentication)
   - [**Before you install an update**](#before-you-install-an-update)
     - [**Step 1: Review the update checklist**](#step-1-review-the-update-checklist)
     - [**Step 2: Test the database upgrade**](#step-2-test-the-database-upgrade)
@@ -386,6 +387,44 @@ The following error is logged in DMPDownloader.log:
 > 
 
 To fix this issue, check whether the `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\SMS_DMP_CONNECT` registry subkey exists. If it doesn't, create the subkey. Then, delete all files in the `Hman.box\CFD` folder, and restart the SMS Executive Service (SMSExec).
+
+### **Issue 5: Scan failures related to HTTP time-out or authentication**
+
+Errors: `0x80072ee2, 0x8024401C, 0x80244023, or 0x80244017 (HTTP Status 401), 0x80244018 (HTTP Status 403)`
+
+Verify connectivity with the WSUS computer. During a scan, the Windows Update Agent must communicate with the ClientWebService and SimpleAuthWebService virtual directories on the WSUS computer to run a scan. If the client can't communicate with the WSUS computer, the scan fails. This issue can occur for several reasons, including:
+
+    port configuration
+    proxy configuration
+    firewall issues
+    network connectivity
+
+First, find the URL of the WSUS computer by checking the following registry key:
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
+
+Try to access the URL to verify connectivity between the client and the WSUS computer. For example, the URL you use should resemble the following URL:
+http://SUPSERVER.CONTOSO.COM:8530/Selfupdate/wuident.cab
+
+Then check whether the client can access the ClientWebService virtual directory. The URL should resemble the following URL:
+http://SUPSERVER.CONTOSO.COM:8530/ClientWebService/wusserverversion.xml
+
+Finally, check whether the client can access the SimpleAuthWebService virtual directory. The URL should resemble the following URL: http://SUPSERVER.CONTOSO.COM:8530/SimpleAuthWebService/SimpleAuth.asmx
+
+If these tests are successful, review the Internet Information Services (IIS) logs on the WSUS computer to confirm that the HTTP errors are being returned from WSUS. If the WSUS computer doesn't return the error, the issue is probably with an intermediate firewall or proxy.
+
+If any of these tests fails, check for name resolution issues on the client. Verify that you can resolve the FQDN of the WSUS computer.
+
+Also verify the proxy settings on the client to make sure that they are configured correctly. For more information, see the Scan failures due to proxy-related issues section.
+
+Finally, verify that the WSUS ports can be accessed. WSUS can be configured to use any of the following ports:
+
+    80
+    443
+    8530
+    8531
+
+For clients to communicate with the WSUS computer, the appropriate ports must be enabled on any firewall between the client and the WSUS computer.
 
 ## **Before you install an update**
 
