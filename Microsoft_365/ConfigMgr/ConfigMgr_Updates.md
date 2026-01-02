@@ -21,6 +21,8 @@ To view and manage the updates, make sure that you have the [required permission
     - [**Issue 3: Failed to call AdminUIContentDownload. error = \[error code: -2147467261, error message: Invalid pointer\]**](#issue-3-failed-to-call-adminuicontentdownload-error--error-code--2147467261-error-message-invalid-pointer)
     - [**Issue 4: Failed to call Initialize. error = \[error code: -2147467261, error message: Invalid pointer\]**](#issue-4-failed-to-call-initialize-error--error-code--2147467261-error-message-invalid-pointer)
     - [**Issue 5: Scan failures related to HTTP time-out or authentication**](#issue-5-scan-failures-related-to-http-time-out-or-authentication)
+    - [**Issue 6: SCCM Failed to extract update package - FileCopy Error 0x800704c8**](#issue-6-sccm-failed-to-extract-update-package---filecopy-error-0x800704c8)
+      - [The Workaround](#the-workaround)
   - [**Before you install an update**](#before-you-install-an-update)
     - [**Step 1: Review the update checklist**](#step-1-review-the-update-checklist)
     - [**Step 2: Test the database upgrade**](#step-2-test-the-database-upgrade)
@@ -425,6 +427,43 @@ Finally, verify that the WSUS ports can be accessed. WSUS can be configured to u
     8531
 
 For clients to communicate with the WSUS computer, the appropriate ports must be enabled on any firewall between the client and the WSUS computer.
+
+### **Issue 6: SCCM Failed to extract update package - FileCopy Error 0x800704c8**
+
+When updating SCCM instance to 2509, I ran into an issue where the update package failed to get extracted. 
+
+`CopyFileExW failed for E:\SCCMContentLib\FileLib\C251\xxxxxxxx to \\?\E:\Program Files\Microsoft Configuration Manager\CMUStaging\PACKAGEGUID\redist\DoincInstall.exe
+FileCopy Failed: 0x800704c8`
+
+This error code indicated that “the requested operation couldn’t be performed on a file with user-mapped section open.”
+
+To try and troubleshoot the issue the following steps were taken:
+
+- Disabled AV applications running on the server.
+- Imported update cab from a known working instance of SCCM.
+- Utilizing Process Explorer to identify any processes locking the file.
+- Reviewing system and SCCM logs for clues on recent changes that might have influenced this behavior.
+- Verifying permissions, disk space, and network configurations.
+- Confirming all services running and running under system context.
+- Utilizing the built-in CMUpdateReset tool included with SCCM.
+- Confirming all applicable registry entries exist and are correct.
+- Confirming all applicable tables and database entries exist and are correct.
+
+Even after all that effort the exact cause of the issue was still unclear.
+
+#### The Workaround
+
+With no clear understanding of what was causing the automated process to fail, the workaround of manually copying the update files from the `EasySetupPayload` directory to the `CMUStaging` directory was performed using the following steps:
+
+1. Identify the failing updates GUID in the SCCM console. (This can be done easily by displaying the Package GUID column in the ‘Updates and Servicing’ tab in the SCCM console or in the CMUpdate Logs error message, the target dir is named after the packages GUID)
+2. Locate the corresponding update package folder within the EasySetupPayload directory. By default this is `C:\Program Files\Microsoft Configuration Manager\EasySetupPayload`
+3. Open the folder and copy the entire contents.
+4. Paste them into the corresponding location within the CMUStaging directory, maintaining the intended file structure.
+5. Proceed with the update installation as usual.
+
+This is only a work around and doesn't resolve the original issue. This workaround can be applied when SCCM is still running. I would try to time the copy operation to when the CMUpdate log is showing the service is in it's polling/waiting state. Should be a 600 second window to paste the files in, otherwise you risk the update process deleting the directories. Once the update service checks this file again it will detect that the correct files are present and will proceed to check prerequisites. 
+
+ref: [endpoint Focus - Updating stubborn SCCM Server](https://endpointfocus.com/updating-a-stubborn-sccm-server/)
 
 ## **Before you install an update**
 
