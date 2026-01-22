@@ -24,6 +24,7 @@ List of Windows Documents:
 - [Using Telegraf on Windows](./Using-Telegraf-on-Windows-Blog-InfluxData.md)
 - [View Domain name](./View-Domain-Name.md)
 - [NFS](./windows-nfs.md)
+- [Error Codes](./Error-Codes.md)
 
 ### See Also
 
