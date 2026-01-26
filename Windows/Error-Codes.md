@@ -9,3 +9,12 @@ Client cannot find or contact update source.
 
 ### **0x87d00215**
 Item not found or failure to get targeted content/update
+
+### **0x8024401C**
+Same as HTTP status 408 - the server timed out waiting for the request.
+
+### **0x80004005**
+Unspecified error.
+
+### **0x87d00692**
+Group Policy Conflict
