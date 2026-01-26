@@ -6,8 +6,11 @@
   - [Server](#server)
 - [Update from CLI](#update-from-cli)
   - [View Update History](#view-update-history)
+    - [Native method](#native-method)
+    - [3rd Party Methods](#3rd-party-methods)
   - [How To Uninstall Windows Updates Using Dism](#how-to-uninstall-windows-updates-using-dism)
     - [Steps](#steps)
+  - [Manually Install Updates from .cab or .msu file](#manually-install-updates-from-cab-or-msu-file)
 
 
 **Windows Update** is a [Microsoft](https://en.wikipedia.org/wiki/Microsoft "Microsoft") service for the [Windows 9x](https://en.wikipedia.org/wiki/Windows_9x "Windows 9x") and [Windows NT](https://en.wikipedia.org/wiki/Windows_NT "Windows NT") families of the [Microsoft Windows](https://en.wikipedia.org/wiki/Microsoft_Windows "Microsoft Windows") operating system, which automates downloading and installing Microsoft Windows [software updates](https://en.wikipedia.org/wiki/Software_update "Software update") over the [Internet](https://en.wikipedia.org/wiki/Internet "Internet"). The service delivers software updates for Windows, as well as the various Microsoft [antivirus products](https://en.wikipedia.org/wiki/Antivirus_software "Antivirus software"), including [Windows Defender](https://en.wikipedia.org/wiki/Windows_Defender "Windows Defender") and [Microsoft Security Essentials](https://en.wikipedia.org/wiki/Microsoft_Security_Essentials "Microsoft Security Essentials"). Since its inception, Microsoft has introduced two extensions of the service: **Microsoft Update** and **Windows Update for Business**. The former expands the core service to include other Microsoft products, such as [Microsoft Office](https://en.wikipedia.org/wiki/Microsoft_Office "Microsoft Office") and [Microsoft Expression Studio](https://en.wikipedia.org/wiki/Microsoft_Expression_Studio "Microsoft Expression Studio"). The latter is available to business editions of [Windows 10](https://en.wikipedia.org/wiki/Windows_10 "Windows 10") and permits postponing updates or receiving updates only after they have undergone rigorous testing.
@@ -34,6 +37,17 @@ This module can be used to manage windows udpates from the command line, such as
 
 ## View Update History
 
+### Native method
+
+To view update history via powershell, and without installing any extra software or PS modules, you can use the built-in command `Get-WindowsUpdateLog`. Run the command with the `-LogPath` parameter to output results to a single text file. For example: 
+
+```ps1
+Get-WindowsUpdateLog -LogPath C:\Temp\WindowsUpdate.log
+```
+
+### 3rd Party Methods
+
+> [!NOTE]
 > `Get-WUHistory` is apart of the `PSWindowsUpdate` module. 
 
 To view windows update history from powershell run the following command: 
@@ -54,8 +68,6 @@ Server01       Update           KB4495590     NT AUTHORITY\SYSTEM  5/16/2019 00:
 Server01       Security Update  KB4470788     NT AUTHORITY\SYSTEM  1/22/2019 00:00:00
 Server01       Update           KB4480056     NT AUTHORITY\SYSTEM  1/24/2019 00:00:00
 ```
-
-
 
 ## How To Uninstall Windows Updates Using Dism
 
@@ -90,3 +102,22 @@ _Example: To remove the "Package\_for\_KB4058702~31bf3856ad364e35~amd64~~16299.1
 _Example: To remove the "Package\_for\_KB4058702~31bf3856ad364e35~amd64~~16299.188.1.0", enter this command:_
 
 `dism /Online /Remove-Package /PackageName:Package\_for\_KB4058702~31bf3856ad364e35~amd64~~16299.188.1.0`
+
+## Manually Install Updates from .cab or .msu file
+
+You are required to have the .cab or .msu file from Microsoft Update Catalog in a location accessible to the machine being updated **before** you can use this installation method. You can download MSU Windows updates files (and sometimes CAB files) or files for other Microsoft products from Microsoft Update Catalog (https://www.catalog.update.microsoft.com/).
+
+Normally .msu files can be installed to a single machine via double-click install. To install via powershell, use `wusa.exe`, Windows Standalone Update Installer. To install the update in a silent mode (a user won’t see any pop-up windows) with a delayed restart, open the command prompt as administrator and run the following command:
+
+```ps1
+wusa.exe c:\Temp\windows10-21h2-kb5014032.mxu /quiet /norestart
+```
+
+After a while, check that the update has been successfully installed:
+
+```ps1
+wmic qfe list | findstr 5014032
+```
+Where you are searching via KB number to find update install status.  
+Or you can find an entry with Event ID 2 from the WUSA source in the Event Viewer -> Windows Logs -> Setup:  
+`Windows update "Security Update for Windows (KB5014032)" was successfully installed. (Command line: "wusa.exe  c:\Temp\windows10-21h2-kb5014032.msu /quiet /norestart")`
