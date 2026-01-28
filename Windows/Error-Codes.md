@@ -18,3 +18,6 @@ Unspecified error.
 
 ### **0x87d00692**
 Group Policy Conflict
+
+### **0x80240017**
+Windows Update failed because the update isn't needed (already installed, superseded, or requirements missing) or there's a system issue like corrupted files, driver problems, or conflicting software (like antivirus)
