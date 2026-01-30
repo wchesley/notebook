@@ -49,6 +49,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Chrome Version](#get-chrome-version)
   - [Enable Legacy Print Preview](#enable-legacy-print-preview)
   - [Disable Internet Explorer](#disable-internet-explorer)
+  - [Get Windows Full Build Number](#get-windows-full-build-number)
 
 
 # Snippits and small scripts
@@ -768,4 +769,18 @@ Optionally (required to satisfy vulnerability scanners ie. Nessus), set registry
 
 ```ps1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Main" /v "NotifyDisableIEOptions" /t REG_DWORD /d 1 /f
+```
+
+## Get Windows Full Build Number
+
+```ps1
+$properties = 'CurrentMajorVersionNumber','CurrentMinorVersionNumber','CurrentBuild','UBR'
+
+"{0}.{1}.{2}.{3}" -f ($properties | ForEach-Object {Get-ItemPropertyValue -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' -Name $_})
+
+## Example: 
+PS C:\Users\walker.chesley> $properties = 'CurrentMajorVersionNumber','CurrentMinorVersionNumber','CurrentBuild','UBR'
+PS C:\Users\walker.chesley> "{0}.{1}.{2}.{3}" -f ($properties | ForEach-Object {Get-ItemPropertyValue -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' -Name $_})
+10.0.26200.7623
+PS C:\Users\walker.chesley>
 ```
