@@ -80,6 +80,14 @@ administration.
 
 For more information, see [Use the Configuration Manager console](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/manage/admin-console).
 
+### **Powershell**
+
+For generic shell access, Launch the Configuration Manager console. In the upper-left corner, there's a blue rectangle. Select the white arrow in the blue rectangle, and choose **Connect via Windows PowerShell**.
+
+From this powershell console you can test WQL queries via [Invoke-CMWmiQuery](https://learn.microsoft.com/en-us/powershell/module/configurationmanager/invoke-cmwmiquery?view=sccm-ps) CmdLet. For WQL queries, see [this blog post](https://mzonline.com/blog/2020-09/quick-tests-wql-queries) and [this pdf document](https://haribabuonline.wordpress.com/wp-content/uploads/2017/01/wq00-sccm-wql-queries-0.pdf).
+
+For more information or to import SCCM modules manually, see the [official docs](https://learn.microsoft.com/en-us/powershell/sccm/overview?view=sccm-ps).
+
 ## **Software Center**
 
 ### **Software Center** is an application that's installed 
