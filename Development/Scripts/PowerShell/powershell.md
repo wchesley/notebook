@@ -50,6 +50,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Enable Legacy Print Preview](#enable-legacy-print-preview)
   - [Disable Internet Explorer](#disable-internet-explorer)
   - [Get Windows Full Build Number](#get-windows-full-build-number)
+  - [Find OpenSSL](#find-openssl)
 
 
 # Snippits and small scripts
@@ -783,4 +784,13 @@ PS C:\Users\walker.chesley> $properties = 'CurrentMajorVersionNumber','CurrentMi
 PS C:\Users\walker.chesley> "{0}.{1}.{2}.{3}" -f ($properties | ForEach-Object {Get-ItemPropertyValue -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' -Name $_})
 10.0.26200.7623
 PS C:\Users\walker.chesley>
+```
+
+## Find OpenSSL
+
+Basically bruteforce search `C:\` drive for any instance of openssl or libssl: 
+
+```ps1
+(Get-ChildItem -Path c:\ -Filter libssl* -recurse -force -file -ea SilentlyContinue).fullname
+(Get-ChildItem -Path c:\ -Filter openssl* -recurse -force -directory -ea SilentlyContinue).fullname
 ```
