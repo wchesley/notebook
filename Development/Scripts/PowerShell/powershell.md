@@ -51,6 +51,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Disable Internet Explorer](#disable-internet-explorer)
   - [Get Windows Full Build Number](#get-windows-full-build-number)
   - [Find OpenSSL](#find-openssl)
+  - [Search Windows Event Viewer](#search-windows-event-viewer)
 
 
 # Snippits and small scripts
@@ -793,4 +794,19 @@ Basically bruteforce search `C:\` drive for any instance of openssl or libssl:
 ```ps1
 (Get-ChildItem -Path c:\ -Filter libssl* -recurse -force -file -ea SilentlyContinue).fullname
 (Get-ChildItem -Path c:\ -Filter openssl* -recurse -force -directory -ea SilentlyContinue).fullname
+```
+
+## Search Windows Event Viewer
+
+Most commonly you will need the follwing event logs: 
+1. Application
+2. System
+3. Security
+
+You can view all available logs via: `Get-EventLog -List`
+
+```ps1
+(Get-EventLog -LogName system -after (Get-Date).AddDays(-1) | 
+Select-Object -Property Category,Index,TimeGenerated,
+EntryType,Source,InstanceID,Message) -match $Search | Format-Table -AutoSize
 ```
