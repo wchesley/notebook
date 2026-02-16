@@ -3,61 +3,63 @@
 [[_TOC_]]
 
 ## Scope
-This Playbook covers
+This Playbook covers an incident response template. 
 
 ## 1. Preparation
 
 <details>
 <summary>Expand/Colapse</summary>
 
-- Create and maintain a list of 
-    - all domains owned by Company.
+- [ ] Create and maintain a list of 
+    - [ ] all domains owned by Company.
         - This can prevent you from taking actions against our own domains
-    - all people of can register domains
-- Create email template 
-    - to notify all employees of ongoing phishing campaing against the organization 
-    - to contact hosting companies for domain take down
-    - to inform 3rd party to take actions against phishing on there infra (Microsoft, Fedex, Apple, etc.)
-- Ensure that:
-    - Mail anti-malware/anti-spam/anti-phish solutions are in place.
-    - Users know how to report phish
-    - Detection exists for office documents spawning processes
+    - [ ] all people of can register domains
+- [ ] Create email template 
+    - [ ] to notify all employees of ongoing phishing campaing against the organization 
+    - [ ] to contact hosting companies for domain take down
+    - [ ] to inform 3rd party to take actions against phishing on there infra (Microsoft, Fedex, Apple, etc.)
+- [ ] Ensure that:
+    - [ ] Mail anti-malware/anti-spam/anti-phish solutions are in place.
+    - [ ] Users know how to report phish
+    - [ ] Detection exists for office documents spawning processes
         - PowerShell
         - CMD
         - WMI
         - MSHTA
         - Etc.
-- Perform Firedrill to ensure all aspects of the Playbook are working
+- [ ] Perform Firedrill to ensure all aspects of the Playbook are working
     - After publication
     - At least once a year
     - Test/Validate: 
-        - [Customer's Cards](Customers)
         - Internal Contact and Escalation Paths
-- Review threat intelligence for 
+          - [ ] Validate contact details (email and phone number at least)
+          - [ ] Confirm users in escalation path. Are they still in this position, has anyone been added to the escalation path, do we still have good contact information for users in the escalation path? Are there alternates in case someone in the escalation path cannot be reached or is unavailable? 
+- [ ] Review threat intelligence for: 
     - threats to the organisation, 
     - brands and the sector, 
     - common patterns 
     - newly developing risks and vulnerabilities
-- Ensure  appropriate  access  to  any  necessary  documentation  and  information, including out-of-hours access, for the following
-    - IR Playbgns to highlight information security risks faced by employees, including: 
-    - Phishing attacks and malicious emails;
-    - Ransomware;
-    - Reporting a suspected cyber incident.
+- [ ] Ensure  appropriate  access  to  any  necessary  documentation  and  information, including out-of-hours access, for the following
+    - IR Playbooks to highlight information security risks faced by employees, including: 
+      - Phishing;
+      - Malware;
+      - Ransomware;
+      - PUP/Adware (Potentially Unwanted Program)
+      - Reporting a suspected cyber incident.
 
 ### Tool Access and Provisioning
 
-#### Tool1
-Please referer to [Tool1 Documentation](../Products/TOOL.md)
+#### Microsoft Defender for Endpoint
+Please referer to [Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/)
 
-#### Tool2
-Please referer to [Tool2 Documentation](../Products/TOOL.md)
+#### Arctic Wolf
+Please referer to [Arctic Wolf Dashboard](https://dashboard.arcticwolf.com/2e6293c3-694e-4223-96b7-357c3a9e5a91), [Arctic Wolf Docs](https://docs.arcticwolf.com/) and [Arctic Wolf KB](https://support.arcticwolf.com/hc/en-us)
+
+#### ThreatLocker
+Please refer to [ThreatLocker KB](https://threatlocker.kb.help/), and [ThreatLocker Portal](https://portal.threatlocker.com)
 
 ### Assets List
 - A list of assets and owner should exists and be available for the following
-    - Customers Assets
-        - Owners
-        - Contacts
-        - Pre authorized actions
     - Company Assets 
         - Onwers
         - Contacts
@@ -126,11 +128,13 @@ Notifications are comming from external sources usually via email, Teams or phon
 
 #### Company Specific
 - Financial Losses
-    - Lost of conctrat
+    - Lost of contract
     - Contract not renewed
-    - Lower bid to our clients
+    - Loss of sales
     - Fines
         - Regulation
+- Company Public Image 
+  - How will people react to this incident? 
 
 </details>
 
