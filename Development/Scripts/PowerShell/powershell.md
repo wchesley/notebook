@@ -52,6 +52,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Windows Full Build Number](#get-windows-full-build-number)
   - [Find OpenSSL](#find-openssl)
   - [Search Windows Event Viewer](#search-windows-event-viewer)
+  - [Exclude results from Get-ChildItem (ls, gci)](#exclude-results-from-get-childitem-ls-gci)
 
 
 # Snippits and small scripts
@@ -810,3 +811,14 @@ You can view all available logs via: `Get-EventLog -List`
 Select-Object -Property Category,Index,TimeGenerated,
 EntryType,Source,InstanceID,Message) -match $Search | Format-Table -AutoSize
 ```
+
+## Exclude results from Get-ChildItem (ls, gci)
+
+There is an `-exclude` parameter that accepts an array of strings, and supports wild cards. 
+
+```ps1
+get-childitem $path -recurse -exclude *.cs,*.tt,*.xaml,*.csproj,
+  *.sln,*.xml,*.cmd,*.txt
+```
+
+The above command will exclude all cs, tt, xaml, csproj, sln, xml, cmd and txt files from the output. 
