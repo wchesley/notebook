@@ -781,6 +781,9 @@ $properties = 'CurrentMajorVersionNumber','CurrentMinorVersionNumber','CurrentBu
 
 "{0}.{1}.{2}.{3}" -f ($properties | ForEach-Object {Get-ItemPropertyValue -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' -Name $_})
 
+## One liner version: 
+$OSBuild = "{0}.{1}.{2}.{3}" -f ('CurrentMajorVersionNumber','CurrentMinorVersionNumber','CurrentBuild','UBR' | ForEach-Object {Get-ItemPropertyValue -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' -Name $_})
+
 ## Example: 
 PS C:\Users\walker.chesley> $properties = 'CurrentMajorVersionNumber','CurrentMinorVersionNumber','CurrentBuild','UBR'
 PS C:\Users\walker.chesley> "{0}.{1}.{2}.{3}" -f ($properties | ForEach-Object {Get-ItemPropertyValue -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' -Name $_})
