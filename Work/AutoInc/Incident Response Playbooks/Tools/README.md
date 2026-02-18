@@ -107,3 +107,11 @@ https://0xbanana.com/blog/one-click-forensics-lab-in-the-cloud/
 Deploy a DFIR forensics lab with one script on Google Cloud Platform!
 
 
+# Malware Analysis
+
+## REMnux
+https://remnux.org/  
+[docs](https://docs.remnux.org/)
+
+Linux toolkit for reverse-engineering and analyzing malicious software. Based on Ubuntu, can be installed into ubuntu or premade as a VM. 
+
