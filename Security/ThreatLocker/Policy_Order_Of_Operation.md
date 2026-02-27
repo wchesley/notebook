@@ -6,6 +6,41 @@
 
 This article covers the order of policies as they apply to your computers. The first policy that a file matches is the one that is processed, and no further policies will be applied to that file.  
 
+## Policy Order Changes 10/16/2025
+
+> [!CAUTION]> Important Note: Policy order changes cannot be rolled back once they are implemented.
+
+Beginning in ThreatLocker Portal Version `3.3.1`, and Windows Agent `10.5.3`,  ThreatLocker offers the opportunity to move from a hierarchical structure of policy ordering to a flat processing structure. This change is optional; however, it is needed to accommodate future changes, including the ability to view all policies for each module, and the ability to not prioritize built-in applications over custom applications.
+
+By reordering policies, you can choose to manage a lower number of policies by creating entire organization or global policies, and setting exceptions to those catch-all policies at a lower order by number.
+
+Once an organization meets the criteria of having all their Windows groups set to `10.5.3` or above, a new button will be available in the Application Control > Policies hamburger menu titled `Upgrade to Flat Policy Structure`.
+
+> [!NOTE] Please note: Parent organizations must upgrade before the option will be presented to child organizations. This is a per organization setting, so every organization will have the ability to choose to upgrade.
+
+You will be presented with a confirmation dialog that outlines the benefits of upgrading to a flat policy structure.
+
+Select the checkbox at the bottom to acknowledge that you understand the policy order could be impacted.
+
+Next, select the 'Save' button.
+
+The reordering process should not interfere with the existing order of an Organization's policies. Instead, it will assign order numbers as follows:
+
+- Built-in applications - Start at 101
+- Custom apps - Start at +100,001 
+- Default policy - Will be 1,000,000
+
+Policies will be processed from the lowest number to the highest number, regardless of their Applies To level.
+
+> [!NOTE] Please Note: Some discrepencies could occur for policies that have the same order by number assigned,
+
+Once the order numbers have been changed, policies at any level can be renumbered to any number to provide granular control over the policy processing order. This includes the ability to set a group or single computer policy to process before a global policy.
+
+> [!NOTE] Please Note: Policies cannot be reordered to a negative number
+
+It is important to note that by default, the Windows Agent automatically prioritizes built-in applications over custom applications. This means that a policy for a custom application for Office will always be processed after a policy for the built-in Office application, regardless of hierarchy or policy order number. The reorder will reflect the processing order as built-in applications will be given a lower order by number.
+
+To allow the agent to stop prioritizing built-in applications, the Agent Setting "Prioritize Built-In Applications" will need to be set with the checkbox unchecked.
 
 ## Application Control
 
