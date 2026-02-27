@@ -53,6 +53,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Find OpenSSL](#find-openssl)
   - [Search Windows Event Viewer](#search-windows-event-viewer)
   - [Exclude results from Get-ChildItem (ls, gci)](#exclude-results-from-get-childitem-ls-gci)
+  - [Scheduled Reboot](#scheduled-reboot)
 
 
 # Snippits and small scripts
@@ -825,3 +826,13 @@ get-childitem $path -recurse -exclude *.cs,*.tt,*.xaml,*.csproj,
 ```
 
 The above command will exclude all cs, tt, xaml, csproj, sln, xml, cmd and txt files from the output. 
+
+## Scheduled Reboot 
+
+Schedule a reboot of a windows PC for the next day at 3am: 
+
+```ps1
+shutdown /f /r /t ([decimal]::round(((Get-Date).AddDays(1).Date.AddHours(3) - (Get-Date)).TotalSeconds))
+```
+
+use `shutdown /?` for more parameters. 
