@@ -4,6 +4,30 @@
 
 Bash is the GNU Project's shell—the Bourne Again SHell. This is an sh-compatible shell that incorporates useful features from the Korn shell (ksh) and the C shell (csh). It is intended to conform to the IEEE POSIX P1003.2/ISO 9945.2 Shell and Tools standard. It offers functional improvements over sh for both programming and interactive use. In addition, most sh scripts can be run by Bash without modification.
 
+## What does `2>&1` mean? 
+
+To combine `stderr` and `stdout` into the `stdout` stream, we append this to a command:
+```shell
+2>&1
+```
+
+For example, the following command shows the first few errors from compiling main.cpp:
+
+```shell
+g++ main.cpp 2>&1 | head
+```
+
+But what does `2>&1` mean?
+
+---
+
+File descriptor 1 is the standard output (`stdout`).
+File descriptor 2 is the standard error (`stderr`).
+
+At first, `2>1` may look like a good way to redirect `stderr` to `stdout`. However, it will actually be interpreted as "redirect `stderr` to a file named `1`".
+
+`&` indicates that what follows and precedes is a *file descriptor*, and not a filename. Thus, we use `2>&1`. Consider `>&` to be a *redirect merger* operator.
+
 ## Trap Exit
 - http://redsymbol.net/articles/bash-exit-traps/
 - https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#index-trap
