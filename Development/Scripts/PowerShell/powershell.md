@@ -648,7 +648,30 @@ Get-Service | Where-Object {$_.StartupType -eq "Automatic"}
 
 This example filters for services with an "Automatic" startup type. Other common StartupType values include "Manual," "Disabled," and "AutomaticDelayedStart."
 
-## Get Available Image/Document Scanners
+## Get Plug-N-Play (PNP) Devices
+
+The `Get-PnpDevice` cmdlet returns basic information about Plug and Play (PnP) devices. The values returned are common to all devices.
+
+### Get all PnP devices
+
+```ps1
+Get-PnPDevice
+```
+**Get-PnPDevice \| Select -Property Class,FriendlyName,InstanceId \| fmt**
+
+|Class|FriendlyName|InstanceId|
+|:--|:--|:--|
+|USB|Generic USB Hub|USB\\VID\_05E3&PID\_0608\\5&CC3F949&0&13|
+|HIDClass|HID-compliant vendor-defined device|HID\\VID\_258A&PID\_002F&MI\_01&COL06\\9&7A88EEB&0&0005|
+|System|Motherboard resources|ACPI\\PNP0C02\\0|
+|HIDClass|USB Input Device|USB\\VID\_258A&PID\_002F&MI\_01\\8&3E20A90&0&0001|
+|MEDIA|Microsoft Streaming Service Proxy|SW\\{96E080C7-143C-11D1-B40F-00A0C9223196}\\{3C0D501A-140B-11D1-B40F-00A0C9223196}|
+|System|ACPI Fan|ACPI\\PNP0C0B\\0|
+|Volume|Volume|STORAGE\\VOLUME\\{F53643C7-4CB4-11EE-A47F-806E6F6E6963}#000000E8B1400000|
+
+This command gets all devices known to PnP, whether they are present or not. Using parameters for `-FriendlyName`, `-InstanceId`, `-Status` or `-Class`, specific PnP devices can be returned. 
+
+### Get Available Image/Document Scanners
 <sub>[back to top](#powershell)</sub>
 
 To get a list of available Image/Document scanners via powershell: 
@@ -659,6 +682,8 @@ Status     Class      FriendlyName   InstanceId
 ------     -----      ------------   ---------- 
 OK         Image      fi-7160        USB\VID_...
 ```
+
+[Get-PnPDevice Docs](https://learn.microsoft.com/en-us/powershell/module/pnpdevice/get-pnpdevice?view=windowsserver2025-ps)
 
 ## netsh
 <sub>[back to top](#powershell)</sub>
