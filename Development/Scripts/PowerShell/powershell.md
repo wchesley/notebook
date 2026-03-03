@@ -873,3 +873,36 @@ shutdown /f /r /t ([decimal]::round(((Get-Date).AddDays(1).Date.AddHours(3) - (G
 ```
 
 use `shutdown /?` for more parameters. 
+
+## Disable IPv6
+
+<sub>[back to top](#powershell)</sub>
+
+You will need an elevated powershell session to run these commands. 
+
+To view all Network Adapters with IPv6 enabled: 
+
+```ps1
+Get-NetAdapterBinding -ComponentID ms_tcpip6
+```
+
+|Name|DisplayName|ComponentID|Enabled|
+|:--|:--|:--|:--|
+|VMware Network Adapte...1|Internet Protocol Version 6 (TCP/IPv6)|ms\_tcpip6|True|
+|Ethernet|Internet Protocol Version 6 (TCP/IPv6)|ms\_tcpip6|True|
+|VMware Network Adapte...8|Internet Protocol Version 6 (TCP/IPv6)|ms\_tcpip6|True|
+|Ethernet 3|Internet Protocol Version 6 (TCP/IPv6)|ms\_tcpip6|True|
+
+Use the following command with your desired adapter name you want to disable IPv6 for: 
+
+```ps1
+Disable-NetAdapterBinding -Name "Ethernet" -ComponentID ms_tcpip6
+```
+
+Use a wildcard (`*`) to disable IPv6 for all network adapters: 
+
+```ps1
+Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6
+```
+
+[reference](https://www.tenforums.com/tutorials/90033-enable-disable-ipv6-windows.html#option5)
