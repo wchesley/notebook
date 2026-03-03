@@ -558,6 +558,14 @@ Set-Printer -Name "<PrinterName>" -DriverName "<DriverName>"
 > - `<PrinterName>` is the string name of the printer
 > - `<DriverName>` is the string name of the desired driver
 
+### Printer Jobs
+
+List of print jobs in the specified printer. 
+
+```ps1
+Get-PrintJob -PrinterName "Office Printer"
+```
+
 ## Ping all hosts in subnet
 <sub>[back to top](#powershell)</sub>
 
