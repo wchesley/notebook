@@ -35,10 +35,13 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get File last access time and last write time](#get-file-last-access-time-and-last-write-time)
   - [Get Printers \& Printer Queue Status](#get-printers--printer-queue-status)
     - [Get/Set Printer Driver](#getset-printer-driver)
+    - [Printer Jobs](#printer-jobs)
   - [Ping all hosts in subnet](#ping-all-hosts-in-subnet)
   - [Create Shortcut (.lnk file)](#create-shortcut-lnk-file)
   - [Get Service Startup Type](#get-service-startup-type)
-  - [Get Available Image/Document Scanners](#get-available-imagedocument-scanners)
+  - [Get Plug-N-Play (PNP) Devices](#get-plug-n-play-pnp-devices)
+    - [Get all PnP devices](#get-all-pnp-devices)
+    - [Get Available Image/Document Scanners](#get-available-imagedocument-scanners)
   - [netsh](#netsh)
   - [PowerCfg](#powercfg)
     - [Syntax](#syntax-1)
@@ -54,6 +57,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Search Windows Event Viewer](#search-windows-event-viewer)
   - [Exclude results from Get-ChildItem (ls, gci)](#exclude-results-from-get-childitem-ls-gci)
   - [Scheduled Reboot](#scheduled-reboot)
+  - [Disable IPv6](#disable-ipv6)
 
 
 # Snippits and small scripts
