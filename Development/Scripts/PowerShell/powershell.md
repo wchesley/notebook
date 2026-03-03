@@ -97,7 +97,6 @@ $pkg = "D:\a\test\ultimate\WindowsApplicationDriver_1.2.1.msi";
 Start-Process msiexec "/i $pkg /qn";
 ##Start-Process msiexec "/i $pkg /qn" -Wait;
 ##Start-Process msiexec "/i $pkg /norestart /qn" -Wait;
-
 ```
 
 ## Get password from Environment Variable: 
@@ -381,13 +380,15 @@ apart from the classic tools like the Disk Management Utility or Diskpart.
 
 The corresponding Powershell cmdlets can be retrieved with the following command:
 
-    Get-Command -Module Storage -Name Get*
-    
+```ps1
+Get-Command -Module Storage -Name Get*
+```    
 
 -   **Get-PhysicalDisk** allows you to get information about physical disks and device characteristics.
 -   **Get-Disk display** gets disk information at the logical level of the operating system.
 -   **Get-Partition** shows partition information on all drives.
 -   **Get-Volume** displays volume information on all disks.
+-   **Get-PSDrive** displays drives in the current session, can be a single drive or all drives in the session.
 
 Ex:
 
@@ -439,18 +440,29 @@ function make-link ($target, $link) {
 
 As of server 2008 R2, `Test-ComputerSecureChannel` was added as a cmdlet in powershell, making this an easy process. 
 
+The `Test-ComputerSecureChannel` cmdlet verifies that the channel between the local computer and its domain is working correctly by checking the status of its trust relationships. If a connection fails, you can use the **Repair** parameter to try to restore it.
+
+`Test-ComputerSecureChannel` returns `$true` if the channel is working correctly and `$false` if it is not. This result lets you use the cmdlet in conditional statements in functions and scripts. To get more detailed test results, use the Verbose parameter.
+
+This cmdlet works much like `NetDom.exe`. Both NetDom and `Test-ComputerSecureChannel` use the **NetLogon** service to perform the actions.
+
 ```ps1
 Test-ComputerSecureChannel -Repair -Credential (Get-Credential)
 ```
 
 Will require that you input domain admin credentials in a window pop-up before it will repair the relationship.
 
+> [!NOTE]
+> This cmdlet only works on Domain Member computers. When you run it on Domain Controllers, it returns false positive errors. To verify and reset the secure channels for Domain Controllers, use `netdom.exe` or `nltest.exe`.
+
 ## Get file size(s) in directory
 <sub>[back to top](#powershell)</sub>
 
 ```ps1
-Get-ChildItem -Path 'E:\Backups' -Recurse -Force -File | Select-Object -Property FullName `,@{Name='SizeGB';Expression={$_.Length / 1GB}} `  ,@{Name='SizeMB';Expression={$_.Length / 1MB}}` ,@{Name='SizeKB';Expression={$_.Length / 1KB}} | Sort-Object { $_.SizeKB } -Descending | 
-Export-Csv -Path C:\Temp\SYNOLOGYLUN_file_sizes.csv  
+Get-ChildItem -Path 'E:\Backups' -Recurse -Force -File | Select-Object -Property FullName `,@{Name='SizeGB';Expression={$_.Length / 1GB}} `  ,@{Name='SizeMB';Expression={$_.Length / 1MB}}` ,@{Name='SizeKB';Expression={$_.Length / 1KB}} | Sort-Object { $_.SizeKB } -Descending 
+
+# Pipe command output to CSV via: 
+| Export-Csv -Path C:\Temp\SYNOLOGYLUN_file_sizes.csv
 ```
 
 Alternate: Replace `Export-Csv` with `Output-Grid` to not create a file and have a new window popup with your results.
@@ -571,7 +583,7 @@ $Shortcut.TargetPath = "%SystemDrive%\Program Files (x86)\ColorPix\ColorPix.exe"
 $Shortcut.Save()
 ```
 
-If so desired, you could create a PowerShell script save as `Set-Shortcut.ps1` in your `$PWD` (or save to your user/system `$PATH`):
+If so desired, you could create a PowerShell script save as `Set-Shortcut.ps1` in your `$PWD` (or save to your user/system `$PATH`, or add it to your PowerShell profile):
 
 ```ps1
 param ( [string]$SourceExe, [string]$DestinationPath )
