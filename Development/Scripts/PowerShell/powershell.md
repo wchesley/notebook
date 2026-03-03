@@ -187,6 +187,14 @@ PS C:\Users\wchesley> query user
 >wchesley              console             1  Active      none   7/24/2024 7:36 AM
 ```
 
+Alternative: 
+
+```ps1
+PS C:\Users\wchesley> quser
+ USERNAME              SESSIONNAME        ID  STATE   IDLE TIME  LOGON TIME
+>walker.chesley        console             1  Active      none   2/27/2026 1:52 PM
+```
+
 ### Get Count of users with given name: 
 
 ```ps1
