@@ -1,10 +1,6 @@
 [back](./README.md)
 
-# Microsoft Defender (O365/Intune)
-
-Antivirus and EDR solution provided by microsoft. This is different from the built in Windows defender on each Windows PC. As a guess, it seems that defender requests scans (Update from devices, ie what vulnerability is in effect, what is installed, what's updated, etc...) every 24 hours, typically from 12am-6am. 
-
-## MpCmdRun
+# MpCmdRun
 
 You can perform various functions in Microsoft Defender Antivirus using the dedicated command-line tool mpcmdrun.exe. This utility is useful when you want to automate Microsoft Defender Antivirus tasks. You can find the utility in %ProgramFiles%\Windows Defender\MpCmdRun.exe. Run it from a command prompt.
 
