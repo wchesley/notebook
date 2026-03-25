@@ -11,7 +11,7 @@ Leveraging Microsoft Graph with .NET and PowerShell enables efficient, programma
 ## Links
 
 - [Graph Quick Reference](./Graph.md)
-- [Defender](./Defender.md)
+- [Defender](./Defender/README.md)
 - [Deploy](./Deploy.md)
 - [Intune](./Intune/README.md)
 - [MECM/SCCM](./ConfigMgr/README.md)
