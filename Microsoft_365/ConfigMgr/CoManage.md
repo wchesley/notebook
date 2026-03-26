@@ -4,6 +4,25 @@ Overview of Intune Service Family with co-managed setup:
 
 ![Intune Family of Services](../../Images/Intune_Services_Family.webp)
 
+- [Intune \& ConfigMgr CoManaged](#intune--configmgr-comanaged)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+- [Troubleshooting tenant attach and device actions](#troubleshooting-tenant-attach-and-device-actions)
+  - [**Log files**](#log-files)
+  - [**Review your upload**](#review-your-upload)
+  - [**Configuration Manager components and log flow**](#configuration-manager-components-and-log-flow)
+  - [**SMS\_SERVICE\_CONNECTOR**](#sms_service_connector)
+  - [**SMS\_NOTIFICATION\_SERVER**](#sms_notification_server)
+  - [**BgbAgent**](#bgbagent)
+  - [**Common issues**](#common-issues)
+    - [**Unauthorized to perform client action**](#unauthorized-to-perform-client-action)
+  - [**Known issues**](#known-issues)
+    - [**Data synchronization failures**](#data-synchronization-failures)
+    - [**Workaround for data synchronization failures**](#workaround-for-data-synchronization-failures)
+    - [**Specific devices don't synchronize**](#specific-devices-dont-synchronize)
+  - [Error Codes](#error-codes)
+
+
 ## Prerequisites
 
 **Azure services and environment**
@@ -157,7 +176,7 @@ Use the following logs located on the client:
 
 ## **Review your upload**
 
-1. Open **CMGatewaySyncUploadWorker.log** from <ConfigMgr install directory>\Logs.
+1. Open **CMGatewaySyncUploadWorker.log** from `<ConfigMgr install directory>\Logs`.
 2. The next sync time is noted by log entries similar to `Next run time will be at approximately: 02/28/2020 16:35:31`.
 3. For device uploads, look for log entries similar to `Batching N records`. **N** is the number of changed devices uploaded since the last upload.
 4. The upload occurs every 15 minutes for changes. Once changes are
@@ -309,3 +328,7 @@ applications, run CMPivot queries, and perform other actions from the
 admin console. You receive an error code 403, forbidden.
 
 **Workaround:** The current workaround is to configure the on-premises hierarchy to the default authentication level of **Windows authentication**. For more information, see the [Authentication section in the SMS provider article](https://learn.microsoft.com/en-us/intune/configmgr/core/plan-design/hierarchy/plan-for-the-sms-provider#authentication).
+
+## Error Codes
+
+SCCM error codes are given in hex format, ie `0x0000000`. Error codes to their human readable meaning are translated in the Windows [Error Codes](../../Windows/Error-Codes.md) doc. 
