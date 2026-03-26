@@ -32,7 +32,7 @@ function Get-FileLastModified {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, Position = 0)]
-        [string]$DirectoryPath = (Get-Location).Path,
+        [string]$DirectoryPath,
 
         [Parameter(Mandatory = $false, Position = 1)]
         [DateTime]$AsOfDate = (Get-Date).AddDays(-1)
