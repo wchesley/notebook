@@ -58,6 +58,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Exclude results from Get-ChildItem (ls, gci)](#exclude-results-from-get-childitem-ls-gci)
   - [Scheduled Reboot](#scheduled-reboot)
   - [Disable IPv6](#disable-ipv6)
+  - [Lock PC via shell](#lock-pc-via-shell)
 
 
 # Snippits and small scripts
@@ -926,3 +927,17 @@ Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6
 ```
 
 [reference](https://www.tenforums.com/tutorials/90033-enable-disable-ipv6-windows.html#option5)
+
+## Lock PC via shell
+
+To lock the PC via powershell, use `rundll32.exe` and `user32.dll` to call `LockWorkstation`, like so: 
+
+```ps1
+rundll32.exe user32.dll,LockWorkStation
+```
+
+Run against remote PC: 
+
+```ps1
+Invoke-Command -ComputerName "RemotePCName" -ScriptBlock { rundll32.exe user32.dll,LockWorkStation }
+```
