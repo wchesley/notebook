@@ -59,6 +59,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Scheduled Reboot](#scheduled-reboot)
   - [Disable IPv6](#disable-ipv6)
   - [Lock PC via shell](#lock-pc-via-shell)
+  - ["Bounce" USB port](#bounce-usb-port)
 
 
 # Snippits and small scripts
@@ -940,4 +941,16 @@ Run against remote PC:
 
 ```ps1
 Invoke-Command -ComputerName "RemotePCName" -ScriptBlock { rundll32.exe user32.dll,LockWorkStation }
+```
+
+## "Bounce" USB port
+
+Similar to `shut`, `no shut` on a cisco switch or unplugging the USB and plugging it back in. Use `Get-PnPDevice` to find the `InstanceId` of the device you wish to reseat. 
+
+```ps1
+# Disable the device
+Disable-PnpDevice -InstanceId "Your Device Instance ID" -Confirm:$false
+
+# Re-enable the device
+Enable-PnpDevice -InstanceId "Your Device Instance ID" -Confirm:$false
 ```
