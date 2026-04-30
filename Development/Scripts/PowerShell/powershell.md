@@ -60,6 +60,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Disable IPv6](#disable-ipv6)
   - [Lock PC via shell](#lock-pc-via-shell)
   - ["Bounce" USB port](#bounce-usb-port)
+  - [Disable Focused Inbox - Outlook](#disable-focused-inbox---outlook)
 
 
 # Snippits and small scripts
@@ -953,4 +954,12 @@ Disable-PnpDevice -InstanceId "Your Device Instance ID" -Confirm:$false
 
 # Re-enable the device
 Enable-PnpDevice -InstanceId "Your Device Instance ID" -Confirm:$false
+```
+
+## Disable Focused Inbox - Outlook
+
+Disable focused inbox in OWA and "New" outlook application. This requires 365 subscription and exchange powershell module. 
+
+```ps1
+Set-FocusedInbox -Identity "username@example.com" -FocusedInboxOn $false
 ```
