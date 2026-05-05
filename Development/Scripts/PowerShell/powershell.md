@@ -61,6 +61,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Lock PC via shell](#lock-pc-via-shell)
   - ["Bounce" USB port](#bounce-usb-port)
   - [Disable Focused Inbox - Outlook](#disable-focused-inbox---outlook)
+  - [How to Set File Assertions from the Command Prompt?](#how-to-set-file-assertions-from-the-command-prompt)
 
 
 # Snippits and small scripts
@@ -963,3 +964,45 @@ Disable focused inbox in OWA and "New" outlook application. This requires 365 su
 ```ps1
 Set-FocusedInbox -Identity "username@example.com" -FocusedInboxOn $false
 ```
+
+## How to Set File Assertions from the Command Prompt?
+
+On Windows, you can use the **assoc**
+ command line tool to configure file associations for applications. For 
+example, to check the program that should be used to open PDF files, run
+ the command:
+
+`assoc .pdf`
+
+In this example, you can see that the AcroExch.Document.DC file type is associated with the PDF file extension:
+
+```
+.pdf=AcroExch.Document.DC
+```
+
+![assoc command in windows](https://woshub.com/wp-content/uploads/2020/01/assoc-command-in-windows.jpg.webp)
+
+Show all extension associations with file types:
+
+`assoc|more`
+
+To understand which program the AcroExch.Document.DC file type is associated with:
+
+`ftype AcroExch.Document.DC`
+
+![ftype command to set file to app assotiations](https://woshub.com/wp-content/uploads/2020/01/ftype-command-file-assotiations.jpg.webp)
+
+You can set the type for a specific file type with the command:
+
+`ASSOC .csv=txtfile`
+
+In this example, we have specified that all CSV files should be opened as plain text files (using notepad.exe by default).
+
+You can create or change the association of a file extension with a program
+ from the command prompt. For example, you want all files with the **.tx1** extension to open with notepad++.exe. First, you need to associate the **.tx1** extension with the new **tx1file** file type.
+
+`assoc .tx1=tx1file`
+
+Now let’s specify the program that should be used by default to open files with the tx1 extension.
+
+`ftype tx1file="%programfiles(x86)%\"Notepad++\notepad++.exe" "%1"`
