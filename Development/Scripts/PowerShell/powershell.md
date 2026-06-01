@@ -896,7 +896,9 @@ Schedule a reboot of a windows PC for the next day at 3am:
 shutdown /f /r /t ([decimal]::round(((Get-Date).AddDays(1).Date.AddHours(3) - (Get-Date)).TotalSeconds))
 ```
 
-use `shutdown /?` for more parameters. 
+Where `/t` params value is given in seconds, adding this parameter implies the `/f` (force) command, no warnign is given to the end user in this case. 
+
+use `shutdown /?` for more parameters or refer to the [documentation for shutdown command](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/shutdown). 
 
 ## Disable IPv6
 
