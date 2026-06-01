@@ -86,3 +86,45 @@ Chang ownership of files (powershell):
 
 - So the last time I needed to use this was when I was denied access to my old windows profile. `takeown /F /R /A ./myoldprofileFolder/`
   - This recursively changed all owners of files and folder in my old profile to the admins group.
+
+## How to Set File Assertions from the Command Prompt?
+
+On Windows, you can use the **assoc**
+ command line tool to configure file associations for applications. For 
+example, to check the program that should be used to open PDF files, run
+ the command:
+
+`assoc .pdf`
+
+In this example, you can see that the AcroExch.Document.DC file type is associated with the PDF file extension:
+
+```
+.pdf=AcroExch.Document.DC
+```
+
+![assoc command in windows](https://woshub.com/wp-content/uploads/2020/01/assoc-command-in-windows.jpg.webp)
+
+Show all extension associations with file types:
+
+`assoc|more`
+
+To understand which program the AcroExch.Document.DC file type is associated with:
+
+`ftype AcroExch.Document.DC`
+
+![ftype command to set file to app assotiations](https://woshub.com/wp-content/uploads/2020/01/ftype-command-file-assotiations.jpg.webp)
+
+You can set the type for a specific file type with the command:
+
+`ASSOC .csv=txtfile`
+
+In this example, we have specified that all CSV files should be opened as plain text files (using notepad.exe by default).
+
+You can create or change the association of a file extension with a program
+ from the command prompt. For example, you want all files with the **.tx1** extension to open with notepad++.exe. First, you need to associate the **.tx1** extension with the new **tx1file** file type.
+
+`assoc .tx1=tx1file`
+
+Now let’s specify the program that should be used by default to open files with the tx1 extension.
+
+`ftype tx1file="%programfiles(x86)%\"Notepad++\notepad++.exe" "%1"`
