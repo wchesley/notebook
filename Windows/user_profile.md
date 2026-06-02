@@ -25,13 +25,12 @@ Find and delete the key with the four digits from the last step.
 7. Login with the users credentials.
 8. Transfer data from the user’s old profile (username-old), into the user new profile (username) one folder at a time.
 *Do not transfer the “AppData” Contents unless you specifically know what you are looking for. This folder is most likely housing the garbage that jacked-up the user profile in the first place.
-<mark>If the user was fond of Sticky Notes, they can be found here:</mark>
+   - If the user was fond of Sticky Notes, they can be found here:
 `C:\Users\username\AppData\Roaming\Microsoft\Sticky Notes`
-***Web Browsers such as Chrome, Firefox, etc. often time store the user data in the “AppData” folder as well. For example you may need to reach back and restore the users Google Chrome folder here:
+   - **Web Browsers such as Chrome, Firefox, etc**. often time store the user data in the `AppData` folder as well. For example you may need to reach back and restore the users Google Chrome folder here:
 `C:\Users\username\AppData\Local\Google\Chrome\User Data`
 9. After you are sure that you have moved all the users’ data from the old profile on to the new profile. You may delete the old profile, but I never do. Just in case.
-10. Another reboot may be required.
-11. Have user login again. Remap any network drives, printers, task bar items and any other cosmetics from step 1.
+10.  Another reboot may be required.
+11.  Have user login again. Remap any network drives, printers, task bar items and any other cosmetics from step 1.
 
-If whatever caused you to want to rebuild the user profile in the first place is still causing issues…save yourself some time and nuke it. If you have automated your machine build process that shouldn’t be too much of a burdensome task.
-Just remember to backup any active user profiles.
+If whatever caused you to want to rebuild the user profile in the first place is still causing issues…save yourself some time and nuke the old profile. If you have automated your machine build process that shouldn’t be too much of a burdensome task. Just remember to backup any active user profiles.
