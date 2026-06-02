@@ -2,7 +2,7 @@
 
 # Windows Server Update Services (WSUS)
 
-Connect to WID database via SQL Server Management Studio (SSMS), use the named pipe `\\.\pipe\MICROSOFT##WID\tsql\query` to connect to the local WID database. If using dedicated SQL database, the file is located in `C:\Windows\WID\Data`. You will most likely have to run SSMS as administrator in order to connect to the WSUS WID. 
+Connect to WID database via SQL Server Management Studio (SSMS), use the named pipe `\\.\pipe\MICROSOFT##WID\tsql\query` to connect to the local WID database. If using dedicated SQL database, the file is located in `C:\Windows\WID\Data`. You will most likely have to run SSMS as administrator in order to connect to the WSUS WID. These should be run in the order provided below, but I typically shrink the DB and DB File before and after running SQL maintenance scripts. 
 
 To shrink the database file: 
 
@@ -97,5 +97,7 @@ DEALLOCATE DU
 PRINT CHAR(10) + 'Attempted to decline ' + CONVERT(NVARCHAR(10), @count) + ' updates.'
 ```
 
-[WSUS Maintenance Guide](https://learn.microsoft.com/en-us/troubleshoot/mem/configmgr/update-management/wsus-maintenance-guide)
+## Reference
+
+[WSUS Maintenance Guide](https://learn.microsoft.com/en-us/troubleshoot/mem/configmgr/update-management/wsus-maintenance-guide)  
 [WSUS DB Maintenance](https://learn.microsoft.com/en-us/troubleshoot/mem/configmgr/update-management/wsus-automatic-maintenance?source=recommendations)
