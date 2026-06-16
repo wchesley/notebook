@@ -15,7 +15,6 @@ PowerShell is a task automation and configuration management program from Micros
   - [Create new Local User:](#create-new-local-user)
   - [Add Local User to Administrators group:](#add-local-user-to-administrators-group)
   - [Set Local User password to never expire:](#set-local-user-password-to-never-expire)
-  - [List folder size:](#list-folder-size)
   - [Set ACL to directory recusively](#set-acl-to-directory-recusively)
   - [Get users currently logged into system:](#get-users-currently-logged-into-system)
     - [Get Count of users with given name:](#get-count-of-users-with-given-name)
@@ -31,6 +30,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Hard Drive (Disk) Information](#get-hard-drive-disk-information)
   - [Create System Link (symlink)](#create-system-link-symlink)
   - [Rejoin computer to domain](#rejoin-computer-to-domain)
+  - [List folder size:](#list-folder-size)
   - [Get file size(s) in directory](#get-file-sizes-in-directory)
   - [Get File last access time and last write time](#get-file-last-access-time-and-last-write-time)
   - [Get Printers \& Printer Queue Status](#get-printers--printer-queue-status)
@@ -156,13 +156,6 @@ Add-LocalGroupMember -Group Administrators -Member svcNessus -Verbose
 
 ```ps1
 Set-LocalUser -Name "svcNessus" -PasswordNeverExpires 1
-```
-
-## List folder size: 
-<sub>[back to top](#powershell)</sub>
-
-```ps1
-[math]::Round((Get-ChildItem -Path C:\Temp -Recurse | Measure-Object -Property Length -Sum).Sum / 1GB,2)
 ```
 
 ## Set ACL to directory recusively 
@@ -435,7 +428,7 @@ Get-Volume
 ## Create System Link (symlink)
 <sub>[back to top](#powershell)</sub>
 
-**Windows 10 (and Powershell 5.0 in general) allows you to [create symbolic links via the New-Item cmdlet](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-item).**
+**Windows 10 (and Powershell 5.0 in general) allows you to create symbolic links via the [New-Item cmdlet](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-item).**
 
 Usage:
 
@@ -470,6 +463,13 @@ Will require that you input domain admin credentials in a window pop-up before i
 
 > [!NOTE]
 > This cmdlet only works on Domain Member computers. When you run it on Domain Controllers, it returns false positive errors. To verify and reset the secure channels for Domain Controllers, use `netdom.exe` or `nltest.exe`.
+
+## List folder size: 
+<sub>[back to top](#powershell)</sub>
+
+```ps1
+[math]::Round((Get-ChildItem -Path C:\Temp -Recurse | Measure-Object -Property Length -Sum).Sum / 1GB,2)
+```
 
 ## Get file size(s) in directory
 <sub>[back to top](#powershell)</sub>
