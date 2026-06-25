@@ -20,7 +20,22 @@ This document is an overview of key components of Windows Registry forensics, **
 - Registry analysis tools
 - Registry forensics tips
 
-If you’d like to us to add something to our Windows forensics cheat sheet, [please contact us](https://www.cybertriage.com/contact/).
+## Installed Programs
+
+All installed programs on windows are stored in the registry. This registry location contains all the information needed to run and uninstall the application. On 64-bit systems the x64 key is:
+
+`HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall`
+
+Most programs are listed there. Look at the keys: `DisplayName`, `DisplayVersion`
+
+> [!NOTE]
+The `DisplayVersion` is not always set!
+
+On 64-bit systems the x86 key (usually with more entries) is:
+
+`HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall`
+
+
 
 ## **Core Windows Registry Hives and Their Forensic Value**
 
