@@ -24,7 +24,11 @@ log. The following table lists all network protection events.
 
 | Event ID | Description |
 | --- | --- |
+| 4625 | Failed Logon attempt | 
 | 4648 | A logon was attempted using explicit credentials | 
-| 4672 | Special Privileges assigned to new logon | 
+| 4672 | Special Privileges assigned to new logon |
+| 4740 | User account was locked out | 
+| 4771 | Kerberos pre-auth failure |  
 | 4774 | An account was mapped for logon | 
 | 4775 | An account could not be mapped for logon | 
+| 4776 | NTLM auth failure | 
