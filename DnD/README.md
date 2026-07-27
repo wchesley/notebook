@@ -7,3 +7,8 @@ Dungeons & Dragons (commonly abbreviated as D&D or DnD) is a fantasy tabletop ro
 ## Characters
 
 - [Bazaq](./Bazaq.md) - Tiefling Warlock
+- [Gideon Thane](./Gideon_Thane.md) - Human Paladin
+
+## Links
+
+- [D&D Templates](./Templates/README.md)
