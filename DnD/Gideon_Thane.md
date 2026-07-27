@@ -1,5 +1,7 @@
-# Gideon Thane | Paladin (Oath of Vengeance) | CN | Human | Level 5 |
+<sub>[back](./README.md)</sub>
 
+# Gideon Thane | Paladin (Oath of Vengeance) | CN | Human | Level 5 |
+<sub>[Character Sheet (pdf)](./Gideon_Thane.pdf)</sub>
 #### Stats Table
 
 | Stat | Score | Modifier | Saving Throw |
