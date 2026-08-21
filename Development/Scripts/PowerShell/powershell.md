@@ -51,6 +51,7 @@ PowerShell is a task automation and configuration management program from Micros
       - [value](#value)
   - [Get Chrome Version](#get-chrome-version)
   - [Enable Legacy Print Preview](#enable-legacy-print-preview)
+  - [View PrinterPort IP address](#view-printerport-ip-address)
   - [Disable Internet Explorer](#disable-internet-explorer)
   - [Get Windows Full Build Number](#get-windows-full-build-number)
   - [Find OpenSSL](#find-openssl)
@@ -822,6 +823,14 @@ Print preview not working in windows 11? Enable legacy print preview. Via Powers
 `reg add "HKCU\Software\Microsoft\Print\UnifiedPrintDialog" /v "PreferLegacyPrintDialog" /d 1 /t REG_DWORD /f`  
 This registry key will enable legacy print preview for windows 11. 
 
+## View PrinterPort IP address
+
+View any IP printer, get the printer port and the printer host address. 
+
+```ps1
+Get-Printer | select Name, DriverName, @{n="IPAddress";e={(Get-PrinterPort -Name $_.PortName).PrinterHostAddress}}
+```
+
 ## Disable Internet Explorer
 
 use DISM: 
@@ -875,6 +884,12 @@ You can view all available logs via: `Get-EventLog -List`
 (Get-EventLog -LogName system -after (Get-Date).AddDays(-1) | 
 Select-Object -Property Category,Index,TimeGenerated,
 EntryType,Source,InstanceID,Message) -match $Search | Format-Table -AutoSize
+```
+
+Further filtering, for example by ID, or error level (INFO,WARN,ERR), or both; can be achieved with `FilterHashSet` and/or limiting the number of events returned with `MaxEvents` parameter.. 
+
+```ps1
+Get-WinEvent -FilterHashtable @{LogName='Application';LevelDisplayName='Information';ID=1} -MaxEvents 25
 ```
 
 ## Exclude results from Get-ChildItem (ls, gci)
