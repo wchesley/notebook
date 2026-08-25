@@ -52,6 +52,9 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Chrome Version](#get-chrome-version)
   - [Enable Legacy Print Preview](#enable-legacy-print-preview)
   - [View PrinterPort IP address](#view-printerport-ip-address)
+  - [View or Set Default Printer](#view-or-set-default-printer)
+    - [View default printer](#view-default-printer)
+    - [Set Default Printer](#set-default-printer)
   - [Disable Internet Explorer](#disable-internet-explorer)
   - [Get Windows Full Build Number](#get-windows-full-build-number)
   - [Find OpenSSL](#find-openssl)
@@ -829,6 +832,25 @@ View any IP printer, get the printer port and the printer host address.
 
 ```ps1
 Get-Printer | select Name, DriverName, @{n="IPAddress";e={(Get-PrinterPort -Name $_.PortName).PrinterHostAddress}}
+```
+
+## View or Set Default Printer
+
+### View default printer
+
+```ps1
+Get-CimInstance -Class Win32_Printer | Select-Object Name, Default
+```
+
+The current default printer will be the only `True` value in the `Default` column, all others should be false. 
+
+### Set Default Printer
+
+You will need to know the name of the printer you wish to set as default, use either `Get-Printer` or the output from the above 'View Default Printer' to get the printer name. Use `Get-CimInstance` and filter for the desired printer by name. Assign this printer to a variable then use `Invoke-CimInstance` to set the default printer. 
+
+```ps1
+$Printer = Get-CimInstance -Class Win32_Printer -Filter "Name='Your Printer Name Here'"
+Invoke-CimMethod -InputObject $Printer -MethodName SetDefaultPrinter
 ```
 
 ## Disable Internet Explorer
