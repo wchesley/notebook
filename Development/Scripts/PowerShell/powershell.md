@@ -66,6 +66,8 @@ PowerShell is a task automation and configuration management program from Micros
   - ["Bounce" USB port](#bounce-usb-port)
   - [Disable Focused Inbox - Outlook](#disable-focused-inbox---outlook)
   - [How to Set File Assertions from the Command Prompt?](#how-to-set-file-assertions-from-the-command-prompt)
+  - [View users Quick Access items](#view-users-quick-access-items)
+  - [Create Shortcut to files or locations](#create-shortcut-to-files-or-locations)
 
 
 # Snippits and small scripts
@@ -1045,3 +1047,33 @@ You can create or change the association of a file extension with a program
 Now let’s specify the program that should be used by default to open files with the tx1 extension.
 
 `ftype tx1file="%programfiles(x86)%\"Notepad++\notepad++.exe" "%1"`
+
+## View users Quick Access items
+
+The **CLSID** `shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}` is the official Windows class ID for Quick Access (or Home in Windows 11) in File Explorer. Create a shell application in powershell under this namespace, and query the items to view Quick Access items: 
+
+```ps1
+$ShellApp = New-Object -ComObject Shell.Application
+$QuickAccess = $ShellApp.Namespace("shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}")
+
+$QuickAccess.Items() | Select-Object Name, Path, IsFolder | Format-Table -AutoSize
+```
+
+## Create Shortcut to files or locations
+
+```ps1
+# Define the path to the file, folder or network share: 
+$SharePath = "\\My_Server\Shared_Folder"
+# Define where you want to save the shortcut file: 
+$SaveShortcutPath = "C:\Users\Public\Desktop\Server_Share.lnk" # Any files or app shortcuts placed inside this folder automatically appear on the desktop of every user account on that PC.
+# Create shell object: 
+$wshShell = New-Object -ComObject WScript.Shell
+# Create Shortcut object:
+$Shortcut = $wshShell.CreateShortcut($SaveShortcutPath)
+# Set Shortcut path, description and save directory: 
+$Shortcut.TargetPath = $SharePath
+$Shortcut.Description = "Acct_Forms"
+$Shortcut.WorkingDirectory = $SharePath
+# Finally save the shortcut
+$Shortcut.Save()
+```
