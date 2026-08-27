@@ -67,6 +67,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Disable Focused Inbox - Outlook](#disable-focused-inbox---outlook)
   - [How to Set File Assertions from the Command Prompt?](#how-to-set-file-assertions-from-the-command-prompt)
   - [View users Quick Access items](#view-users-quick-access-items)
+  - [Pin item to Quick Access](#pin-item-to-quick-access)
   - [Create Shortcut to files or locations](#create-shortcut-to-files-or-locations)
 
 
@@ -1057,6 +1058,28 @@ $ShellApp = New-Object -ComObject Shell.Application
 $QuickAccess = $ShellApp.Namespace("shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}")
 
 $QuickAccess.Items() | Select-Object Name, Path, IsFolder | Format-Table -AutoSize
+```
+
+## Pin item to Quick Access
+
+```ps1
+# Define the network folder path (UNC)
+$NetworkFolder = "\\My_Server\Server_Shared_Directory"
+ 
+# Create a Shell object
+$shell = New-Object -ComObject shell.application
+ 
+# Use the Shell's NameSpace to access the folder
+$folder = $shell.NameSpace($NetworkFolder)
+ 
+if ($folder) {
+    # Pin the folder to Quick Access
+    $folderItem = $folder.Self
+    $folderItem.InvokeVerb("pintohome")
+    Write-Host "Pinned $NetworkFolder to Quick Access."
+} else {
+    Write-Host "Folder not found or inaccessible: $NetworkFolder"
+}
 ```
 
 ## Create Shortcut to files or locations
