@@ -69,6 +69,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [View users Quick Access items](#view-users-quick-access-items)
   - [Pin item to Quick Access](#pin-item-to-quick-access)
   - [Create Shortcut to files or locations](#create-shortcut-to-files-or-locations)
+  - [List running processes](#list-running-processes)
 
 
 # Snippits and small scripts
@@ -1099,4 +1100,12 @@ $Shortcut.Description = "Acct_Forms"
 $Shortcut.WorkingDirectory = $SharePath
 # Finally save the shortcut
 $Shortcut.Save()
+```
+
+## List running processes
+
+Typically just use `tasklist` to view all running processes, but it only shows memory use, not CPU. Use `Get-Process` to view process with it's CPU use. ie. Sorted by CPU Use: 
+
+```ps1
+Get-Process | Sort-Object -Property CUP -Descending
 ```
