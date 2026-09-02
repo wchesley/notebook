@@ -70,6 +70,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Pin item to Quick Access](#pin-item-to-quick-access)
   - [Create Shortcut to files or locations](#create-shortcut-to-files-or-locations)
   - [List running processes](#list-running-processes)
+  - [Copy files via pssession](#copy-files-via-pssession)
 
 
 # Snippits and small scripts
@@ -1108,4 +1109,13 @@ Typically just use `tasklist` to view all running processes, but it only shows m
 
 ```ps1
 Get-Process | Sort-Object -Property CUP -Descending
+```
+
+## Copy files via pssession
+
+Provided the remote machine already has WinRM enabled on it and you can access the PC via `enter-pessession`: 
+
+```ps1
+$session = New-PSSession -ComputerName "RemotePC" # Optional: -Credential $Cred  Where you have already set the $cred variable via command like Get-Credential
+Copy-Item -Path "/path/to/file/to/copy" -Destination "/path/on/remotePC" -ToSession $session
 ```
