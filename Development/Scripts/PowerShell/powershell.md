@@ -69,6 +69,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [View users Quick Access items](#view-users-quick-access-items)
   - [Pin item to Quick Access](#pin-item-to-quick-access)
   - [Create Shortcut to files or locations](#create-shortcut-to-files-or-locations)
+  - [Pin folder to users quick access](#pin-folder-to-users-quick-access)
   - [List running processes](#list-running-processes)
   - [Copy files via pssession](#copy-files-via-pssession)
 
@@ -1101,6 +1102,47 @@ $Shortcut.Description = "Acct_Forms"
 $Shortcut.WorkingDirectory = $SharePath
 # Finally save the shortcut
 $Shortcut.Save()
+```
+
+## Pin folder to users quick access
+
+This must be run as the user you want to pin folder for. 
+
+```ps1
+# Define the network folder path (UNC)
+$NetworkFolder = "\\Server\SharedFolder"
+ 
+# Create a Shell object
+$shell = New-Object -ComObject shell.application
+
+# Use the Shell's NameSpace to access the folder
+$folder = $shell.NameSpace($NetworkFolder)
+
+if ($folder) {
+    # Pin the folder to Quick Access
+    $folderItem = $folder.Self
+    $folderItem.InvokeVerb("pintohome")
+    Write-Host "Pinned $NetworkFolder to Quick Access."
+}
+else {
+    Write-Host "Folder not found or inaccessible: $NetworkFolder"
+}
+```
+
+> [!NOTE]
+> If the folder is already pinned to Quick Access prior to running the above commands, it will be unpinned from Quick Access. 
+
+With check if item is already pinned to quick access: 
+
+```ps1
+# Pin a network folder to Quick Access
+$QuickAccess = New-Object -ComObject Shell.Application
+$PathToPin = "\\AI-DC4\Acct_Forms"  # Replace with your UNC path
+
+# Check if already pinned to avoid removing it
+if (-not ($QuickAccess.Namespace("shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}").Items() | Where-Object { $_.Path -eq $PathToPin })) {
+    $QuickAccess.Namespace($PathToPin).Self.InvokeVerb("pintohome")
+}
 ```
 
 ## List running processes
