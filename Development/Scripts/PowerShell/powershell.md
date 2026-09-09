@@ -72,6 +72,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Pin folder to users quick access](#pin-folder-to-users-quick-access)
   - [List running processes](#list-running-processes)
   - [Copy files via pssession](#copy-files-via-pssession)
+  - [View 365 users timezone (Exchange):](#view-365-users-timezone-exchange)
 
 
 # Snippits and small scripts
@@ -145,6 +146,20 @@ Option 2. - Use password from a variable:
 
 ```ps1
 net user svcNessus $passwd
+```
+
+As of 2026, I've run into problems setting local users passwords via `net user` commands and have since updated my scripts to use `Set-LocalUser` instead: 
+
+
+```ps1
+# still using secure string for password variable: 
+$SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force
+
+# set password to local account named `LocalUserName`: 
+Set-LocalUser -Name LocalUserName -Password $SecurePassword
+
+# If needed; ensure local user account is enabled: 
+Enable-LocalUser -Name LocalUserName
 ```
 
 ## Create new Local User: 
@@ -1160,4 +1175,19 @@ Provided the remote machine already has WinRM enabled on it and you can access t
 ```ps1
 $session = New-PSSession -ComputerName "RemotePC" # Optional: -Credential $Cred  Where you have already set the $cred variable via command like Get-Credential
 Copy-Item -Path "/path/to/file/to/copy" -Destination "/path/on/remotePC" -ToSession $session
+```
+
+## View 365 users timezone (Exchange): 
+
+Requires the `ExchangeOnline` powershell module and admin rights to Exchange online. 
+
+```ps1
+# First, connect to exchange online: 
+Connect-ExchangeOnline
+# Get mailbox in question via email address: 
+$mbox = Get-Mailbox -Identity "username@domainname.com"
+# View WorkingHoursTimeZone: 
+Get-MailboxCalendarConfiguration -Identity $mbox.PrimarySmtpAddress | select WorkingHoursTimeZone
+# (Optional): Change users timezone to CST:
+Set-MailboxCalendarConfiguration -Identity $mbox.PrimarySmtpAddress -WorkingHoursTimeZone "Central Standard Time"
 ```
