@@ -59,6 +59,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get Windows Full Build Number](#get-windows-full-build-number)
   - [Find OpenSSL](#find-openssl)
   - [Search Windows Event Viewer](#search-windows-event-viewer)
+    - [Event Viewer Threat Hunting](#event-viewer-threat-hunting)
   - [Exclude results from Get-ChildItem (ls, gci)](#exclude-results-from-get-childitem-ls-gci)
   - [Scheduled Reboot](#scheduled-reboot)
   - [Disable IPv6](#disable-ipv6)
@@ -934,6 +935,10 @@ Further filtering, for example by ID, or error level (INFO,WARN,ERR), or both; c
 ```ps1
 Get-WinEvent -FilterHashtable @{LogName='Application';LevelDisplayName='Information';ID=1} -MaxEvents 25
 ```
+
+### Event Viewer Threat Hunting
+
+While this can be done manually using the above commands, there exists some open source software to make this easier and faster. [Chainsaw](https://github.com/WithSecureOpenSource/chainsaw) facilitates this, but must be installed separately. It's written in rust, and the compiled releases are [here](https://github.com/WithSecureOpenSource/chainsaw/releases). Chainsaw provides a powerful ‘first-response’ capability to quickly identify threats within Windows event logs. It offers a generic and fast method of searching through event logs for keywords, and by identifying threats using built-in support for Sigma detection rules, and via custom Chainsaw detection rules.
 
 ## Exclude results from Get-ChildItem (ls, gci)
 
