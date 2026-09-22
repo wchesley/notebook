@@ -21,6 +21,7 @@ Links to other security related notes:
 - [Standard Levels](./Standard_levels.md)
 - [ThreatLocker](./Threatlocker.md)
 - [Phishing](./Phishing.md)
+- [MFA for Linux](./MFA_Linux.md)
 
 ## Threat Modeling
 
