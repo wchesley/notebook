@@ -74,6 +74,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [List running processes](#list-running-processes)
   - [Copy files via pssession](#copy-files-via-pssession)
   - [View 365 users timezone (Exchange):](#view-365-users-timezone-exchange)
+  - [Enable Print logging in Event Viewer](#enable-print-logging-in-event-viewer)
 
 
 # Snippits and small scripts
@@ -1196,3 +1197,19 @@ Get-MailboxCalendarConfiguration -Identity $mbox.PrimarySmtpAddress | select Wor
 # (Optional): Change users timezone to CST:
 Set-MailboxCalendarConfiguration -Identity $mbox.PrimarySmtpAddress -WorkingHoursTimeZone "Central Standard Time"
 ```
+
+## Enable Print logging in Event Viewer
+
+The command basically boils down to getting the desired log name and using `wevtutil.exe` to enable it. The objective is to have a record of what was printed, by whom, and when. After enabling this, search event viewer for ID 307 to find these logs. 
+
+```ps1
+$LogName = 'Microsoft-Windows-PrintService/Operational'
+wevtutil.exe sl $LogName /enabled:true
+
+# run the inverse to disable print logging: 
+
+$LogName = 'Microsoft-Windows-PrintService/Operational'
+wevtutil.exe sl $LogName /enabled:false
+```
+
+This was pulled from a few sources, but the two main ones regarding event log are: [Powershellmagazine](https://powershellmagazine.com/2013/07/15/pstip-how-to-enable-event-logs-using-windows-powershell/) and [EventLogConfiguration Class](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.eventing.reader.eventlogconfiguration?view=net-11.0-pp&redirectedfrom=MSDN). Finally, [Spiceworks](https://community.spiceworks.com/t/turn-on-windows-print-logging-with-script/707250) has the command for printers specifically. 
