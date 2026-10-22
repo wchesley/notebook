@@ -1,4 +1,6 @@
-# Ubuntu Homepage
+<sub>[back](../README.md)</sub>
+
+# Ubuntu
 Landing page for my Ubuntu notes
 
 18.04
@@ -11,7 +13,3 @@ upgrade without prompting reboot of services: `sudo NEEDRESTART_MODE=a apt-get d
 ## apt-key Depreciation: 
 See: https://opensource.com/article/22/9/deprecated-linux-apt-key
 TODO: Create note page for `apt-key`
-
----
-[back](./README.md)
-
