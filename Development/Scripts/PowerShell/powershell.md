@@ -16,6 +16,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Add Local User to Administrators group:](#add-local-user-to-administrators-group)
   - [Set Local User password to never expire:](#set-local-user-password-to-never-expire)
   - [Set ACL to directory recusively](#set-acl-to-directory-recusively)
+  - [View owner of folder](#view-owner-of-folder)
   - [Get users currently logged into system:](#get-users-currently-logged-into-system)
     - [Get Count of users with given name:](#get-count-of-users-with-given-name)
   - [Uninstall any app by name:](#uninstall-any-app-by-name)
@@ -205,6 +206,11 @@ Set-Acl -path $Path -AclObject $Acl
 
 For more details take a look at http://www.tomsitpro.com/articles/powershell-manage-file-system-acl,2-837.html
 
+## View owner of folder
+
+```ps1
+Get-Acl -Path "C:\Path\To\Folder" | Select-Object Owner
+```
 
 ## Get users currently logged into system: 
 <sub>[back to top](#powershell)</sub>
