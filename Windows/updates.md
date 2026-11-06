@@ -45,6 +45,12 @@ To view update history via powershell, and without installing any extra software
 Get-WindowsUpdateLog -LogPath C:\Temp\WindowsUpdate.log
 ```
 
+For windows server OS the process is a bit different, use `Get-HotFix` to view update history there. 
+
+```ps1
+Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object HotFixID, Description, InstalledOn
+```
+
 ### 3rd Party Methods
 
 > [!NOTE]
