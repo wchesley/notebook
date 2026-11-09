@@ -561,8 +561,8 @@ Example output:
 ```ps1
 PS C:\> $Printers = Get-Printer
 PS C:\> foreach($printer in $Printers) {
->> Get-PrintJob -PrinterObject $printer
->> }
+Get-PrintJob -PrinterObject $printer
+}
 
 Id    ComputerName    PrinterName     DocumentName         SubmittedTime        JobStatus      
 --    ------------    -----------     ------------         -------------        ---------
