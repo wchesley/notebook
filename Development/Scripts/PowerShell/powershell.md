@@ -1180,6 +1180,12 @@ Typically just use `tasklist` to view all running processes, but it only shows m
 Get-Process | Sort-Object -Property CUP -Descending
 ```
 
+To sort by memory use, sort by the property `WS` for working set memory, by default it's displayed in Kilobytes, we can round this into Megabytes like so: 
+
+```ps1
+Get-Process | Sort-Object -Descending WS | Select-Object -First 10 -Property Name, ID, @{Name="RAM (MB)";Expression={[math]::round($_.WS / 1MB, 2)}}
+```
+
 ## Copy files via pssession
 
 Provided the remote machine already has WinRM enabled on it and you can access the PC via `enter-pessession`: 
