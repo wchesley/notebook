@@ -76,6 +76,7 @@ PowerShell is a task automation and configuration management program from Micros
   - [Copy files via pssession](#copy-files-via-pssession)
   - [View 365 users timezone (Exchange):](#view-365-users-timezone-exchange)
   - [Enable Print logging in Event Viewer](#enable-print-logging-in-event-viewer)
+  - [Get count of active monitors](#get-count-of-active-monitors)
 
 
 # Snippits and small scripts
@@ -1225,3 +1226,17 @@ wevtutil.exe sl $LogName /enabled:false
 ```
 
 This was pulled from a few sources, but the two main ones regarding event log are: [Powershellmagazine](https://powershellmagazine.com/2013/07/15/pstip-how-to-enable-event-logs-using-windows-powershell/) and [EventLogConfiguration Class](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.eventing.reader.eventlogconfiguration?view=net-11.0-pp&redirectedfrom=MSDN). Finally, [Spiceworks](https://community.spiceworks.com/t/turn-on-windows-print-logging-with-script/707250) has the command for printers specifically. 
+
+## Get count of active monitors
+
+Shows number of detected monitors by windows: 
+
+```ps1
+@(Get-CimInstance -Namespace root\wmi -ClassName WmiMonitorID).Count
+```
+
+Show number of detected monitors in users session (requires .NET): 
+
+```ps1
+[System.Windows.Forms.Screen]::AllScreens.Count
+```
