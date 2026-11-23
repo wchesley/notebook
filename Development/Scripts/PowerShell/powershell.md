@@ -1052,8 +1052,13 @@ In this example, you can see that the AcroExch.Document.DC file type is associat
 ```
 .pdf=AcroExch.Document.DC
 ```
-
 ![assoc command in windows](https://woshub.com/wp-content/uploads/2020/01/assoc-command-in-windows.jpg.webp)
+
+You will not find this `assoc` command in powershell, you can still run it within powershell via `cmd` like so: 
+
+```ps1
+cmd /c "assoc .pdf"
+```
 
 Show all extension associations with file types:
 
