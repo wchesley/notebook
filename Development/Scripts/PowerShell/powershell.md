@@ -35,8 +35,10 @@ PowerShell is a task automation and configuration management program from Micros
   - [Get file size(s) in directory](#get-file-sizes-in-directory)
   - [Get File last access time and last write time](#get-file-last-access-time-and-last-write-time)
   - [Get Printers \& Printer Queue Status](#get-printers--printer-queue-status)
+          - [For more, see Printers](#for-more-see-printers)
     - [Get/Set Printer Driver](#getset-printer-driver)
     - [Printer Jobs](#printer-jobs)
+    - [Print Test Page](#print-test-page)
   - [Ping all hosts in subnet](#ping-all-hosts-in-subnet)
   - [Create Shortcut (.lnk file)](#create-shortcut-lnk-file)
   - [Get Service Startup Type](#get-service-startup-type)
@@ -542,6 +544,8 @@ For Windows 10 prior to April 2019 the following registry key should be set to `
 ## Get Printers & Printer Queue Status
 <sub>[back to top](#powershell)</sub>
 
+###### For more, see [Printers](./Printers.md)
+
 Get all printers: 
 
 ```ps1
@@ -607,6 +611,25 @@ List of print jobs in the specified printer.
 ```ps1
 Get-PrintJob -PrinterName "Office Printer"
 ```
+
+### Print Test Page
+
+Will require you to know the printer name before hand: 
+
+```ps1
+Get-CimInstance Win32_Printer -Filter "Name = 'Printer Name'" |
+    Invoke-CimMethod -MethodName PrintTestPage
+```
+
+Alternatively use `Out-Printer` to send a string or text file to a printer, you will still need to use the printer's name else this command will send to the default printer. 
+
+```ps1
+# print string to printer: 
+"Test Print" | Out-Printer # only prints 'Test Print' from default printer
+# print txt file to a specific printer: 
+Get-Content -Path ./file.txt | Out-Printer -Name "Printer Name"
+```
+
 
 ## Ping all hosts in subnet
 <sub>[back to top](#powershell)</sub>
