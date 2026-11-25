@@ -85,6 +85,9 @@ Add-Printer
     [-WhatIf]
     [-Confirm]
     [<CommonParameters>]
+
+# Example: 
+Add-Printer -Name "Printer Name" -DriverName "PrinterDriverName" -PortName "PrinterPortName"
 ```
 
 Add local printer port: 
@@ -117,6 +120,10 @@ Add-PrinterPort
     [-WhatIf]
     [-Confirm]
     [<CommonParameters>]
+
+# Example: 
+Add-PrinterPort -Name 192.168.2.1 -PrinterHostAddress 192.168.2.1
+# Adds printer port named after the IP address of the printer. 
 ```
 
 Add Printer Driver: 
